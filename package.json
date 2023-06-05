@@ -1,0 +1,19 @@
+{
+  "name": "project-swp391",
+  "version": "1.0.0",
+  "description": "This is project swp391",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dattq2002/Student-Registration-System.git"
+  },
+  "author": "Dat Trang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dattq2002/Student-Registration-System/issues"
+  },
+  "homepage": "https://github.com/dattq2002/Student-Registration-System#readme"
+}
