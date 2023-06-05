@@ -1,46 +1,34 @@
 package controller;
 
+import DAO.StudentDAO;
+import DTO.StudentProfile;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class MainController extends HttpServlet {
-
-    private static final String ERROR = "error.jsp";
-    private static final String LOGIN = "LoginController";
-    private static final String SEARCH_STUDENT = "SearchStudentProfile";
-    private static final String ADD_STUDENT = "AddStudentProfile";
-    private static final String DELETE_STUDENT = "DeleteStudentProfile";
-    private static final String UPDATE_STUDENT = "UpdateStudentProfile";
-
+public class SearchStudentProfile extends HttpServlet {
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
         try {
-            String action = request.getParameter("action");
-            if ("Login".equals(action)) {
-                url = LOGIN;
-            } else if ("SearchStudent".equals(action)) {
-                url = SEARCH_STUDENT;
-            } else if ("AddProfile".equals(action)) {
-                url = ADD_STUDENT;
-            } else if ("DeleteStudent".equals(action)) {
-                url = DELETE_STUDENT;
-            } else if ("UpdateStudent".equals(action)) {
-                url = UPDATE_STUDENT;
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("ERROR_FUNC", "function is not available");
-                url = ERROR;
+            String search = request.getParameter("searchStudent");
+            StudentDAO dao = new StudentDAO();
+            List<StudentProfile> list = dao.getListStudent(search);
+            HttpSession session = request.getSession();
+            if(!list.isEmpty()){
+                session.setAttribute("LIST_STUDENT", list);
+            }else{
+                session.setAttribute("SEARCH_NOTFOUND", "No Record !!");
             }
         } catch (Exception e) {
-            log("Error at MainController: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            log("Error at SearchStudentProfile: " + e.toString());
+        }finally{
+            request.getRequestDispatcher("viewStudent.jsp").forward(request, response);
         }
     }
 

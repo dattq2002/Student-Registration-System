@@ -1,44 +1,41 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
+import DAO.StudentDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class MainController extends HttpServlet {
+/**
+ *
+ * @author meryc
+ */
+public class UpdateStudentProfile extends HttpServlet {
 
-    private static final String ERROR = "error.jsp";
-    private static final String LOGIN = "LoginController";
-    private static final String SEARCH_STUDENT = "SearchStudentProfile";
-    private static final String ADD_STUDENT = "AddStudentProfile";
-    private static final String DELETE_STUDENT = "DeleteStudentProfile";
-    private static final String UPDATE_STUDENT = "UpdateStudentProfile";
+    private static final String SUCCESS = "SearchStudentProfile";
+    private static final String ERROR = "viewStudent.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String action = request.getParameter("action");
-            if ("Login".equals(action)) {
-                url = LOGIN;
-            } else if ("SearchStudent".equals(action)) {
-                url = SEARCH_STUDENT;
-            } else if ("AddProfile".equals(action)) {
-                url = ADD_STUDENT;
-            } else if ("DeleteStudent".equals(action)) {
-                url = DELETE_STUDENT;
-            } else if ("UpdateStudent".equals(action)) {
-                url = UPDATE_STUDENT;
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("ERROR_FUNC", "function is not available");
-                url = ERROR;
+            String name = request.getParameter("Name");
+            String code = request.getParameter("code");
+
+            StudentDAO dao = new StudentDAO();
+            boolean check = dao.UpdateStudent(name, code);
+            if (check) {
+                url = SUCCESS;
             }
         } catch (Exception e) {
-            log("Error at MainController: " + e.toString());
+            log("Error at UpdateStudentProfile: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

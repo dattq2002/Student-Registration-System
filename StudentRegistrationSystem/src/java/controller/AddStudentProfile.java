@@ -1,45 +1,36 @@
 package controller;
 
+import DAO.StudentDAO;
+import DTO.StudentProfile;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class MainController extends HttpServlet {
-
-    private static final String ERROR = "error.jsp";
-    private static final String LOGIN = "LoginController";
-    private static final String SEARCH_STUDENT = "SearchStudentProfile";
-    private static final String ADD_STUDENT = "AddStudentProfile";
-    private static final String DELETE_STUDENT = "DeleteStudentProfile";
-    private static final String UPDATE_STUDENT = "UpdateStudentProfile";
-
+public class AddStudentProfile extends HttpServlet {
+    private static final String SUCCESS = "SearchStudentProfile";
+    private static final String ERROR = "addStudent.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String action = request.getParameter("action");
-            if ("Login".equals(action)) {
-                url = LOGIN;
-            } else if ("SearchStudent".equals(action)) {
-                url = SEARCH_STUDENT;
-            } else if ("AddProfile".equals(action)) {
-                url = ADD_STUDENT;
-            } else if ("DeleteStudent".equals(action)) {
-                url = DELETE_STUDENT;
-            } else if ("UpdateStudent".equals(action)) {
-                url = UPDATE_STUDENT;
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("ERROR_FUNC", "function is not available");
-                url = ERROR;
+            int id = Integer.parseInt(request.getParameter("studentid"));
+            String code = request.getParameter("studentcode");
+            String name = request.getParameter("studentname");
+            String birthday = request.getParameter("birthday");
+            String email = request.getParameter("email");
+            StudentDAO dao = new StudentDAO();
+            StudentProfile student = new StudentProfile(id, code, name, birthday, email);
+            boolean check = dao.AddStudent(student);
+            if(check){
+                url = SUCCESS;
             }
         } catch (Exception e) {
-            log("Error at MainController: " + e.toString());
-        } finally {
+            log("Error at AddStudentProfile: "+ e.toString());
+        }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

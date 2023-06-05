@@ -14,5 +14,7 @@
                 return;
             }           
         %>
+        <!--add Student--> 
+        <a href="viewStudent.jsp">Student</a>
     </body>
 </html>

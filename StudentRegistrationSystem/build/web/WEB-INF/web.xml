@@ -8,6 +8,22 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchStudentProfile</servlet-name>
+        <servlet-class>controller.SearchStudentProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddStudentProfile</servlet-name>
+        <servlet-class>controller.AddStudentProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteStudentProfile</servlet-name>
+        <servlet-class>controller.DeleteStudentProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateStudentProfile</servlet-name>
+        <servlet-class>controller.UpdateStudentProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -15,6 +31,22 @@
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchStudentProfile</servlet-name>
+        <url-pattern>/SearchStudentProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddStudentProfile</servlet-name>
+        <url-pattern>/AddStudentProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteStudentProfile</servlet-name>
+        <url-pattern>/DeleteStudentProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateStudentProfile</servlet-name>
+        <url-pattern>/UpdateStudentProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
