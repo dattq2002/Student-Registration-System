@@ -1,43 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package controller;
+package adminController;
 
 import DAO.StudentDAO;
+import DTO.StudentProfile;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author meryc
- */
-public class UpdateStudentProfile extends HttpServlet {
+public class AddStudentProfile extends HttpServlet {
 
     private static final String SUCCESS = "SearchStudentProfile";
-    private static final String ERROR = "viewStudent.jsp";
+    private static final String ERROR = "addStudent.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String name = request.getParameter("Name");
-            String code = request.getParameter("code");
+            int id = Integer.parseInt(request.getParameter("studentid"));
+            String code = request.getParameter("studentcode");
+            String name = request.getParameter("studentname");
+            String birthday = request.getParameter("birthday");
+            String email = request.getParameter("email");
 
+            String regex = "^(?:19|20)\\d\\d-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-30|(?:0[13578]|1[02])-31)$";
             StudentDAO dao = new StudentDAO();
-            boolean check = dao.UpdateStudent(name, code);
-            if (check) {
-                url = SUCCESS;
+            StudentProfile student = new StudentProfile(id, code, name, birthday, email);
+            HttpSession session = request.getSession();
+            if (code.length() < 2 || code.contains(" ")) {
+                session.setAttribute("MESSAGE1", "Your code must be more than 2 or cannot contain space!!!");
+            } else if (email.contains(" ") || !email.contains("@fpt.edu.vn")) {
+                session.setAttribute("MESSAGE1", "Your email must be contain '@fe.edu.vn' or cannot contain space!!!");
+            } else if (!birthday.matches(regex)) {
+                session.setAttribute("MESSAGE1", "Wrong format!! Try again");
+            } else {
+                boolean check = dao.AddStudent(student);
+                if (check) {
+                    url = SUCCESS;
+                    Thread.sleep(2000);
+                } else {
+                    session.setAttribute("MESSAGE1", "Cannot create because duplicate ID");
+                }
             }
         } catch (Exception e) {
-            log("Error at UpdateStudentProfile: " + e.toString());
+            log("Error at AddStudentProfile: " + e.toString());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

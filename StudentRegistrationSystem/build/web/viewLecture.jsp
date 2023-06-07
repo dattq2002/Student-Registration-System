@@ -1,12 +1,12 @@
-<%@page import="DTO.StudentProfile"%>
 <%@page import="java.util.List"%>
+<%@page import="DTO.LectureProfile"%>
 <%@page import="DTO.UserAccountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> Student Management Page</title>
+        <title>Lecture Management Page</title>
     </head>
     <body>
         <%
@@ -15,12 +15,12 @@
                 response.sendRedirect("login.jsp");
                 return;
             }
-            String search = request.getParameter("searchStudent");
+            String search = request.getParameter("searchLecture");
             if (search == null) {
                 search = "";
             }
         %>
-        <a href="admin.jsp">Home</a> > <a href="viewStudent.jsp"> View Student</a>
+        <a href="admin.jsp"> home</a> > <a href="viewLecture.jsp"> View Lecture</a>
         <!--thanh sidebar
             ...
         -->
@@ -30,13 +30,12 @@
         -->
         <!--body-->
         <form action="MainController">
-            Search: <input type="text" name="searchStudent" value="" placeholder="search by name"/>
-            <input type="submit" value="SearchStudent" name="action" />
+            Search: <input type="text" name="searchLecture" value="<%=search%>" placeholder="search by name"/>
+            <input type="submit" value="SearchLecture" name="action" />
         </form>
-        <h3>View Student</h3>
-
+        <h3>View Lecture</h3>
         <%
-            List<StudentProfile> list = (List<StudentProfile>) session.getAttribute("LIST_STUDENT");
+            List<LectureProfile> list = (List<LectureProfile>) session.getAttribute("LIST_LECTURE");
             if (list != null) {
                 if (!list.isEmpty()) {
         %>
@@ -56,29 +55,29 @@
             <tbody>
                 <%
                     int count = 1;
-                    for (StudentProfile item : list) {
+                    for (LectureProfile item : list) {
                 %>
             <form action="MainController">
                 <tr>
-                    <td><%=count++%></td>
+                    <td><%= count++%></td>
                     <td><%= item.getID()%></td>
                     <td>
                         <input type="text" name="code" value="<%= item.getCode()%>" />
                     </td>
-                    <td>                     
+                    <td>
                         <input type="text" name="Name" value="<%= item.getName()%>" />
                     </td>
                     <td><%= item.getBirthday()%></td>
                     <td><%= item.getEmail()%></td>
                     <td>
                         <button>
-                            <a href="MainController?ID=<%= item.getID()%>&action=DeleteStudent&searchStudent=<%=search%> ">Delete</a>
+                            <a href="MainController?ID=<%= item.getID()%>&action=DeleteLecture&searchLecture=<%=search%> ">Delete</a>
                         </button>
                     </td>
                     <td>
-                        <input type="submit" value="UpdateStudent" name="action" />
+                        <input type="submit" value="UpdateLecture" name="action" />
                         <input type="hidden" name="ID" value="<%= item.getID()%>" />
-                        <input type="hidden" name ="searchStudent" value="<%= search%>" />
+                        <input type="hidden" name ="searchLecture" value="<%= search%>" />
                     </td>
                 </tr>
             </form>
@@ -94,13 +93,13 @@
         }
     %>
     <%
-        String message = (String) session.getAttribute("ERROR_DU");
+        String message = (String) session.getAttribute("MESSAGE");
         if (message != null) {
     %>
     <h4 style="color: red"><%= message%></h4>
     <%
         }
     %>
-    <button><a href="addStudent.jsp">Create</a></button>
+    <button><a href="addLecture.jsp">Create</a></button>
 </body>
 </html>

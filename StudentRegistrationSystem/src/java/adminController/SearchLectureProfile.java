@@ -1,46 +1,35 @@
-package controller;
+package adminController;
 
+import DAO.LectureDAO;
+import DTO.LectureProfile;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class MainController extends HttpServlet {
-
-    private static final String ERROR = "error.jsp";
-    private static final String LOGIN = "LoginController";
-    private static final String SEARCH_STUDENT = "SearchStudentProfile";
-    private static final String ADD_STUDENT = "AddStudentProfile";
-    private static final String DELETE_STUDENT = "DeleteStudentProfile";
-    private static final String UPDATE_STUDENT = "UpdateStudentProfile";
-
+public class SearchLectureProfile extends HttpServlet {
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
         try {
-            String action = request.getParameter("action");
-            if ("Login".equals(action)) {
-                url = LOGIN;
-            } else if ("SearchStudent".equals(action)) {
-                url = SEARCH_STUDENT;
-            } else if ("AddProfile".equals(action)) {
-                url = ADD_STUDENT;
-            } else if ("DeleteStudent".equals(action)) {
-                url = DELETE_STUDENT;
-            } else if ("UpdateStudent".equals(action)) {
-                url = UPDATE_STUDENT;
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("ERROR_FUNC", "function is not available");
-                url = ERROR;
+            int search = Integer.parseInt(request.getParameter("searchLecture"));
+            LectureDAO dao = new LectureDAO();
+            List<LectureProfile> list = dao.getListLecture(search);
+            HttpSession session = request.getSession();
+            if(!list.isEmpty()){
+                session.setAttribute("LIST_LECTURE", list);
+            }else{
+                session.setAttribute("MESSAGE", "No record !!");
             }
-        } catch (Exception e) {
-            log("Error at MainController: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        } catch (NumberFormatException | SQLException e) {
+            log("Error at SearchLectureProfile: "+ e.toString());
+        }finally{
+            request.getRequestDispatcher("viewLecture.jsp").forward(request, response);
         }
     }
 

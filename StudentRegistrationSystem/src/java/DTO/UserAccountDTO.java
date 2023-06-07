@@ -1,6 +1,6 @@
 package DTO;
 
-public class UserDTO {
+public class UserAccountDTO {
     //props
     private String Email;
     private String Password;
@@ -8,10 +8,10 @@ public class UserDTO {
     private String roleID;
 
     //contructor
-    public UserDTO() {
+    public UserAccountDTO() {
     }
 
-    public UserDTO(String Email, String Password, String FullName, String roleID) {
+    public UserAccountDTO(String Email, String Password, String FullName, String roleID) {
         this.Email = Email;
         this.Password = Password;
         this.FullName = FullName;

@@ -2,27 +2,43 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
         <servlet-name>MainController</servlet-name>
-        <servlet-class>controller.MainController</servlet-class>
+        <servlet-class>mainController.MainController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>controller.LoginController</servlet-class>
+        <servlet-class>mainController.LoginController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchStudentProfile</servlet-name>
-        <servlet-class>controller.SearchStudentProfile</servlet-class>
+        <servlet-class>adminController.SearchStudentProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddStudentProfile</servlet-name>
-        <servlet-class>controller.AddStudentProfile</servlet-class>
+        <servlet-class>adminController.AddStudentProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteStudentProfile</servlet-name>
-        <servlet-class>controller.DeleteStudentProfile</servlet-class>
+        <servlet-class>adminController.DeleteStudentProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateStudentProfile</servlet-name>
-        <servlet-class>controller.UpdateStudentProfile</servlet-class>
+        <servlet-class>adminController.UpdateStudentProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchLectureProfile</servlet-name>
+        <servlet-class>adminController.SearchLectureProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddLectureProfile</servlet-name>
+        <servlet-class>adminController.AddLectureProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteLectureProfile</servlet-name>
+        <servlet-class>adminController.DeleteLectureProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateLectureProfile</servlet-name>
+        <servlet-class>adminController.UpdateLectureProfile</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -47,6 +63,22 @@
     <servlet-mapping>
         <servlet-name>UpdateStudentProfile</servlet-name>
         <url-pattern>/UpdateStudentProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchLectureProfile</servlet-name>
+        <url-pattern>/SearchLectureProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddLectureProfile</servlet-name>
+        <url-pattern>/AddLectureProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteLectureProfile</servlet-name>
+        <url-pattern>/DeleteLectureProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateLectureProfile</servlet-name>
+        <url-pattern>/UpdateLectureProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

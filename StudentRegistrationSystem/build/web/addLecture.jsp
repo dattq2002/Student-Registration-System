@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add Student Page</title>
+        <title>Add Lecture Page</title>
     </head>
     <body>
         <%
@@ -14,15 +14,14 @@
                 return;
             }
         %>
-        <a href="admin.jsp">Home</a> > <a href="viewStudent.jsp"> View Student</a> > <a href="addStudent.jsp">Create Student</a>
-        <h3>Add Student Profile</h3>
+        <h3>Add Lecture Profile</h3>
         <form action="MainController">
-            Student ID: <input type="number" name="studentid" value="" required="" min ="0"placeholder="more than 0"/><br>
-            Student Code: <input type="text" name="studentcode" value="" required="" minlength="2" placeholder="ex:SE01"/><br>
-            Student Name: <input type="text" name="studentname" value="" required=""placeholder="ex: abc"/><br>
-            BirthDay: <input type="text" name="birthday" value=""placeholder="ex: 1999-12-07"/><br>
-            Email: <input type="text" name="email" value="" required="" placeholder="ex: abc@fpt.edu.vn"/><br>
-            <input type="submit" value="AddProfile" name="action" />
+            Lecture ID: <input type="number" name="lectureid" value="" required="" min="0" placeholder="more than 0"/><br>
+            Lecture Code: <input type="text" name="lecturecode" value="" required="" minlength="2" placeholder="ex:LTxx"/><br>
+            Lecture Name: <input type="text" name="lecturetname" value=""placeholder="ex: abc"/><br>
+            BirthDay: <input type="text" name="lecturebirthday" value=""placeholder="ex: 1998-04-29"/><br>
+            Email: <input type="text" name="lectureemail" value="" required=""placeholder="ex: abc@fe.edu.vn"/><br>
+            <input type="submit" value="CreateLecture" name="action" />
             <input type="reset" value="Reset" />
         </form>
         <%

@@ -1,17 +1,17 @@
 package DAO;
 
 import DBUtil.Util;
-import DTO.UserDTO;
+import DTO.UserAccountDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAO {
+public class UserAccountDAO {
     
     //checkLogin
-    public UserDTO checkLogin(String email, String password) throws SQLException {
-        UserDTO user = null;
+    public UserAccountDTO checkLogin(String email, String password) throws SQLException {
+        UserAccountDTO user = null;
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -27,7 +27,7 @@ public class UserDAO {
                 if (rs.next()) {       
                     String fullName = rs.getString("FullName");
                     String roleID = rs.getString("Role");
-                    user = new UserDTO(email, password, fullName, roleID);
+                    user = new UserAccountDTO(email, password, fullName, roleID);
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {

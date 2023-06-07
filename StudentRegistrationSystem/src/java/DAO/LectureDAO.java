@@ -1,6 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package DAO;
 
 import DBUtil.Util;
+import DTO.LectureProfile;
 import DTO.StudentProfile;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +15,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentDAO {
-
+/**
+ *
+ * @author meryc
+ */
+public class LectureDAO {
     //search student profile
-    public List<StudentProfile> getListStudent(int search) throws SQLException {
-        List<StudentProfile> list = new ArrayList<>();
+    public List<LectureProfile> getListLecture(int search) throws SQLException {
+        List<LectureProfile> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -21,10 +30,10 @@ public class StudentDAO {
             conn = Util.getConnection();
             if (conn != null) {
                 String sql = "SELECT * "
-                        + "FROM Student "
+                        + "FROM Lecturer "
                         + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
-                stm.setInt(1, search );
+                stm.setInt(1, search);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("ID");
@@ -32,7 +41,7 @@ public class StudentDAO {
                     String Name = rs.getString("Name");
                     String Birthday = rs.getString("Birthday");
                     String Email = rs.getString("Email");
-                    list.add(new StudentProfile(id, Code, Name, Birthday, Email));
+                    list.add(new LectureProfile(id, Code, Name, Birthday, Email));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -50,16 +59,15 @@ public class StudentDAO {
         }
         return list;
     }
-
     //add student profile
-    public boolean AddStudent(StudentProfile profile) throws SQLException {
+    public boolean AddLecture(LectureProfile profile) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "INSERT INTO Student(ID, Code, Name, Birthday, Email) "
+                String sql = "INSERT INTO Lecturer(ID, Code, Name, Birthday, Email) "
                         + "VALUES (?,?,?,?,?)";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, profile.getID());
@@ -70,7 +78,7 @@ public class StudentDAO {
                 check = stm.executeUpdate() > 0;
             }
         } catch (ClassNotFoundException | SQLException e) {
-            System.err.println("Error at AddStudent!!");
+            System.err.println("Error at AddLecture!!");
         }finally{
             if(conn != null) conn.close();
             if(stm != null) stm.close();
@@ -78,22 +86,22 @@ public class StudentDAO {
         return check;
     }
     
-    //delete Student profile
-    public boolean DeleteStudent(int id) throws SQLException{
+    //delete Lecture profile
+    public boolean DeleteLecture(int id) throws SQLException{
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
             if(conn != null){
-                String sql = "DELETE Student "
+                String sql = "DELETE Lecturer "
                         +"WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, id);
                 int value = stm.executeUpdate();
                 check = (value > 0) ? true : false;
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Err at DeleteStudent!!");
         }finally{
             if (conn != null) {
@@ -105,16 +113,15 @@ public class StudentDAO {
         }
         return check;
     }
-    
     //update Profile
-    public boolean UpdateStudent(int id, String name, String code) throws SQLException{
+    public boolean UpdateLecture(int id, String name, String code) throws SQLException{
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
             if(conn != null){
-                String sql ="UPDATE Student "
+                String sql ="UPDATE Lecturer "
                         +"SET code = ?, name = ? WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, code);
@@ -124,7 +131,7 @@ public class StudentDAO {
                 check = value > 0? true: false;
             }
         } catch (ClassNotFoundException | SQLException e) {
-            System.err.println("Err at UpdateStudent!!");
+            System.err.println("Err at UpdateLecturer!!");
         }finally{
             if (conn != null) {
                 conn.close();

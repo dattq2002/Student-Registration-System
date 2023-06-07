@@ -1,34 +1,46 @@
-package controller;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package adminController;
 
 import DAO.StudentDAO;
-import DTO.StudentProfile;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class SearchStudentProfile extends HttpServlet {
-    
+/**
+ *
+ * @author meryc
+ */
+public class DeleteStudentProfile extends HttpServlet {
+    private static final String ERROR = "viewStudent.jsp";
+    private static final String SUCCESS = "SearchStudentProfile";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String url = ERROR;
         try {
-            String search = request.getParameter("searchStudent");
+            int id = Integer.parseInt(request.getParameter("ID"));
             StudentDAO dao = new StudentDAO();
-            List<StudentProfile> list = dao.getListStudent(search);
             HttpSession session = request.getSession();
-            if(!list.isEmpty()){
-                session.setAttribute("LIST_STUDENT", list);
+            boolean check = dao.DeleteStudent(id);
+            if(check){
+                url = SUCCESS;
+                session.setAttribute("ERROR_DU", "Delete profile successfully!!!");
+                Thread.sleep(2000);
             }else{
-                session.setAttribute("SEARCH_NOTFOUND", "No Record !!");
+                session.setAttribute("ERROR_DU", "Delete profile!!! May be some Problem in database");
+                //fail may be database connect with other table, check table and try again
             }
         } catch (Exception e) {
-            log("Error at SearchStudentProfile: " + e.toString());
+            log("Error at DeleteStudentProfile: " + e.toString());
         }finally{
-            request.getRequestDispatcher("viewStudent.jsp").forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

@@ -1,37 +1,45 @@
-package controller;
+package adminController;
 
 import DAO.StudentDAO;
-import DTO.StudentProfile;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class AddStudentProfile extends HttpServlet {
+public class UpdateStudentProfile extends HttpServlet {
+
     private static final String SUCCESS = "SearchStudentProfile";
-    private static final String ERROR = "addStudent.jsp";
+    private static final String ERROR = "viewStudent.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            int id = Integer.parseInt(request.getParameter("studentid"));
-            String code = request.getParameter("studentcode");
-            String name = request.getParameter("studentname");
-            String birthday = request.getParameter("birthday");
-            String email = request.getParameter("email");
+            int id = Integer.parseInt(request.getParameter("ID"));
+            String name = request.getParameter("Name");
+            String code = request.getParameter("code").toUpperCase();
+            HttpSession session = request.getSession();
             StudentDAO dao = new StudentDAO();
-            StudentProfile student = new StudentProfile(id, code, name, birthday, email);
-            boolean check = dao.AddStudent(student);
-            if(check){
-                url = SUCCESS;
+            if (code.length() < 2 || code.contains(" ")) {
+                session.setAttribute("ERROR_DU", "Your code must be more than 2 or cannot contain space!!!");
+            }else{
+                boolean check = dao.UpdateStudent(id,name, code);
+                if (check) {
+                    url = SUCCESS;
+                    session.setAttribute("ERROR_DU", "Update successfully!!");
+                    Thread.sleep(2000);
+                }else{
+                    session.setAttribute("ERROR_DU", "Cannot Update profile!!! May be some Problem in database");
+                    //fail may be database connect with other table, check table and try again
+                }
             }
         } catch (Exception e) {
-            log("Error at AddStudentProfile: "+ e.toString());
-        }finally{
-            request.getRequestDispatcher(url).forward(request, response);
+            log("Error at UpdateStudentProfile: " + e.toString());
+        } finally {
+            response.sendRedirect(url);
         }
     }
 

@@ -3,37 +3,54 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package adminController;
 
+import DAO.LectureDAO;
 import DAO.StudentDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author meryc
  */
-public class DeleteStudentProfile extends HttpServlet {
-    private static final String ERROR = "viewStudent.jsp";
-    private static final String SUCCESS = "SearchStudentProfile";
+public class UpdateLectureProfile extends HttpServlet {
+
+    private static final String SUCCESS = "SearchLectureProfile";
+    private static final String ERROR = "viewLecture.jsp";
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            int id = Integer.parseInt(request.getParameter("ID"));
             String name = request.getParameter("Name");
-            StudentDAO dao = new StudentDAO();
-            boolean check = dao.DeleteStudent(name);
-            if(check){
-                url = SUCCESS;
+            String code = request.getParameter("code").toUpperCase();
+            HttpSession session = request.getSession();
+            LectureDAO dao = new LectureDAO();
+            if (code.length() < 2 || code.contains(" ")) {
+                session.setAttribute("MESSAGE", "Your code must be more than 2 or cannot contain space!!!");
+            }else{
+                boolean check = dao.UpdateLecture(id,name, code);
+                if (check) {
+                    url = SUCCESS;
+                    session.setAttribute("MESSAGE", "Update successfully!!");
+                    Thread.sleep(2000);
+                }else{
+                    session.setAttribute("MESSAGE", "Cannot Update profile!!! May be some Problem in database");
+                    //fail may be database connect with other table, check table and try again
+                }
             }
         } catch (Exception e) {
-            log("Error at DeleteStudentProfile: " + e.toString());
-        }finally{
-            request.getRequestDispatcher(url).forward(request, response);
+            log("Error at UpdateStudentProfile: " + e.toString());
+        } finally {
+            response.sendRedirect(url);
         }
     }
 
