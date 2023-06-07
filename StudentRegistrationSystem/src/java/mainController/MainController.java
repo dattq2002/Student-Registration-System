@@ -19,7 +19,8 @@ public class MainController extends HttpServlet {
     private static final String ADD_LECTURE = "AddLectureProfile";
     private static final String DELETE_LECTURE = "DeleteLectureProfile";
     private static final String UPDATE_LECTURE = "UpdateLectureProfile";
-
+    private static final String FORGOT_PASSWORD = "ForgotController";
+    private static final String RESET_PASSWORD = "ResetPasswordController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -44,6 +45,10 @@ public class MainController extends HttpServlet {
                 url = DELETE_LECTURE;
             }else if("UpdateLecture".equals(action)){
                 url = UPDATE_LECTURE;
+            }else if("Submit".equals(action)){
+                url = FORGOT_PASSWORD;
+            }else if("Reset".equals(action)){
+                url = RESET_PASSWORD;
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

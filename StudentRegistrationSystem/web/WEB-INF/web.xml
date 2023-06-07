@@ -40,6 +40,14 @@
         <servlet-name>UpdateLectureProfile</servlet-name>
         <servlet-class>adminController.UpdateLectureProfile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ForgotController</servlet-name>
+        <servlet-class>mainController.ForgotController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <servlet-class>mainController.ResetPasswordController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -79,6 +87,14 @@
     <servlet-mapping>
         <servlet-name>UpdateLectureProfile</servlet-name>
         <url-pattern>/UpdateLectureProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotController</servlet-name>
+        <url-pattern>/ForgotController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <url-pattern>/ResetPasswordController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

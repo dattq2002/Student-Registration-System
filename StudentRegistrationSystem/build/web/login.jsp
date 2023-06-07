@@ -11,6 +11,7 @@
             Email: <input type="text" name="email" value="" required="" placeholder="vd:abc@fpt.edu.vn"/><br>
             Password: <input type="password" name="password" value="" required="" placeholder="password"/><br>
             <input type="submit" value="Login" name="action" />
+            <p><a href="forgotPassword.jsp"> Forgot password?</a></p>
         </form>
         <div>
             <%
