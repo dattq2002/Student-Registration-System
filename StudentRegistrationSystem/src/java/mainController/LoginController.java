@@ -3,6 +3,7 @@ package mainController;
 import DAO.UserAccountDAO;
 import DTO.UserAccountDTO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class LoginController extends HttpServlet {
             } else {
                 session.setAttribute("ERROR_LOGIN", "InCorrect userName or Password");
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             log("Error at LoginController: " + e.toString());
         } finally {
             response.sendRedirect(url);

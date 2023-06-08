@@ -135,4 +135,37 @@ public class StudentDAO {
         }
         return check;
     }
+    
+    //showListStudent
+    public List<StudentProfile> getListStudent() throws SQLException {
+        List<StudentProfile> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = Util.getConnection();
+            if(conn != null) {
+                String sql = "SELECT * "
+                        + " FROM Student ";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while(rs.next()) {
+                    int id = rs.getInt("ID");
+                    String code = rs.getString("Code");
+                    String Name = rs.getString("Name");
+                    String Birthday = rs.getString("Birthday");
+                    String Email = rs.getString("Email");
+                    list.add(new StudentProfile(id, code, Name, Birthday, Email));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("Err at showListStudent!");
+        } finally {
+            if(rs != null) rs.close();
+            if(stm != null) stm.close();
+            if(conn != null) conn.close();
+        }
+        return list;
+    }
 }

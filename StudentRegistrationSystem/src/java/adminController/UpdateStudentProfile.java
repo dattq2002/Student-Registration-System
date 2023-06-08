@@ -2,6 +2,7 @@ package adminController;
 
 import DAO.StudentDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,17 +30,17 @@ public class UpdateStudentProfile extends HttpServlet {
                 boolean check = dao.UpdateStudent(id,name, code);
                 if (check) {
                     url = SUCCESS;
-                    session.setAttribute("ERROR_DU", "Update successfully!!");
+                    request.setAttribute("ERROR_DU", "Update successfully!!");
                     Thread.sleep(2000);
                 }else{
-                    session.setAttribute("ERROR_DU", "Cannot Update profile!!! May be some Problem in database");
+                    request.setAttribute("ERROR_DU", "Cannot Update profile!!! May be some Problem in database");
                     //fail may be database connect with other table, check table and try again
                 }
             }
-        } catch (Exception e) {
+        } catch (InterruptedException | NumberFormatException | SQLException e) {
             log("Error at UpdateStudentProfile: " + e.toString());
         } finally {
-            response.sendRedirect(url);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

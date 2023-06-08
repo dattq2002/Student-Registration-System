@@ -3,17 +3,77 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="CSS/style.css">
         <title>Login Page</title>
     </head>
     <body>
-        <h1>Login System!!</h1>
-        <form action="MainController" method="POST">
-            Email: <input type="text" name="email" value="" required="" placeholder="vd:abc@fpt.edu.vn"/><br>
-            Password: <input type="password" name="password" value="" required="" placeholder="password"/><br>
-            <input type="submit" value="Login" name="action" />
-            <p><a href="forgotPassword.jsp"> Forgot password?</a></p>
-        </form>
-        <div>
+        <div class="container">
+            <input type="checkbox" id="flip">
+            <div class="cover">
+                <div class="front">
+                    <img src="images/truong-dai-hoc-fpt-tp-hcm-(7).jpg" alt="">
+                    <div class="text">
+                        <!-- <span class="text-1">Every new friend is a <br> new adventure</span>
+                        <span class="text-2">Let's get connected</span> -->
+                    </div>
+                </div>
+
+            </div>
+            <div class="forms">
+                <div class="form-content">
+                    <div class="login-form">
+                        <div class="title">Login</div>
+                        <form action="MainController" method="POST">
+                            <div class="input-boxes">
+                                <div class="inputBox">
+
+                                    <input type="text" name="email" value="" required="required" />
+                                    <small>Enter your email</small>
+                                    <i></i>
+                                </div>
+                                <div class="inputBox">
+                                    <input type="password" name="password" value="" required="" />
+                                    <small>Enter your password</small>
+                                    <i></i>
+                                </div>
+                                <div class="button input-box">
+                                    <input type="submit" value="Login" name="action" class="submit-button" />
+                                </div>
+                                <div class="text sign-up-text">Don't have an account? <label for="flip">Forgot password?</label></div>
+                            </div>
+                            <!--                                <p><a href="forgotPassword.jsp"> Forgot password?</a></p>-->
+                        </form>
+                    </div>
+                    <div class="signup-form">
+                        <div class="title">Forgot password?</div>
+                        <form action="ForgotController">
+                            <div class="input-boxes">
+                                <div class="inputBox">
+                                    <input type="text" name="email" value="" required="required"/>
+                                    <small>Enter your email</small>
+                                    <i></i>
+                                    
+                                </div>
+                                <div class="button input-box">
+                                    <input type="submit" value="Sumbit" name="action">
+                                </div>
+                                <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+                            </div>
+                        </form>
+                        <%
+                            String message1 = (String) session.getAttribute("ERROR_EMAIL");
+                            if (message1 != null) {
+                        %>
+                        <h5 style="color: red"><%= message1%></h5>
+                        <%
+                            }
+                        %>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+            </div>
             <%
                 String message = (String) session.getAttribute("ERROR_LOGIN");
                 if (message != null) {
@@ -23,5 +83,6 @@
                 }
             %>
         </div>
+
     </body>
 </html>

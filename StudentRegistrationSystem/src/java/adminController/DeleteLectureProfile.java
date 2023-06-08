@@ -1,15 +1,12 @@
 package adminController;
 
 import DAO.LectureDAO;
-import DAO.StudentDAO;
-import DTO.LectureProfile;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class DeleteLectureProfile extends HttpServlet {
     private static final String ERROR = "viewLecture.jsp";
@@ -21,20 +18,19 @@ public class DeleteLectureProfile extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("ID"));
             LectureDAO dao = new LectureDAO();
-            HttpSession session = request.getSession();
             boolean check = dao.DeleteLecture(id);
             if(check){
                 url = SUCCESS;
-                session.setAttribute("MESSAGE", "Delete profile successfully!!!");
+                request.setAttribute("MESSAGE", "Delete profile successfully!!!");
                 Thread.sleep(2000);
             }else{
-                session.setAttribute("MESSAGE", "Cannot Delete profile!!! May be some Problem in database");
+                request.setAttribute("MESSAGE", "Cannot Delete profile!!! May be some Problem in database");
                 //fail may be database connect with other table, check table and try again
             }
-        } catch (Exception e) {
+        } catch (InterruptedException | NumberFormatException | SQLException e) {
             log("Error at DeleteLectureProfile: " + e.toString());
         }finally{
-            response.sendRedirect(url);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

@@ -19,8 +19,14 @@ public class MainController extends HttpServlet {
     private static final String ADD_LECTURE = "AddLectureProfile";
     private static final String DELETE_LECTURE = "DeleteLectureProfile";
     private static final String UPDATE_LECTURE = "UpdateLectureProfile";
-    private static final String FORGOT_PASSWORD = "ForgotController";
     private static final String RESET_PASSWORD = "ResetPasswordController";
+    private static final String LOGOUT = "LogoutController";
+    private static final String LIST_ACCOUNT = "ListAccountController";
+    private static final String SEARCH_ACCOUNT = "SearchAccountController";
+    private static final String CREATE_ACCOUNT = "CreateAccountController";
+    private static final String DELETE_ACCOUNT = "DeleteAccountController";
+    private static final String UPDATE_ACCOUNT = "UpdateAccountController";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -37,18 +43,28 @@ public class MainController extends HttpServlet {
                 url = DELETE_STUDENT;
             } else if ("UpdateStudent".equals(action)) {
                 url = UPDATE_STUDENT;
-            }else if("SearchLecture".equals(action)){
+            } else if ("SearchLecture".equals(action)) {
                 url = SEARCH_LECTURE;
-            }else if("CreateLecture".equals(action)){
+            } else if ("CreateLecture".equals(action)) {
                 url = ADD_LECTURE;
-            }else if("DeleteLecture".equals(action)){
+            } else if ("DeleteLecture".equals(action)) {
                 url = DELETE_LECTURE;
-            }else if("UpdateLecture".equals(action)){
+            } else if ("UpdateLecture".equals(action)) {
                 url = UPDATE_LECTURE;
-            }else if("Submit".equals(action)){
-                url = FORGOT_PASSWORD;
-            }else if("Reset".equals(action)){
+            } else if ("Reset".equals(action)) {
                 url = RESET_PASSWORD;
+            } else if ("Logout".equals(action)) {
+                url = LOGOUT;
+            } else if ("Account".equals(action)) {
+                url = LIST_ACCOUNT;
+            } else if ("SearchAccount".equals(action)) {
+                url = SEARCH_ACCOUNT;
+            } else if ("CreateAccount".equals(action)) {
+                url = CREATE_ACCOUNT;
+            } else if ("DeleteAccount".equals(action)) {
+                url = DELETE_ACCOUNT;
+            } else if ("UpdateAccount".equals(action)) {
+                url = UPDATE_ACCOUNT;
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

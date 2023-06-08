@@ -3,7 +3,7 @@ package adminController;
 import DAO.StudentDAO;
 import DTO.StudentProfile;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +45,7 @@ public class AddStudentProfile extends HttpServlet {
                     session.setAttribute("MESSAGE1", "Cannot create because duplicate ID");
                 }
             }
-        } catch (Exception e) {
+        } catch (InterruptedException | NumberFormatException | SQLException e) {
             log("Error at AddStudentProfile: " + e.toString());
         } finally {
             response.sendRedirect(url);

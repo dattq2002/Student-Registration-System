@@ -1,22 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package adminController;
 
 import DAO.StudentDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author meryc
- */
 public class DeleteStudentProfile extends HttpServlet {
     private static final String ERROR = "viewStudent.jsp";
     private static final String SUCCESS = "SearchStudentProfile";
@@ -27,20 +18,19 @@ public class DeleteStudentProfile extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("ID"));
             StudentDAO dao = new StudentDAO();
-            HttpSession session = request.getSession();
             boolean check = dao.DeleteStudent(id);
             if(check){
                 url = SUCCESS;
-                session.setAttribute("ERROR_DU", "Delete profile successfully!!!");
+                request.setAttribute("ERROR_DU", "Delete profile successfully!!!");
                 Thread.sleep(2000);
             }else{
-                session.setAttribute("ERROR_DU", "Delete profile!!! May be some Problem in database");
+                request.setAttribute("ERROR_DU", "Delete profile!!! May be some Problem in database");
                 //fail may be database connect with other table, check table and try again
             }
-        } catch (Exception e) {
+        } catch (InterruptedException | NumberFormatException | SQLException e) {
             log("Error at DeleteStudentProfile: " + e.toString());
         }finally{
-            response.sendRedirect(url);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

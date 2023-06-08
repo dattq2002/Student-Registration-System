@@ -2,6 +2,7 @@ package mainController;
 
 import DAO.UserAccountDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ForgotController extends HttpServlet {
-    private static final String ERROR = "forgotPassword.jsp";
+    private static final String ERROR = "login.jsp";
     private static final String SUCCESS = "resetPassword.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -24,9 +25,9 @@ public class ForgotController extends HttpServlet {
                 url = SUCCESS;
                 sesion.setAttribute("EXSITED_EMAIL", email);
             }else{
-                sesion.setAttribute("ERROR_EMAIL", "Email không tồn tại !!");
+                sesion.setAttribute("ERROR_EMAIL", "Email is not exit !!");
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             log("Error at ForgotController: " + e.toString());
         }finally{
             request.getRequestDispatcher(url).forward(request, response);

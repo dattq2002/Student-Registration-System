@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class SearchLectureProfile extends HttpServlet {
     
@@ -20,11 +19,10 @@ public class SearchLectureProfile extends HttpServlet {
             int search = Integer.parseInt(request.getParameter("searchLecture"));
             LectureDAO dao = new LectureDAO();
             List<LectureProfile> list = dao.getListLecture(search);
-            HttpSession session = request.getSession();
             if(!list.isEmpty()){
-                session.setAttribute("LIST_LECTURE", list);
+                request.setAttribute("LIST_LECTURE", list);
             }else{
-                session.setAttribute("MESSAGE", "No record !!");
+                request.setAttribute("MESSAGE", "No record !!");
             }
         } catch (NumberFormatException | SQLException e) {
             log("Error at SearchLectureProfile: "+ e.toString());

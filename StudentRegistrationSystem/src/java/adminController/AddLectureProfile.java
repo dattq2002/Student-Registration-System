@@ -1,11 +1,9 @@
 package adminController;
 
 import DAO.LectureDAO;
-import DAO.StudentDAO;
 import DTO.LectureProfile;
-import DTO.StudentProfile;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +45,7 @@ public class AddLectureProfile extends HttpServlet {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (InterruptedException | NumberFormatException | SQLException e) {
             log("Error at AddStudentProfile: " + e.toString());
         } finally {
             response.sendRedirect(SUCCESS);

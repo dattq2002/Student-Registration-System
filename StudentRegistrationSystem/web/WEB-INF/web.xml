@@ -48,6 +48,38 @@
         <servlet-name>ResetPasswordController</servlet-name>
         <servlet-class>mainController.ResetPasswordController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>mainController.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateAccountController</servlet-name>
+        <servlet-class>adminController.CreateAccountController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteAccountController</servlet-name>
+        <servlet-class>adminController.DeleteAccountController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateAccountController</servlet-name>
+        <servlet-class>adminController.UpdateAccountController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchAccountController</servlet-name>
+        <servlet-class>adminController.SearchAccountController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListAccountController</servlet-name>
+        <servlet-class>adminController.ListAccountController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListStudentProfile</servlet-name>
+        <servlet-class>adminController.ListStudentProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListLectureProfile</servlet-name>
+        <servlet-class>adminController.ListLectureProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -95,6 +127,38 @@
     <servlet-mapping>
         <servlet-name>ResetPasswordController</servlet-name>
         <url-pattern>/ResetPasswordController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/LogoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateAccountController</servlet-name>
+        <url-pattern>/CreateAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAccountController</servlet-name>
+        <url-pattern>/DeleteAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateAccountController</servlet-name>
+        <url-pattern>/UpdateAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchAccountController</servlet-name>
+        <url-pattern>/SearchAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListAccountController</servlet-name>
+        <url-pattern>/ListAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListStudentProfile</servlet-name>
+        <url-pattern>/ListStudentProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListLectureProfile</servlet-name>
+        <url-pattern>/ListLectureProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

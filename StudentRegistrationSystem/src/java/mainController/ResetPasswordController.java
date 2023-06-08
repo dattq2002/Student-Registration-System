@@ -2,7 +2,7 @@ package mainController;
 
 import DAO.UserAccountDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +22,8 @@ public class ResetPasswordController extends HttpServlet {
             boolean check = dao.resetPassword(rsPass,email);
             if(check){
                 url = SUCCESS;
-            }
-            
-        } catch (Exception e) {
+            }       
+        } catch (ClassNotFoundException | SQLException e) {
             log("Error at ResetPasswordController: "+e.toString());
         }finally{
             response.sendRedirect(url);

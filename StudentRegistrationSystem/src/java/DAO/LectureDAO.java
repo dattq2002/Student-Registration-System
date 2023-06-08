@@ -142,4 +142,37 @@ public class LectureDAO {
         }
         return check;
     }
+    
+    //showListLecture
+    public List<LectureProfile> getListLecture() throws SQLException {
+        List<LectureProfile> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = Util.getConnection();
+            if(conn != null) {
+                String sql = "SELECT * "
+                        + " FROM Lecturer ";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while(rs.next()) {
+                    int id = rs.getInt("ID");
+                    String code = rs.getString("Code");
+                    String Name = rs.getString("Name");
+                    String Birthday = rs.getString("Birthday");
+                    String Email = rs.getString("Email");
+                    list.add(new LectureProfile(id, code, Name, Birthday, Email));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("Err at showListLecture!");
+        } finally {
+            if(rs != null) rs.close();
+            if(stm != null) stm.close();
+            if(conn != null) conn.close();
+        }
+        return list;
+    }
 }
