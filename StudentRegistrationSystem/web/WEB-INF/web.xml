@@ -10,35 +10,35 @@
     </servlet>
     <servlet>
         <servlet-name>SearchStudentProfile</servlet-name>
-        <servlet-class>adminController.SearchStudentProfile</servlet-class>
+        <servlet-class>admin.controller.SearchStudentProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddStudentProfile</servlet-name>
-        <servlet-class>adminController.AddStudentProfile</servlet-class>
+        <servlet-class>admin.controller.AddStudentProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteStudentProfile</servlet-name>
-        <servlet-class>adminController.DeleteStudentProfile</servlet-class>
+        <servlet-class>admin.controller.DeleteStudentProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateStudentProfile</servlet-name>
-        <servlet-class>adminController.UpdateStudentProfile</servlet-class>
+        <servlet-class>admin.controller.UpdateStudentProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchLectureProfile</servlet-name>
-        <servlet-class>adminController.SearchLectureProfile</servlet-class>
+        <servlet-class>admin.controller.SearchLectureProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddLectureProfile</servlet-name>
-        <servlet-class>adminController.AddLectureProfile</servlet-class>
+        <servlet-class>admin.controller.AddLectureProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteLectureProfile</servlet-name>
-        <servlet-class>adminController.DeleteLectureProfile</servlet-class>
+        <servlet-class>admin.controller.DeleteLectureProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateLectureProfile</servlet-name>
-        <servlet-class>adminController.UpdateLectureProfile</servlet-class>
+        <servlet-class>admin.controller.UpdateLectureProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForgotController</servlet-name>
@@ -58,27 +58,47 @@
     </servlet>
     <servlet>
         <servlet-name>DeleteAccountController</servlet-name>
-        <servlet-class>adminController.DeleteAccountController</servlet-class>
+        <servlet-class>admin.controller.DeleteAccountController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateAccountController</servlet-name>
-        <servlet-class>adminController.UpdateAccountController</servlet-class>
+        <servlet-class>admin.controller.UpdateAccountController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchAccountController</servlet-name>
-        <servlet-class>adminController.SearchAccountController</servlet-class>
+        <servlet-class>admin.controller.SearchAccountController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListAccountController</servlet-name>
-        <servlet-class>adminController.ListAccountController</servlet-class>
+        <servlet-class>admin.controller.ListAccountController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListStudentProfile</servlet-name>
-        <servlet-class>adminController.ListStudentProfile</servlet-class>
+        <servlet-class>admin.controller.ListStudentProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListLectureProfile</servlet-name>
-        <servlet-class>adminController.ListLectureProfile</servlet-class>
+        <servlet-class>admin.controller.ListLectureProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListSubject</servlet-name>
+        <servlet-class>admin.controller.ListSubject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LinkSubject</servlet-name>
+        <servlet-class>admin.controller.LinkSubject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListTopic</servlet-name>
+        <servlet-class>user.controller.ListTopic</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendApplicationController</servlet-name>
+        <servlet-class>user.controller.SendApplicationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListForm</servlet-name>
+        <servlet-class>user.controller.ListForm</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -159,6 +179,26 @@
     <servlet-mapping>
         <servlet-name>ListLectureProfile</servlet-name>
         <url-pattern>/ListLectureProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListSubject</servlet-name>
+        <url-pattern>/ListSubject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LinkSubject</servlet-name>
+        <url-pattern>/LinkSubject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListTopic</servlet-name>
+        <url-pattern>/ListTopic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendApplicationController</servlet-name>
+        <url-pattern>/SendApplicationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListForm</servlet-name>
+        <url-pattern>/ListForm</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

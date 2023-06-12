@@ -5,7 +5,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User Page</title>
-        <link rel="stylesheet" href="CSS/style.css">
     </head>
     <body>      
         <%
@@ -15,5 +14,10 @@
                 return;
             }           
         %>
+        
+        <a href="ListTopic">Topic</a></br>
+        <a href="sendApplication.jsp">Send Application</a><br>
+        <a href="ListForm">View Application</a>
+        
     </body>
 </html>

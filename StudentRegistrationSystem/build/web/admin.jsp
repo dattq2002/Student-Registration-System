@@ -70,7 +70,7 @@
 
                     <!-- Start -->
                     <li class="item">
-                        <a href="#" class="nav_link">
+                        <a href="ListSubject" class="nav_link">
                             <span class="navlink_icon">
                                 <i class="bx bx-grid-alt"></i>
                             </span>

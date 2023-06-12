@@ -26,6 +26,7 @@ public class MainController extends HttpServlet {
     private static final String CREATE_ACCOUNT = "CreateAccountController";
     private static final String DELETE_ACCOUNT = "DeleteAccountController";
     private static final String UPDATE_ACCOUNT = "UpdateAccountController";
+    private static final String SEND_APPLICATION = "SendApplicationController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -65,6 +66,8 @@ public class MainController extends HttpServlet {
                 url = DELETE_ACCOUNT;
             } else if ("UpdateAccount".equals(action)) {
                 url = UPDATE_ACCOUNT;
+            } else if ("Send".equals(action)) {
+                url = SEND_APPLICATION;
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

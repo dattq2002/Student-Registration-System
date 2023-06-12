@@ -1,6 +1,6 @@
 package mainController;
 
-import DAO.UserAccountDAO;
+import adminDAO.UserAccountDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
