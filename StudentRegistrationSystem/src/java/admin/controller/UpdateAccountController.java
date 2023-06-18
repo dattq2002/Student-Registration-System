@@ -1,5 +1,7 @@
 package admin.controller;
 
+import DTO.LectureProfile;
+import DTO.StudentProfile;
 import adminDAO.UserAccountDAO;
 import DTO.UserAccountDTO;
 import java.io.IOException;
@@ -8,44 +10,28 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class UpdateAccountController extends HttpServlet {
-   private static final String LOGOUT = "LogoutController";
-    private static final String ERROR = "SearchAccountController";
-    private static final String SUCCESS = "SearchAccountController";
+    private static final String ERROR = "ListAccountController";
+    private static final String SUCCESS = "ListAccountController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String email = request.getParameter("email");
-            String fullName = request.getParameter("fullName");
+            int id = Integer.parseInt(request.getParameter("id"));
+            String Name = request.getParameter("name");
             String role = request.getParameter("role");
-            String password = request.getParameter("password");
-            HttpSession session = request.getSession();
-            UserAccountDTO loginAccount = (UserAccountDTO) session.getAttribute("LOGIN_USER");
-            boolean check = true;
-            if (password.length() > 15 || password.length() < 3) {
-                check = false;
-            }
-
-            if (fullName.length() > 50 || fullName.length() < 5) {
-                check = false;
-            }
-
-            if (check) {
-                UserAccountDAO dao = new UserAccountDAO();
-                UserAccountDTO account = new UserAccountDTO(email, password, role, fullName);
-                boolean run = dao.updateAccount(account);
-                if (run) {
-                    if (email.equals(loginAccount.getEmail())) {
-                        url = LOGOUT;
-                    } else {
-                        url = SUCCESS;
-                    }
-                }
+            String Status = request.getParameter("status");
+            UserAccountDAO dao = new UserAccountDAO();
+            UserAccountDTO acc = new UserAccountDTO(role, Name, Status);
+            boolean check = dao.updateAccount(id, acc);
+            if(check){
+                request.setAttribute("MESSAGE", "Updating Successfully!");
+                url = SUCCESS;
+            }else{
+                request.setAttribute("MESSAGE", "Updating fail !!!");
             }
 
         } catch (SQLException e) {

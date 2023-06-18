@@ -1,6 +1,8 @@
 package adminDAO;
 
 import DBUtil.Util;
+import DTO.LectureProfile;
+import DTO.StudentProfile;
 import DTO.UserAccountDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserAccountDAO {
-    
-    //checkLogin
+
+    //----------------Login-----------------
+    //checkLoginAdmin
     public UserAccountDTO checkLogin(String email, String password) throws SQLException {
         UserAccountDTO user = null;
         Connection conn = null;
@@ -20,16 +23,20 @@ public class UserAccountDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT FullName, Role FROM Account "
-                        + "WHERE Email =? AND Password = ?";
+                String sql = "SELECT AccountID, FullName, Role, "
+                        + "Code, Status FROM Account "
+                        + "WHERE Email = ? AND Password =?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, password);
                 rs = stm.executeQuery();
-                if (rs.next()) {       
-                    String fullName = rs.getString("FullName");
-                    String roleID = rs.getString("Role");
-                    user = new UserAccountDTO(email, password, fullName, roleID);
+                if (rs.next()) {
+                    int id = rs.getInt("AccountID");
+                    String code = rs.getString("Code");
+                    String role = rs.getString("Role");
+                    String FullName = rs.getString("FullName");
+                    String Status = rs.getString("Status");
+                    user = new UserAccountDTO(id, code, email, password, role,FullName, Status);
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -47,7 +54,9 @@ public class UserAccountDAO {
         }
         return user;
     }
-    
+
+    //-----------------------------------------------------
+    //-------------------ForgotPassword--------------------
     //checkEmail 
     public String checkEmail(String email) throws SQLException, ClassNotFoundException {
         Connection conn = null;
@@ -80,7 +89,7 @@ public class UserAccountDAO {
         }
         return null;
     }
-    
+
     //resetPassword
     public boolean resetPassword(String password, String email) throws ClassNotFoundException, SQLException {
         Connection conn = null;
@@ -99,7 +108,7 @@ public class UserAccountDAO {
             }
         } catch (SQLException e) {
             System.err.println("Err at ResetPassword!!");
-        }finally{
+        } finally {
             if (conn != null) {
                 conn.close();
             }
@@ -109,73 +118,90 @@ public class UserAccountDAO {
         }
         return check;
     }
-    
+
+    //------------------------------------------------
     //showListAccount
     public List<UserAccountDTO> getListAccount() throws SQLException {
         List<UserAccountDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        
+
         try {
             conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "Select * "
-                        + " from account ";
+            if (conn != null) {
+                String sql = "SELECT * FROM Account";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
-                while(rs.next()) {
+                while(rs.next()){
+                    int id = rs.getInt("AccountID");
+                    String code = rs.getString("Code");
+                    String role = rs.getString("Role");
+                    String FullName = rs.getString("FullName");
+                    String Status = rs.getString("Status");
                     String email = rs.getString("Email");
-                    String fullName = rs.getString("FullName");
-                    String roleID = rs.getString("Role");
-                    String password = rs.getString("Password");
-                    list.add(new UserAccountDTO(email, password, roleID, fullName));
+                    String pass = rs.getString("Password");
+                    list.add(new UserAccountDTO(id, code, email, pass, role, FullName, Status));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Err at showListAccount!");
         } finally {
-            if(rs != null) rs.close();
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return list;
     }
-    
+
     //searchAccountByEmail
     public List<UserAccountDTO> searchAccountByEmail(String search) throws SQLException {
         List<UserAccountDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        
+
         try {
             conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "Select * "
-                        + " from account "
-                        + " where Email =?";
+            if (conn != null) {
+                String sql = "SELECT * FROM Account "
+                        + "WHERE FullName LIKE ?";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, search);
+                stm.setString(1, "%" + search + "%");
                 rs = stm.executeQuery();
-                while(rs.next()) {
+                while(rs.next()){
+                    int id = rs.getInt("AccountID");
+                    String code = rs.getString("Code");
+                    String role = rs.getString("Role");
+                    String FullName = rs.getString("FullName");
+                    String Status = rs.getString("Status");
                     String email = rs.getString("Email");
-                    String fullName = rs.getString("FullName");
-                    String roleID = rs.getString("Role");
-                    String password = rs.getString("Password");
-                    list.add(new UserAccountDTO(email, password, roleID, fullName));
+                    String pass = rs.getString("Password");
+                    list.add(new UserAccountDTO(id, code, email, pass, role, FullName, Status));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Error at searchAccountByEmail");
         } finally {
-            if(rs != null) rs.close();
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return list;
     }
-    
+
     //checkDuplicateEmail
     public boolean checkDuplicateEmail(String email) throws SQLException {
         boolean check = false;
@@ -184,99 +210,117 @@ public class UserAccountDAO {
         ResultSet rs = null;
         try {
             conn = Util.getConnection();
-            if(conn != null) {
+            if (conn != null) {
                 String sql = "Select Email"
                         + " from Account"
                         + " where Email=?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
-                if(rs.next()) {
+                if (rs.next()) {
                     check = true;
-                } 
+                }
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Error at checkDuplicateEmail");
         } finally {
-            if(rs != null) rs.close();
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
-        }
-        return check;
-    }
-    
-    //createAccount
-    public boolean createAccount(UserAccountDTO account) throws SQLException {
-        boolean check = false;
-        Connection conn = null;
-        PreparedStatement stm = null;
-        try {
-            conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "Insert into Account(Email, Password, Role, FullName)"
-                        + " values(?,?,?,?)";
-                stm = conn.prepareStatement(sql);
-                stm.setString(1, account.getEmail());
-                stm.setString(2, account.getPassword());
-                stm.setString(3, account.getRoleID());
-                stm.setString(4, account.getFullName());
-                check = stm.executeUpdate() > 0;     
+            if (rs != null) {
+                rs.close();
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            System.err.println("Error at createAccount");
-        } finally {
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }
-  
+
+//    //createAccount
+//    public boolean createAccount(UserAccountDTO account) throws SQLException {
+//        boolean check = false;
+//        Connection conn = null;
+//        PreparedStatement stm = null;
+//        try {
+//            conn = Util.getConnection();
+//            if (conn != null) {
+//                String sql = "Insert into Account(Email, Password, Role, FullName)"
+//                        + " values(?,?,?,?)";
+//                stm = conn.prepareStatement(sql);
+//                stm.setString(1, account.getEmail());
+//                stm.setString(2, account.getPassword());
+//                stm.setString(3, account.getRoleID());
+//                stm.setString(4, account.getFullName());
+//                check = stm.executeUpdate() > 0;
+//            }
+//        } catch (ClassNotFoundException | SQLException e) {
+//            System.err.println("Error at createAccount");
+//        } finally {
+//            if (stm != null) {
+//                stm.close();
+//            }
+//            if (conn != null) {
+//                conn.close();
+//            }
+//        }
+//        return check;
+//    }
+//
     //deleteAccount
-    public boolean deleteAccount(String email) throws SQLException {
-        boolean result = false;
+    public boolean deleteAccount(int id) throws SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
-        
+        boolean check = false;
         try {
             conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "Delete Account"
-                        + " where Email= ?";
+            if (conn != null) {
+                String sql = "DELETE Account "
+                        + "WHERE AccountID =?";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, email);
-                int value = stm.executeUpdate();
-                result = value > 0 ? true : false;
+                stm.setInt(1, id);
+                check = stm.executeUpdate() > 0;
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Error at deleteAccount");
         } finally {
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
-        return result;
+        return check;
     }
+//
     //updateAccount
-    public boolean updateAccount(UserAccountDTO account) throws SQLException {
+
+    public boolean updateAccount(int id, UserAccountDTO acc) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "Update Account"
-                        + " set Password= ?, FullName= ?"
-                        + " where Email= ?";
+            if (conn != null) {
+                String sql = "UPDATE Account SET Role = ?, FullName =?, Status =? "
+                        + "WHERE AccountID = ?";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, account.getPassword());
-                stm.setString(2, account.getFullName());
-                stm.setString(3, account.getEmail());
-                check = stm.executeUpdate()>0;
+                stm.setString(1, acc.getRoleID());
+                stm.setString(2, acc.getFullName());
+                stm.setString(3, acc.getStatus());
+                stm.setInt(4, id);
+                check = stm.executeUpdate() > 0;
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Error at updateAccount");
         } finally {
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }

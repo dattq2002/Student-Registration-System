@@ -1,36 +1,33 @@
 package admin.controller;
 
-import adminDAO.LectureDAO;
+import adminDAO.ProfileDAO;
+import DTO.StudentProfile;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DeleteLectureProfile extends HttpServlet {
-    private static final String ERROR = "viewLecture.jsp";
-    private static final String SUCCESS = "SearchLectureProfile";
+public class SearchStudentInformation extends HttpServlet {
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
         try {
-            int id = Integer.parseInt(request.getParameter("ID"));
-            LectureDAO dao = new LectureDAO();
-            boolean check = dao.DeleteLecture(id);
-            if(check){
-                url = SUCCESS;
-                request.setAttribute("MESSAGE", "Delete profile successfully!!!");
-                Thread.sleep(2000);
+            String name = request.getParameter("searchStudent");
+            ProfileDAO dao = new ProfileDAO();
+            List<StudentProfile> list = dao.SearchStudent(name);
+            if(!list.isEmpty()){
+                request.setAttribute("LIST_STUDENT", list);
             }else{
-                request.setAttribute("MESSAGE", "Cannot Delete profile!!! May be some Problem in database");
-                //fail may be database connect with other table, check table and try again
+                request.setAttribute("ERROR_DU", "No Record !!");
             }
-        } catch (InterruptedException | NumberFormatException | SQLException e) {
-            log("Error at DeleteLectureProfile: " + e.toString());
+        } catch (NumberFormatException | SQLException e) {
+            log("Error at SearchStudentProfile: " + e.toString());
         }finally{
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("viewStudent.jsp").forward(request, response);
         }
     }
 

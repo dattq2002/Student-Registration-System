@@ -80,7 +80,7 @@
                     <!-- End -->
                     <!-- Start -->
                     <li class="item">
-                        <a href="ListStudentProfile" class="nav_link">
+                        <a href="ListStudentInformation" class="nav_link">
                             <span class="navlink_icon">
                                 <i class="bx bx-grid-alt"></i>
                             </span>
@@ -90,7 +90,7 @@
                     <!-- End -->
                     <!-- Start -->
                     <li class="item">
-                        <a href="ListLectureProfile" class="nav_link">
+                        <a href="ListLectureInformation" class="nav_link">
                             <span class="navlink_icon">
                                 <i class="bx bx-grid-alt"></i>
                             </span>

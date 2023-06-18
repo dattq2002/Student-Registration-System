@@ -75,7 +75,7 @@
 
             </div>
             <%
-                String message = (String) session.getAttribute("ERROR_LOGIN");
+                String message = (String) session.getAttribute("LOGIN");
                 if (message != null) {
             %>
             <h4 style="color: red"><%= message%></h4>

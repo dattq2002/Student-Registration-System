@@ -1,65 +1,28 @@
 package DTO;
 
-public class StudentProfile {
+public class StudentProfile extends Person{
     //props
-    private int ID;
-    private String Code;
-    private String name;
-    private String birthday;
-    private String email;
+    private String Major;
     //constructor
 
-    public StudentProfile() {
+    public StudentProfile(int ID, String Code, String name, String birthday, 
+            String PhoneNumber, String Gender, String Address, String City) {
+        super(ID, Code, name, birthday, PhoneNumber, Gender, Address, City);
     }
 
-    public StudentProfile(int ID, String Code, String name, String birthday, String email) {
-        this.ID = ID;
-        this.Code = Code;
-        this.name = name;
-        this.birthday = birthday;
-        this.email = email;
+    public StudentProfile(int ID, String Code, String name, String birthday, 
+            String PhoneNumber, String Gender, String Address, String City, String Major) {
+        super(ID, Code, name, birthday, PhoneNumber, Gender, Address, City);
+        this.Major = Major;
     }
-    
+      
     //getter, setter
 
-    public int getID() {
-        return ID;
+    public String getMajor() {
+        return Major;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public String getCode() {
-        return Code;
-    }
-
-    public void setCode(String Code) {
-        this.Code = Code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
+    public void setMajor(String Major) {
+        this.Major = Major;
+    }   
 }

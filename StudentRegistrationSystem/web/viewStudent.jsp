@@ -187,12 +187,14 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID</th>
-                        <th>Code</th>
+                        <th>Student Code</th>
                         <th>Name</th>
                         <th>Birthday</th>
-                        <th>Email</th>
-                        <th>Delete</th>
+                        <th>Phone Number</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Major</th>
                         <th>Update</th>
                     </tr>
                 </thead>
@@ -205,26 +207,24 @@
 
                     <tr>
                         <td><%=count++%></td>
-                        <td><%= dto.getID()%></td>
                         <td>
-                            <input type="text" name="code" value="<%= dto.getCode()%>" />
+                            <%= dto.getCode() + dto.getID()%>
+                            <input type="hidden" name="id" value="<%= dto.getID()%>" />
+                            <input type="hidden" name="code" value="<%= dto.getCode()%>" />
                         </td>
                         <td>                     
                             <input type="text" name="Name" value="<%= dto.getName()%>" />
                         </td>
                         <td><%= dto.getBirthday()%></td>
-                        <td><%= dto.getEmail()%></td>
+                        <td><%= dto.getPhoneNumber()%></td>
+                        <td><%= dto.getGender()%></td>
+                        <td><%= dto.getAddress()%></td>
+                        <td><%= dto.getCity()%></td>
+                        <td><%= dto.getMajor()%></td>
                         <td>
-                            <button>
-                                <a href="MainController?ID=<%= dto.getID()%>&action=DeleteStudent&searchStudent=<%=search%> ">Delete</a>
-                            </button>
-                        </td>
-                        <td>
-                            <form action="UpdateStudentProfile">
-                                <input type="submit" value="UpdateStudent" name="action"/>
-                                <input type="hidden" name="ID" value="<%= dto.getID()%>" />
-                                <input type="hidden" name ="searchStudent" value="<%= search%>" />
-                            </form>
+                            <input type="submit" value="UpdateStudent" name="action"/>
+                            <input type="hidden" name="ID" value="<%= dto.getID()%>" />
+                            <input type="hidden" name ="searchStudent" value="<%= search%>" />
                         </td>
                     </tr>
                 </form>
@@ -253,40 +253,43 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID</th>
-                        <th>Code</th>
+                        <th>Student Code</th>
                         <th>Name</th>
                         <th>Birthday</th>
-                        <th>Email</th>
-                        <th>Delete</th>
+                        <th>Phone Number</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Major</th>
                         <th>Update</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
-                        int count1 = 1;
-                        for (StudentProfile item : list) {
+                        int count = 1;
+                        for (StudentProfile dto : list) {
                     %>
                 <form action="MainController">
+
                     <tr>
-                        <td><%=count1++%></td>
-                        <td><%= item.getID()%></td>
+                        <td><%=count++%></td>
                         <td>
-                            <input type="text" name="code" value="<%= item.getCode()%>" />
+                            <%= dto.getCode() + dto.getID()%>
+                            <input type="hidden" name="id" value="<%= dto.getID()%>" />
+                            <input type="hidden" name="code" value="<%= dto.getCode()%>" />
                         </td>
                         <td>                     
-                            <input type="text" name="Name" value="<%= item.getName()%>" />
+                            <input type="text" name="Name" value="<%= dto.getName()%>" />
                         </td>
-                        <td><%= item.getBirthday()%></td>
-                        <td><%= item.getEmail()%></td>
+                        <td><%= dto.getBirthday()%></td>
+                        <td><%= dto.getPhoneNumber()%></td>
+                        <td><%= dto.getGender()%></td>
+                        <td><%= dto.getAddress()%></td>
+                        <td><%= dto.getCity()%></td>
+                        <td><%= dto.getMajor()%></td>
                         <td>
-                            <button>
-                                <a href="MainController?ID=<%= item.getID()%>&action=DeleteStudent&searchStudent=<%=search%> ">Delete</a>
-                            </button>
-                        </td>
-                        <td>
-                            <input type="submit" value="UpdateStudent" name="action" />
-                            <input type="hidden" name="ID" value="<%= item.getID()%>" />
+                            <input type="submit" value="UpdateStudent" name="action"/>
+                            <input type="hidden" name="ID" value="<%= dto.getID()%>" />
                             <input type="hidden" name ="searchStudent" value="<%= search%>" />
                         </td>
                     </tr>

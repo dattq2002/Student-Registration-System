@@ -18,6 +18,7 @@
         <a href="ListTopic">Topic</a></br>
         <a href="sendApplication.jsp">Send Application</a><br>
         <a href="ListForm">View Application</a>
+        <a href="ProfileStudentController">View Profile</a>
         
     </body>
 </html>

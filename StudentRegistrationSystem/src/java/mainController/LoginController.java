@@ -22,25 +22,25 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String userName = request.getParameter("email");
-            String password = request.getParameter("password");
-            UserAccountDAO dao = new UserAccountDAO();
+            //getParameter
             HttpSession session = request.getSession();
-            UserAccountDTO user = dao.checkLogin(userName, password);
-            if (user != null) {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            //proccess Account
+            UserAccountDAO dao = new UserAccountDAO();
+            UserAccountDTO user = dao.checkLogin(email, password);
+            if (user != null && user.getStatus().equals("Active")) {
                 session.setAttribute("LOGIN_USER", user);
-                String roleID = user.getRoleID();
-                if ("ADMIN".equals(roleID)) {
+                if ("ADMIN".equals(user.getRoleID())) {
                     url = LOGIN_ADMIN;
-                } else if ("USER".equals(roleID)) {
-                    url = LOGIN_USER;
-                } else if ("MNG".equals(roleID)) {
+                } else if ("MNG".equals(user.getRoleID())) {
                     url = LOGIN_MANAGER;
                 } else {
-                    session.setAttribute("ERROR_LOGIN", "Your role is not supported");
+                    url = LOGIN_USER;
                 }
             } else {
-                session.setAttribute("ERROR_LOGIN", "InCorrect userName or Password");
+                session.setAttribute("LOGIN", "Incorret email or password!!!");
             }
         } catch (SQLException e) {
             log("Error at LoginController: " + e.toString());
@@ -49,7 +49,7 @@ public class LoginController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

@@ -14,21 +14,23 @@
                 response.sendRedirect("login.jsp");
                 return;
             }
-
-            String search = (String) request.getParameter("search");
+            String search = request.getParameter("SearchAccount");
             if (search == null) {
                 search = "";
             }
         %>
-
-        <a href="admin.jsp">Home Page</a> 
-        <span> > </span>
         <a href="ListAccountController">List of Account</a>
         <form action="MainController">
-            Search<input type="text" name="search" value="<%= search%>"/>
-            <input type="submit" name="action" value="SearchAccount"/>
+            <input type="text" name="SearchAccount" value="" />
+            <input type="submit" value="SearchAccount" name="action" />
         </form>
         <%
+            String message = (String) request.getAttribute("MESSAGE");
+            if (message != null) {
+        %>
+        <h3 style="color: red"><%=message%></h3>
+        <%
+            }
             List<UserAccountDTO> listAccount = (List<UserAccountDTO>) request.getAttribute("LIST_ACCOUNT");
             if (listAccount != null) {
                 if (!listAccount.isEmpty()) {
@@ -37,11 +39,11 @@
             <thead>
                 <tr>
                     <th>No.</th>
+                    <th>Account Code</th>
                     <th>Email</th>
+                    <th>Role</th>
                     <th>Full Name</th>
-                    <th>Role ID</th>
-                    <th>Password</th>
-                    <th>Delete</th>
+                    <th>Status</th>
                     <th>Update</th>
                 </tr>
             </thead>
@@ -50,30 +52,40 @@
                     int count = 1;
                     for (UserAccountDTO dto : listAccount) {
                 %>
-            <form action="MainController">
+            <form action="MainController" method="POST">
                 <tr>
                     <td>
                         <%= count++%>
                     </td>
                     <td>
+                        <%= dto.getCode() + dto.getID()%>
+                        <input type="hidden" name="code" value="<%=dto.getCode()%>" />
+                        <input type="hidden" name="id" value="<%=dto.getID()%>" />
+                    </td>
+                    <td>
                         <%= dto.getEmail()%>
+                        <input type="hidden" name="email" value="<%= dto.getEmail()%>" />
                     </td>
                     <td>
-                        <input type="text" name="fullName" value="<%= dto.getFullName()%>"/>                
+                        <select name="role">
+                            <option value="ADMIN" <%=(dto.getRoleID().equals("ADMIN")) ? "selected" : ""%>>Admin</option>
+                            <option value="MNG" <%=(dto.getRoleID().equals("MNG")) ? "selected" : ""%>>Manager</option>
+                            <option value="USER" <%=(dto.getRoleID().equals("USER")) ? "selected" : ""%>>User</option>
+                        </select>
                     </td>
                     <td>
-                        <%= dto.getRoleID()%>
+                        <input type="text" name="name" value="<%= dto.getFullName()%>"/>
                     </td>
                     <td>
-                        <input type="text" name="password" value="<%= dto.getPassword()%>"/>
-                    </td>  
-                    <td>
-                        <a href="MainController?email=<%= dto.getEmail()%>&action=DeleteAccount&SearchAccount=<%= search%>" >Delete</a>
+                        <select name="status">
+                            <option value="Active" <%=(dto.getStatus().equals("Active")) ? "selected" : ""%>>Active</option>
+                            <option value="Deactive" <%=(dto.getStatus().equals("Deactive")) ? "selected" : ""%>>Deactive</option>
+                        </select>
                     </td>
                     <td>
-                        <input type="submit" name="action" value="UpdateAccount"/>
-                        <input type="hidden" name="email" value="<%= dto.getEmail()%>"/>
-                        <input type="hidden" name="SearchAccount" value="<%= search%>"/>             
+                        <input type="submit" value="UpdateAccount" name="action" />
+                        <input type="hidden" name="id" value="<%=dto.getID()%>" />
+                        <input type="hidden" name="SearchAccount" value="<%=search%>" />
                     </td>
                 </tr>
             </form>
@@ -82,68 +94,76 @@
             %>
         </tbody>
     </table>
-
-    <button><a href="createAccount.jsp">Create Account</a></button>
-
-
     <%
-        }
-        String error_message = (String) request.getAttribute("ERROR_MESSAGE");
-        if (error_message == null) {
-            error_message = "";
+            }
         }
     %>
 
     <%
-        }
-    %>
-
-
-    <%
-        List<UserAccountDTO> list = (List<UserAccountDTO>) request.getAttribute("SEARCH_ACCOUNT");
-        if (list != null) {
-            if (!list.isEmpty()) {
+        List<UserAccountDTO> listSearch = (List<UserAccountDTO>) request.getAttribute("SEARCH_ACCOUNT");
+        if (listSearch != null) {
+            if (!listSearch.isEmpty()) {
     %>
     <table border="1">
         <thead>
             <tr>
                 <th>No.</th>
+                <th>Account Code</th>
                 <th>Email</th>
-                <th>Full Name</th>
-                <th>Role ID</th>
-                <th>Password</th>
+                <th>Role</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Update</th>
             </tr>
         </thead>
         <tbody>
             <%
                 int count = 1;
-                for (UserAccountDTO dto : list) {
+                for (UserAccountDTO dto2 : listSearch) {
             %>
         <form action="MainController">
             <tr>
-                <td><%= count++%></td>
-                <td><%= dto.getEmail()%></td>
-                <td><%= dto.getFullName()%></td>
-                <td><%= dto.getRoleID()%></td>
-                <td><%= dto.getPassword()%></td>  
+                <td>
+                    <%= count++%>
+                </td>
+                <td>
+                    <%= dto2.getCode() + dto2.getID()%>
+                    <input type="hidden" name="code" value="<%=dto2.getCode()%>" />
+                    <input type="hidden" name="id" value="<%=dto2.getID()%>" />
+                </td>
+                <td>
+                    <%= dto2.getEmail()%>
+                </td>
+                <td>
+                    <select name="role">
+                        <option value="ADMIN" <%=(dto2.getRoleID().equals("ADMIN")) ? "selected" : ""%>>Admin</option>
+                        <option value="MNG" <%=(dto2.getRoleID().equals("MNG")) ? "selected" : ""%>>Manager</option>
+                        <option value="USER" <%=(dto2.getRoleID().equals("USER")) ? "selected" : ""%>>User</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" name="name" value="<%= dto2.getFullName()%>"/>
+                </td>
+                <td>
+                    <select name="status">
+                        <option value="Active" <%=(dto2.getStatus().equals("Active")) ? "selected" : ""%>>Active</option>
+                        <option value="Deactive" <%=(dto2.getStatus().equals("Deactive")) ? "selected" : ""%>>Deactive</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="submit" value="UpdateAccount" name="action" />
+                    <input type="hidden" name="id" value="<%=dto2.getID()%>" />
+                    <input type="hidden" name="SearchAccount" value="<%=search%>" />
+                </td>
             </tr>
         </form>
-
         <%
             }
         %>
     </tbody>
 </table>
-
 <%
-    }
-    String error_message = (String) request.getAttribute("ERROR_MESSAGE");
-    if (error_message == null) {
-        error_message = "";
-    }
-%>
-<h1><%= error_message%></h1>
-<%
+        }
     }
 %>
 

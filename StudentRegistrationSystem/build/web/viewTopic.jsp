@@ -29,7 +29,6 @@
                     <th>ID</th>
                     <th>Code</th>
                     <th>Name</th>
-                    <th>Status</th>
                     <th>ShortDescription</th>
                     <th>FullDesCription</th>
                     <th>LectureName</th>
@@ -45,7 +44,6 @@
                     <td><%=item.getID() %></td>
                     <td><%=item.getCode() %></td>
                     <td><%=item.getName() %></td>
-                    <td><%=item.isStatus() %></td>
                     <td><%=item.getShortDescription() %></td>
                     <td><%=item.getFullDescription() %></td>
                     <td><%=item.getLecName()%></td>

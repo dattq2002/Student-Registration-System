@@ -1,7 +1,7 @@
 package admin.controller;
 
-import adminDAO.UserAccountDAO;
 import DTO.UserAccountDTO;
+import adminDAO.UserAccountDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,7 +19,10 @@ public class SearchAccountController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String search = request.getParameter("search");
+            //get Parameter
+            String search = request.getParameter("SearchAccount");
+            
+            //proccess
             UserAccountDAO dao = new UserAccountDAO();
             List<UserAccountDTO> list = dao.searchAccountByEmail(search);
             if (!search.isEmpty()) {

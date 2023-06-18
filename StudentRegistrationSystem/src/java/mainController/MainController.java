@@ -11,23 +11,18 @@ public class MainController extends HttpServlet {
 
     private static final String ERROR = "error.jsp";
     private static final String LOGIN = "LoginController";
-    private static final String SEARCH_STUDENT = "SearchStudentProfile";
-    private static final String ADD_STUDENT = "AddStudentProfile";
-    private static final String DELETE_STUDENT = "DeleteStudentProfile";
-    private static final String UPDATE_STUDENT = "UpdateStudentProfile";
-    private static final String SEARCH_LECTURE = "SearchLectureProfile";
-    private static final String ADD_LECTURE = "AddLectureProfile";
-    private static final String DELETE_LECTURE = "DeleteLectureProfile";
-    private static final String UPDATE_LECTURE = "UpdateLectureProfile";
+    private static final String SEARCH_STUDENT = "SearchStudentInformation";
+    private static final String UPDATE_STUDENT = "UpdateInformationProfile";
+    private static final String SEARCH_LECTURE = "SearchLectureInformation";
+    private static final String UPDATE_LECTURE = "UpdateInformationProfile";
     private static final String RESET_PASSWORD = "ResetPasswordController";
     private static final String LOGOUT = "LogoutController";
     private static final String LIST_ACCOUNT = "ListAccountController";
     private static final String SEARCH_ACCOUNT = "SearchAccountController";
-    private static final String CREATE_ACCOUNT = "CreateAccountController";
     private static final String DELETE_ACCOUNT = "DeleteAccountController";
     private static final String UPDATE_ACCOUNT = "UpdateAccountController";
     private static final String SEND_APPLICATION = "SendApplicationController";
-
+    private static final String UPDATE_STUDENT_PROFILE = "UpdateProfileController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,18 +33,10 @@ public class MainController extends HttpServlet {
                 url = LOGIN;
             } else if ("SearchStudent".equals(action)) {
                 url = SEARCH_STUDENT;
-            } else if ("AddProfile".equals(action)) {
-                url = ADD_STUDENT;
-            } else if ("DeleteStudent".equals(action)) {
-                url = DELETE_STUDENT;
             } else if ("UpdateStudent".equals(action)) {
                 url = UPDATE_STUDENT;
             } else if ("SearchLecture".equals(action)) {
                 url = SEARCH_LECTURE;
-            } else if ("CreateLecture".equals(action)) {
-                url = ADD_LECTURE;
-            } else if ("DeleteLecture".equals(action)) {
-                url = DELETE_LECTURE;
             } else if ("UpdateLecture".equals(action)) {
                 url = UPDATE_LECTURE;
             } else if ("Reset".equals(action)) {
@@ -60,14 +47,14 @@ public class MainController extends HttpServlet {
                 url = LIST_ACCOUNT;
             } else if ("SearchAccount".equals(action)) {
                 url = SEARCH_ACCOUNT;
-            } else if ("CreateAccount".equals(action)) {
-                url = CREATE_ACCOUNT;
             } else if ("DeleteAccount".equals(action)) {
                 url = DELETE_ACCOUNT;
             } else if ("UpdateAccount".equals(action)) {
                 url = UPDATE_ACCOUNT;
             } else if ("Send".equals(action)) {
                 url = SEND_APPLICATION;
+            } else if ("Update Profile".equals(action)) {
+                url = UPDATE_STUDENT_PROFILE;
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

@@ -172,14 +172,14 @@
                     <input placeholder="search.." class="input" name="text" type="text">
                 </div>
             </div>
-        <a href="admin.jsp"> home</a> > <a href="viewLecture.jsp"> View Lecture</a>
-        <!--body-->
-        <form action="MainController">
-            Search: <input type="text" name="searchLecture" value="" placeholder="search by ID"/>
-            <input type="submit" value="SearchLecture" name="action" />
-        </form>
-        <h3>View Lecture</h3>
-        <%
+            <a href="admin.jsp"> home</a> > <a href="viewLecture.jsp"> View Lecture</a>
+            <!--body-->
+            <form action="MainController">
+                Search: <input type="text" name="searchLecture" value="" placeholder="search by ID"/>
+                <input type="submit" value="SearchLecture" name="action" />
+            </form>
+            <h3>View Lecture</h3>
+            <%
                 List<LectureProfile> listLecture = (List<LectureProfile>) request.getAttribute("SHOWLIST_LECTURE");
                 if (listLecture != null) {
                     if (!listLecture.isEmpty()) {
@@ -188,12 +188,13 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID</th>
-                        <th>Code</th>
+                        <th>Lecture Code</th>
                         <th>Name</th>
                         <th>Birthday</th>
-                        <th>Email</th>
-                        <th>Delete</th>
+                        <th>Phone Number</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>City</th>
                         <th>Update</th>
                     </tr>
                 </thead>
@@ -206,26 +207,23 @@
 
                     <tr>
                         <td><%=count++%></td>
-                        <td><%= dto.getID()%></td>
                         <td>
-                            <input type="text" name="code" value="<%= dto.getCode()%>" />
+                            <%= dto.getCode() + dto.getID()%>
+                            <input type="hidden" name="id" value="<%= dto.getID()%>" />
+                            <input type="hidden" name="code" value="<%= dto.getCode()%>" />
                         </td>
                         <td>                     
                             <input type="text" name="Name" value="<%= dto.getName()%>" />
                         </td>
                         <td><%= dto.getBirthday()%></td>
-                        <td><%= dto.getEmail()%></td>
+                        <td><%= dto.getPhoneNumber()%></td>
+                        <td><%= dto.getGender()%></td>
+                        <td><%= dto.getAddress()%></td>
+                        <td><%= dto.getCity()%></td>                     
                         <td>
-                            <button>
-                                <a href="MainController?ID=<%= dto.getID()%>&action=DeleteLecture&searchLecture=<%=search%> ">Delete</a>
-                            </button>
-                        </td>
-                        <td>
-                            <form action="UpdateLectureProfile">
-                                <input type="submit" value="UpdateLecture" name="action"/>
-                                <input type="hidden" name="ID" value="<%= dto.getID()%>" />
-                                <input type="hidden" name ="searchLecture" value="<%= search%>" />
-                            </form>
+                            <input type="submit" value="UpdateLecture" name="action"/>
+                            <input type="hidden" name="ID" value="<%= dto.getID()%>" />
+                            <input type="hidden" name ="searchLecture" value="<%= search%>" />
                         </td>
                     </tr>
                 </form>
@@ -240,77 +238,78 @@
                     }
                 %>
             </table>
-            
+
             <div class="button">
                 <a href="addLecture.jsp" class="btn">Add</a>
             </div>
-            
-        <%
-            List<LectureProfile> list = (List<LectureProfile>) request.getAttribute("LIST_LECTURE");
-            if (list != null) {
-                if (!list.isEmpty()) {
-        %>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>ID</th>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Birthday</th>
-                    <th>Email</th>
-                    <th>Delete</th>
-                    <th>Update</th>
-                </tr>
-            </thead>
-            <tbody>
+
+            <%
+                List<LectureProfile> list = (List<LectureProfile>) request.getAttribute("LIST_LECTURE");
+                if (list != null) {
+                    if (!list.isEmpty()) {
+            %>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Lecture Code</th>
+                        <th>Name</th>
+                        <th>Birthday</th>
+                        <th>Phone Number</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        int count = 1;
+                        for (LectureProfile dto2 : list) {
+                    %>
+                <form action="MainController">
+
+                    <tr>
+                        <td><%=count++%></td>
+                        <td>
+                            <%= dto2.getCode() + dto2.getID()%>
+                            <input type="hidden" name="id" value="<%= dto2.getID()%>" />
+                            <input type="hidden" name="code" value="<%= dto2.getCode()%>" />
+                        </td>
+                        <td>                     
+                            <input type="text" name="Name" value="<%= dto2.getName()%>" />
+                        </td>
+                        <td><%= dto2.getBirthday()%></td>
+                        <td><%= dto2.getPhoneNumber()%></td>
+                        <td><%= dto2.getGender()%></td>
+                        <td><%= dto2.getAddress()%></td>
+                        <td><%= dto2.getCity()%></td>                     
+                        <td>
+                            <input type="submit" value="UpdateLecture" name="action"/>
+                            <input type="hidden" name="ID" value="<%= dto2.getID()%>" />
+                            <input type="hidden" name ="searchLecture" value="<%= search%>" />
+                        </td>
+                    </tr>
+                </form>
                 <%
-                    int count = 1;
-                    for (LectureProfile item : list) {
+                    }
                 %>
-            <form action="MainController">
-                <tr>
-                    <td><%= count++%></td>
-                    <td><%= item.getID()%></td>
-                    <td>
-                        <input type="text" name="code" value="<%= item.getCode()%>" />
-                    </td>
-                    <td>
-                        <input type="text" name="Name" value="<%= item.getName()%>" />
-                    </td>
-                    <td><%= item.getBirthday()%></td>
-                    <td><%= item.getEmail()%></td>
-                    <td>
-                        <button>
-                            <a href="MainController?ID=<%= item.getID()%>&action=DeleteLecture&searchLecture=<%=search%> ">Delete</a>
-                        </button>
-                    </td>
-                    <td>
-                        <input type="submit" value="UpdateLecture" name="action" />
-                        <input type="hidden" name="ID" value="<%= item.getID()%>" />
-                        <input type="hidden" name ="searchLecture" value="<%= search%>" />
-                    </td>
-                </tr>
-            </form>
+
+                </tbody>
+            </table>
+
+            <%
+                    }
+                }
+            %>
+            <%
+                String message = (String) request.getAttribute("MESSAGE");
+                if (message != null) {
+            %>
+            <h4 style="color: red"><%= message%></h4>
             <%
                 }
             %>
-
-        </tbody>
-    </table>
-
-    <%
-            }
-        }
-    %>
-    <%
-        String message = (String) request.getAttribute("MESSAGE");
-        if (message != null) {
-    %>
-    <h4 style="color: red"><%= message%></h4>
-    <%
-        }
-    %>
-    </div>
-</body>
+        </div>
+    </body>
 </html>

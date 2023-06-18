@@ -1,54 +1,42 @@
 package admin.controller;
 
-import adminDAO.StudentDAO;
-import DTO.StudentProfile;
+import adminDAO.ProfileDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class AddStudentProfile extends HttpServlet {
+public class UpdateInformationProfile extends HttpServlet {
 
-    private static final String SUCCESS = "SearchStudentProfile";
-    private static final String ERROR = "addStudent.jsp";
-
+    private static final String SUCCESS = "ListStudentInformation";
+    private static final String SUCCESS1 = "ListLectureInformation";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
+        String url = "admin.jsp";
         try {
-            int id = Integer.parseInt(request.getParameter("studentid"));
-            String code = request.getParameter("studentcode");
-            String name = request.getParameter("studentname");
-            String birthday = request.getParameter("birthday");
-            String email = request.getParameter("email");
-
-            String regex = "^(?:19|20)\\d\\d-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-30|(?:0[13578]|1[02])-31)$";
-            StudentDAO dao = new StudentDAO();
-            StudentProfile student = new StudentProfile(id, code, name, birthday, email);
-            HttpSession session = request.getSession();
-            if (code.length() < 2 || code.contains(" ")) {
-                session.setAttribute("MESSAGE1", "Your code must be more than 2 or cannot contain space!!!");
-            } else if (email.contains(" ") || !email.contains("@fpt.edu.vn")) {
-                session.setAttribute("MESSAGE1", "Your email must be contain '@fe.edu.vn' or cannot contain space!!!");
-            } else if (!birthday.matches(regex)) {
-                session.setAttribute("MESSAGE1", "Wrong format!! Try again");
+            int id = Integer.parseInt(request.getParameter("ID"));
+            String name = request.getParameter("Name");
+            String code = request.getParameter("code").toUpperCase();
+            ProfileDAO dao = new ProfileDAO();
+            boolean check = dao.UpdateProfile(id, code, name);
+            if (check && code.equals("LT")) {
+                url = SUCCESS1;
+                request.setAttribute("MESSAGE", "Update successfully!!");
+                Thread.sleep(2000);
             } else {
-                boolean check = dao.AddStudent(student);
-                if (check) {
-                    url = SUCCESS;
-                    Thread.sleep(2000);
-                } else {
-                    session.setAttribute("MESSAGE1", "Cannot create because duplicate ID");
-                }
+                url = SUCCESS;
+                request.setAttribute("ERROR_DU", "Update successfully!!");
+                Thread.sleep(2000);
             }
+
         } catch (InterruptedException | NumberFormatException | SQLException e) {
-            log("Error at AddStudentProfile: " + e.toString());
+            log("Error at UpdateStudentProfile: " + e.toString());
         } finally {
-            response.sendRedirect(url);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
@@ -78,6 +66,7 @@ public class AddStudentProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
     }
 

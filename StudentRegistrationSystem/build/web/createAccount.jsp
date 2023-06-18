@@ -21,16 +21,16 @@
             }
         %>
         <h3>Create Account</h3>
-        <form action="MainController">
+        <form action="MainController" method="POST">
             Email: <input type="text" name="email" value="" required=""/>
             <%= accountError.getEmailError() %> <br>
             Full Name: <input types="text" name="fullName" values="" requirede=""/>
             <%= accountError.getFullNameError() %> <br> 
             Role: <input type="text" name="role" values="" required=""/>
             <%= accountError.getRoleError() %> <br> 
-            Password: <input type="text" name="password" values="" required=""/>
+            Password: <input type="password" name="password" values="" required=""/>
             <%= accountError.getPasswordError() %> <br> 
-            Confirm: <input type="text" name="confirm" values="" required=""/>
+            Confirm: <input type="password" name="confirm" values="" required=""/>
             <%= accountError.getConfirmError() %> <br> 
             <input type="submit" value="CreateAccount" name="action" />
             <input type="reset" value="Reset" />
