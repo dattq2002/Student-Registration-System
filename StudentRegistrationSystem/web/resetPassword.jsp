@@ -8,6 +8,12 @@
     <body>
         <h1>Reset Password !!</h1>
         <%
+            String message = (String) request.getAttribute("EXSITED_EMAIL");
+            if(message != null){
+                %>
+                <h4><%=message%></h4>
+        <%
+            }
             String emailExsit = (String) session.getAttribute("EXSITED_EMAIL");
             if(emailExsit != null){
         %>

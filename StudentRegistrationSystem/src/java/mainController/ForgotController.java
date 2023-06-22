@@ -3,6 +3,8 @@ package mainController;
 import adminDAO.UserAccountDAO;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,7 @@ public class ForgotController extends HttpServlet {
     private static final String ERROR = "login.jsp";
     private static final String SUCCESS = "resetPassword.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, InterruptedException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
@@ -23,9 +25,11 @@ public class ForgotController extends HttpServlet {
             HttpSession sesion = request.getSession();
             if(check != null){
                 url = SUCCESS;
+                Thread.sleep(2000);
+                request.setAttribute("EXSITED_EMAIL", "Email verification complete!!");
                 sesion.setAttribute("EXSITED_EMAIL", email);
             }else{
-                sesion.setAttribute("ERROR_EMAIL", "Email is not exit !!");
+                request.setAttribute("ERROR_EMAIL", "Email is not exit !!");
             }
         } catch (ClassNotFoundException | SQLException e) {
             log("Error at ForgotController: " + e.toString());
@@ -46,7 +50,11 @@ public class ForgotController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ForgotController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -60,7 +68,11 @@ public class ForgotController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ForgotController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

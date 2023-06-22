@@ -38,7 +38,8 @@ public class ProfileDAO {
                     String Address = rs.getString("Address");
                     String City = rs.getString("City");
                     String Major = rs.getString("Major");
-                    list.add(new StudentProfile(id, code, Name, Birthday, PhoneNum, Gender, Address, City, Major));
+                    String Email = rs.getString("Email");
+                    list.add(new StudentProfile(id, code, Name, Birthday, PhoneNum, Gender, Address, City, Major,Email));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -81,7 +82,9 @@ public class ProfileDAO {
                     String Address = rs.getString("Address");
                     String City = rs.getString("City");
                     String Major = rs.getString("Major");
-                    list.add(new StudentProfile(id, code, Name, Birthday, PhoneNum, Gender, Address, City, Major));
+                    String Email = rs.getString("Email");
+                    list.add(new StudentProfile(id, code, Name, Birthday, 
+                            PhoneNum, Gender, Address, City, Major, Email));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -125,8 +128,9 @@ public class ProfileDAO {
                     String Gender = rs.getString("Gender");
                     String Address = rs.getString("Address");
                     String City = rs.getString("City");
+                    String Email = rs.getString("Email");
                     list.add(new LectureProfile(id, code, Name, Birthday, 
-                            PhoneNum, Gender, Address, City));
+                            PhoneNum, Gender, Address, City,Email));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -168,8 +172,9 @@ public class ProfileDAO {
                     String Gender = rs.getString("Gender");
                     String Address = rs.getString("Address");
                     String City = rs.getString("City");
+                    String Email = rs.getString("Email");
                     list.add(new LectureProfile(id, code, Name, Birthday, 
-                            PhoneNum, Gender, Address, City));
+                            PhoneNum, Gender, Address, City, Email));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {

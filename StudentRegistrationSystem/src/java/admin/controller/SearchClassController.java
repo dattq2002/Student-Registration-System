@@ -1,34 +1,33 @@
 package admin.controller;
 
+import DTO.ClassInformation;
+import adminDAO.ClassDAO;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LinkSubject extends HttpServlet {
-    private static final String SWP = "classSWP.jsp";
-    private static final String SWR = "classSWR.jsp";
-    private static final String SWT = "classSWT.jsp";
-    private static final String ERROR = "viewClass.jsp";
+public class SearchClassController extends HttpServlet {
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            if(id == 301){
-                url = SWT;
-            }else if(id == 302){
-                url = SWR;
-            }else{
-                url = SWP;
+            String search = request.getParameter("searchClass");
+            ClassDAO dao = new ClassDAO();
+            List<ClassInformation> list = dao.getListClass(search);
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("LIST_CLASS", list);
+                }
             }
-            
-        } catch (Exception e) {
-            log("Error at LinkSubject" + e.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }finally{
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("viewClass.jsp").forward(request, response);
         }
     } 
 

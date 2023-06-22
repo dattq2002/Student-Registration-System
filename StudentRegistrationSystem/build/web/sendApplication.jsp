@@ -18,13 +18,16 @@
             Type: <select name="selectOption">
                 <option>Choose Type</option>
                 <option value="Report">Report</option>
-                <option value="Registration Presentation">Registration Presentation</option>
+                <option value="Presentation Capstone">Presentation Capstone</option>
             </select><br>
-            Student ID: <input type="text" min="0" required="" name="id" value="" placeholder="vd: SE16-453123"><br>
+            Student ID: <input type="text" min="0" required="" name="id" value="" 
+                               placeholder="vd: SE16-453123"><br>
             Student Name: <input type="text" name="stname" value="" required="" /><br>
             Lecture Name: <input type="text" required="" name="lecname" value=""><br>
-            Course: <input type="text" required="" name="course" value="" placeholder="vd:NJS-1701"><br>
-            Reason: <textarea name="reason" rows="5" cols="30" required="" placeholder="Ghi rõ lý do nộp đơn nhằm mục đích gì"></textarea><br>
+            Course: <input type="text" required="" name="course" value="" 
+                           placeholder="vd:NJS-1701"><br>
+            Reason: <textarea name="reason" rows="5" cols="30" required="" 
+                    placeholder="Ghi rõ lý do nộp đơn nhằm mục đích gì"></textarea><br>
             <input type="submit" value="Send" name="action" />
         </form>
         <%

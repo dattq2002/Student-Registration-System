@@ -41,12 +41,11 @@
                                 </div>
                                 <div class="text sign-up-text">Don't have an account? <label for="flip">Forgot password?</label></div>
                             </div>
-                            <!--                                <p><a href="forgotPassword.jsp"> Forgot password?</a></p>-->
                         </form>
                     </div>
                     <div class="signup-form">
                         <div class="title">Forgot password?</div>
-                        <form action="ForgotController">
+                        <form action="ForgotController" method="POST">
                             <div class="input-boxes">
                                 <div class="inputBox">
                                     <input type="text" name="email" value="" required="required"/>
@@ -61,7 +60,7 @@
                             </div>
                         </form>
                         <%
-                            String message1 = (String) session.getAttribute("ERROR_EMAIL");
+                            String message1 = (String) request.getAttribute("ERROR_EMAIL");
                             if (message1 != null) {
                         %>
                         <h5 style="color: red"><%= message1%></h5>

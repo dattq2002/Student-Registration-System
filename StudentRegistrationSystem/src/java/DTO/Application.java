@@ -16,6 +16,13 @@ public class Application {
     private String Status;
     private int CourseID;
     private String CourseName;
+    private int subID;
+    private String subCode;
+    private int grID;
+    private String grName;
+    private String room;
+    private String presentDate;
+    private String time;
 
     //constructor
     public Application() {
@@ -30,9 +37,60 @@ public class Application {
         this.CourseID = CourseID;
     }
 
-    public Application(int ID, int StuID, String StuCode, String CreateDate, 
-       String type, int LecID, String lecName, String reason, String LecNote,
-            String Status, int CourseID,String CourseName, String processDate) {
+    //updateForm
+    
+    public Application(String CreateDate, String room, String presentDate, String time) {
+        this.CreateDate = CreateDate;
+        this.room = room;
+        this.presentDate = presentDate;
+        this.time = time;
+    }
+
+    public Application(int id, int StID, String Stcode, String CreDate, String type, 
+            int lecID, String lecName, String reason, String lecNote, String status, 
+            int CourseID, String CourseName, String processDate) {
+        this.ID = id;
+        this.LecID = lecID;
+        this.lecName = lecName;
+        this.StuID = StID;
+        this.StuCode = Stcode;
+        this.reason = reason;
+        this.LecNote = lecNote;
+        this.CreateDate = CreDate;
+        this.processDate = processDate;
+        this.Status = status;
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.type = type;
+    }
+
+    //Presentation Capstone
+    public Application(int ID, String type, String lecName, String CreateDate, 
+            String processDate, String Status, int CourseID, String CourseName, 
+            int subID, String subCode, int grID, String grName, String room, 
+            String presentDate, String time) {
+        this.type = type;
+        this.ID = ID;
+        this.lecName = lecName;
+        this.CreateDate = CreateDate;
+        this.processDate = processDate;
+        this.Status = Status;
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.subID = subID;
+        this.subCode = subCode;
+        this.grID = grID;
+        this.grName = grName;
+        this.room = room;
+        this.presentDate = presentDate;
+        this.time = time;
+    }
+    
+    //form Report
+    public Application(String type, int ID, int LecID, String lecName, int StuID, 
+            String StuCode, String reason, String LecNote, String CreateDate, 
+            String processDate, String Status, int CourseID, String CourseName, 
+            int subID, String subCode) {
         this.type = type;
         this.ID = ID;
         this.LecID = LecID;
@@ -46,8 +104,9 @@ public class Application {
         this.Status = Status;
         this.CourseID = CourseID;
         this.CourseName = CourseName;
-    }
-
+        this.subID = subID;
+        this.subCode = subCode;
+    }   
     //getter,setter
     public String getType() {
         return type;
@@ -151,6 +210,62 @@ public class Application {
 
     public void setCourseName(String CourseName) {
         this.CourseName = CourseName;
+    }
+
+    public int getSubID() {
+        return subID;
+    }
+
+    public void setSubID(int subID) {
+        this.subID = subID;
+    }
+
+    public String getSubCode() {
+        return subCode;
+    }
+
+    public void setSubCode(String subCode) {
+        this.subCode = subCode;
+    }
+
+    public int getGrID() {
+        return grID;
+    }
+
+    public void setGrID(int grID) {
+        this.grID = grID;
+    }
+
+    public String getGrName() {
+        return grName;
+    }
+
+    public void setGrName(String grName) {
+        this.grName = grName;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getPresentDate() {
+        return presentDate;
+    }
+
+    public void setPresentDate(String presentDate) {
+        this.presentDate = presentDate;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
 }

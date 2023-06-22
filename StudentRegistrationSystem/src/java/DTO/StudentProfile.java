@@ -6,13 +6,13 @@ public class StudentProfile extends Person{
     //constructor
 
     public StudentProfile(int ID, String Code, String name, String birthday, 
-            String PhoneNumber, String Gender, String Address, String City) {
-        super(ID, Code, name, birthday, PhoneNumber, Gender, Address, City);
+            String PhoneNumber, String Gender, String Address, String City,String Email) {
+        super(ID, Code, name, birthday, PhoneNumber, Gender, Address, City, Email);
     }
 
     public StudentProfile(int ID, String Code, String name, String birthday, 
-            String PhoneNumber, String Gender, String Address, String City, String Major) {
-        super(ID, Code, name, birthday, PhoneNumber, Gender, Address, City);
+            String PhoneNumber, String Gender, String Address, String City, String Major,String Email) {
+        super(ID, Code, name, birthday, PhoneNumber, Gender, Address, City,Email);
         this.Major = Major;
     }
       

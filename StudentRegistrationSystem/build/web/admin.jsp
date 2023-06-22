@@ -22,7 +22,8 @@
         <header class="navbar">
             <div class="logo_item">
                 <i class="bx bx-menu" id="sidebarOpen"></i>
-                <img src="images/logo_fpt.png" alt=""></i>FPT University
+                <img src="images/logo_fpt.png" alt=""></i>
+                FPT University
             </div>
 
             <!-- <div class="search_bar">
@@ -70,7 +71,7 @@
 
                     <!-- Start -->
                     <li class="item">
-                        <a href="ListSubject" class="nav_link">
+                        <a href="ClassController" class="nav_link">
                             <span class="navlink_icon">
                                 <i class="bx bx-grid-alt"></i>
                             </span>
@@ -98,32 +99,25 @@
                         </a>
                     </li>
                     <!-- End -->
+                    <!-- Start -->
+                    <li class="item">
+                        <a href="ListFormController" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-grid-alt"></i>
+                            </span>
+                            <span class="navlink">List Presentation</span>
+                        </a>
+                    </li>
+                    <!-- End -->
                 </ul>
                 <ul class="menu_items">
                     <div class="menu_title menu_setting"></div>
                     <li class="item">
-                        <a href="#" class="nav_link">
+                        <a href="profileAdmin.html" class="nav_link">
                             <span class="navlink_icon">
                                 <i class="bx bx-flag"></i>
                             </span>
                             <span class="navlink">Profile</span>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <!-- <i class="bx bx-medal"></i> -->
-                                <i class='bx bx-bell'></i>
-                            </span>
-                            <span class="navlink">Notification</span>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <i class="bx bx-cog"></i>
-                            </span>
-                            <span class="navlink">Setting</span>
                         </a>
                     </li>
                     <li class="item">

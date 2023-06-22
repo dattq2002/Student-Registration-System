@@ -1,14 +1,10 @@
 package user.controller;
 
-import DTO.StudentProfile;
-import DTO.UserAccountDTO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import userDAO.ProfileStudentDAO;
 
 public class ProfileStudentController extends HttpServlet {
    

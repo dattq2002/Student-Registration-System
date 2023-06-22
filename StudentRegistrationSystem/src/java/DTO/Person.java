@@ -2,18 +2,19 @@ package DTO;
 
 public abstract class Person {
     //props
-    private int ID;
-    private String Code;
-    private String name;
-    private String birthday;
-    private String PhoneNumber;
-    private String Gender;
-    private String Address;
-    private String City;
+    protected int ID;
+    protected String Code;
+    protected String name;
+    protected String birthday;
+    protected String PhoneNumber;
+    protected String Gender;
+    protected String Address;
+    protected String City;
+    protected String Email;
     
     //Contructor
 
-    public Person(int ID, String Code, String name, String birthday, String PhoneNumber, String Gender, String Address, String City) {
+    public Person(int ID, String Code, String name, String birthday, String PhoneNumber, String Gender, String Address, String City, String Email) {
         this.ID = ID;
         this.Code = Code;
         this.name = name;
@@ -22,6 +23,7 @@ public abstract class Person {
         this.Gender = Gender;
         this.Address = Address;
         this.City = City;
+        this.Email = Email;
     }
 
     //getter, setter
@@ -87,6 +89,14 @@ public abstract class Person {
 
     public void setCity(String City) {
         this.City = City;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
     
     

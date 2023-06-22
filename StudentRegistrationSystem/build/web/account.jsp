@@ -121,7 +121,7 @@
                 int count = 1;
                 for (UserAccountDTO dto2 : listSearch) {
             %>
-        <form action="MainController">
+        <form action="MainController" method="POST">
             <tr>
                 <td>
                     <%= count++%>

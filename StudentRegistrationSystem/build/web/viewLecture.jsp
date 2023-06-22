@@ -203,7 +203,7 @@
                         int count = 1;
                         for (LectureProfile dto : listLecture) {
                     %>
-                <form action="MainController">
+                <form action="MainController" method="POST">
 
                     <tr>
                         <td><%=count++%></td>
@@ -267,7 +267,7 @@
                         int count = 1;
                         for (LectureProfile dto2 : list) {
                     %>
-                <form action="MainController">
+                <form action="MainController" method="POST">
 
                     <tr>
                         <td><%=count++%></td>

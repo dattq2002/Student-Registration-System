@@ -65,13 +65,13 @@ public class UserAccountDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT Email " + "FROM Account "
+                String sql = "SELECT Email FROM Account "
                         + "WHERE Email =?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
                 if (rs.next()) {
-                    return email;
+                    email = rs.getString("Email");
                 }
             }
         } catch (SQLException e) {
@@ -87,7 +87,7 @@ public class UserAccountDAO {
                 rs.close();
             }
         }
-        return null;
+        return email;
     }
 
     //resetPassword

@@ -57,14 +57,6 @@
         <servlet-class>admin.controller.ListLectureInformation</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ListSubject</servlet-name>
-        <servlet-class>admin.controller.ListSubject</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LinkSubject</servlet-name>
-        <servlet-class>admin.controller.LinkSubject</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ListTopic</servlet-name>
         <servlet-class>user.controller.ListTopic</servlet-class>
     </servlet>
@@ -87,6 +79,30 @@
     <servlet>
         <servlet-name>UpdateInformationProfile</servlet-name>
         <servlet-class>admin.controller.UpdateInformationProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClassController</servlet-name>
+        <servlet-class>admin.controller.ClassController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailClassController</servlet-name>
+        <servlet-class>admin.controller.DetailClassController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchClassController</servlet-name>
+        <servlet-class>admin.controller.SearchClassController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListFormController</servlet-name>
+        <servlet-class>admin.controller.ListFormController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchFormController</servlet-name>
+        <servlet-class>admin.controller.SearchFormController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateFormPresentController</servlet-name>
+        <servlet-class>admin.controller.UpdateFormPresentController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -145,14 +161,6 @@
         <url-pattern>/ListLectureInformation</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ListSubject</servlet-name>
-        <url-pattern>/ListSubject</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LinkSubject</servlet-name>
-        <url-pattern>/LinkSubject</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ListTopic</servlet-name>
         <url-pattern>/ListTopic</url-pattern>
     </servlet-mapping>
@@ -175,6 +183,30 @@
     <servlet-mapping>
         <servlet-name>UpdateInformationProfile</servlet-name>
         <url-pattern>/UpdateInformationProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassController</servlet-name>
+        <url-pattern>/ClassController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailClassController</servlet-name>
+        <url-pattern>/DetailClassController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchClassController</servlet-name>
+        <url-pattern>/SearchClassController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListFormController</servlet-name>
+        <url-pattern>/ListFormController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFormController</servlet-name>
+        <url-pattern>/SearchFormController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateFormPresentController</servlet-name>
+        <url-pattern>/UpdateFormPresentController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

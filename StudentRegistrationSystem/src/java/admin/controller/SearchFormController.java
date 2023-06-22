@@ -1,30 +1,34 @@
 package admin.controller;
 
-import DTO.Subject;
-import adminDAO.SubjectDAO;
+import DTO.Application;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import userDAO.ApplicationDAO;
 
-public class ListSubject extends HttpServlet {
-    
+public class SearchFormController extends HttpServlet {
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            SubjectDAO dao = new SubjectDAO();
-            List<Subject> list = dao.getListSubject();
-            if(!list.isEmpty()){
-                request.setAttribute("SHOWLIST_SUBJECT", list);
+            String search = request.getParameter("searchform");
+            ApplicationDAO dao = new ApplicationDAO();
+            List<Application> list = dao.getListApplication(search);
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("LIST_FORM", list);
+                }
             }
         } catch (SQLException e) {
-            log("Err at ListSubject: " + e.toString());
+            e.printStackTrace();
         }finally{
-            request.getRequestDispatcher("viewClass.jsp").forward(request, response);
+            request.getRequestDispatcher("processForm.jsp").forward(request, response);
         }
     } 
 

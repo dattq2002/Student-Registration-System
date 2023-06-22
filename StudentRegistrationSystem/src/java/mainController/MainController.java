@@ -23,6 +23,10 @@ public class MainController extends HttpServlet {
     private static final String UPDATE_ACCOUNT = "UpdateAccountController";
     private static final String SEND_APPLICATION = "SendApplicationController";
     private static final String UPDATE_STUDENT_PROFILE = "UpdateProfileController";
+    private static final String VIEW_DETAIL_CLASS_INFO = "DetailClassController";
+    private static final String SEARCH_CLASS_INFO = "SearchClassController";
+    private static final String SEARCH_FORM = "SearchFormController";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -55,6 +59,12 @@ public class MainController extends HttpServlet {
                 url = SEND_APPLICATION;
             } else if ("Update Profile".equals(action)) {
                 url = UPDATE_STUDENT_PROFILE;
+            } else if ("ViewDetail".equals(action)) {
+                url = VIEW_DETAIL_CLASS_INFO;
+            } else if ("Search Class".equals(action)) {
+                url = SEARCH_CLASS_INFO;
+            } else if ("Search Form".equals(action)) {
+                url = SEARCH_FORM;
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

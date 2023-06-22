@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/StudentRegistrationSystem/web/viewStudent.jsp</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/StudentRegistrationSystem/web/viewLecture.jsp</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/StudentRegistrationSystem/src/java/admin/controller/UpdateInformationProfile.java</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/StudentRegistrationSystem/web/WEB-INF/web.xml</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/StudentRegistrationSystem/src/java/mainController/MainController.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/StudentRegistrationSystem/src/java/admin/controller/DetailClassController.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/StudentRegistrationSystem/src/java/adminDAO/ClassDAO.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/StudentRegistrationSystem/web/viewClassDetail.jsp</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/StudentRegistrationSystem/web/viewClass.jsp</file>
         </group>
     </open-files>
 </project-private>
