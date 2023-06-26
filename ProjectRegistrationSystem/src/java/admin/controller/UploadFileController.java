@@ -1,38 +1,67 @@
 package admin.controller;
 
+import adminDAO.ClassDAO;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 @MultipartConfig
 public class UploadFileController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            Part filePart = request.getPart("file"); // Lấy phần tệp từ yêu cầu
-            InputStream fileInputStream = filePart.getInputStream(); // Lấy luồng đầu vào từ tệp
-
-            Workbook workbook = WorkbookFactory.create(fileInputStream); // Tạo đối tượng Workbook từ tệp Excel
+        Part filePart = request.getPart("file"); // Lấy phần tệp từ yêu cầu
+        InputStream fileInputStream = filePart.getInputStream(); // Lấy luồng đầu vào từ tệp
+        String course = request.getParameter("course");
+        try ( Workbook workbook = new XSSFWorkbook(fileInputStream)) { // Tạo đối tượng Workbook từ tệp Excel
             Sheet sheet = workbook.getSheetAt(0); // Lấy sheet đầu tiên
-
             // Xử lý dữ liệu từ tệp Excel theo ý muốn của bạn
-            
+            ClassDAO dao = new ClassDAO();
+            int rowCount = sheet.getPhysicalNumberOfRows();
+            int colCount = sheet.getRow(0).getPhysicalNumberOfCells();
+            for (int i = 1; i < rowCount; i++) {
+                Row row = sheet.getRow(i);
+                for (int j = 0; j < colCount; j++) {
+                    Cell cell = row.getCell(j);
+                    double StuID = row.getCell(j).getNumericCellValue();
+                    double courseID = 0;
+                    if (course.equals("null")) {
+                        courseID = row.getCell(j + 1).getNumericCellValue();
+                    }
+                    String StartDate = row.getCell(j + 2).getStringCellValue();
+                    String Note = row.getCell(j + 3).getStringCellValue();
+                    if (cell != null) {
+                        if (!course.equals("null")) {
+                            boolean check = dao.getDataFromFile(StuID, Double.parseDouble(course), StartDate, Note);
+                            if(check == false) return;
+                        } else {
+                            boolean result = dao.getDataFromFile(StuID, courseID, StartDate, Note);
+                            if(result == false) return;
+                        }
+                    }
+                    break;
+                }
+            }
+            request.setAttribute("SUCCESS", "Add data successfully !!!");
             workbook.close(); // Đóng Workbook
             fileInputStream.close(); // Đóng luồng đầu vào
-
         } catch (Exception e) {
-        }finally{
+            request.setAttribute("FAIL", "Add data fail !!");
+        } finally {
             request.getRequestDispatcher("addStudentToClass.jsp").forward(request, response);
         }
     }

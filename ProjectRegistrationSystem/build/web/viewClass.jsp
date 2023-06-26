@@ -125,6 +125,6 @@
         }
     %>
     <button><a href="createCourse.jsp">Create Class</a></button>
-    <button><a href="addStudentToClass.jsp">Create Class</a></button>
+    <button><a href="addStudentToClass.jsp">Add Student Class</a></button>
 </body>
 </html>

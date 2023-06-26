@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ClassDAO {
@@ -598,6 +599,31 @@ public class ClassDAO {
             if (conn != null) {
                 conn.close();
             }
+        }
+        return check;
+    }
+    
+    public boolean getDataFromFile(double col2, double col3, String col4, String col5) throws SQLException{
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if(conn != null){
+                String sql = "INSERT INTO Enrollment(StudentID, CourseID, StartDate, Note) "
+                        + "VALUES(?,?,?,?) ";
+                stm = conn.prepareStatement(sql);
+                stm.setDouble(1, col2);
+                stm.setDouble(2, col3);
+                stm.setString(3, col4);
+                stm.setString(4, col5);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }finally{
+            if(conn != null) conn.close();
+            if(stm != null) stm.close();
         }
         return check;
     }
