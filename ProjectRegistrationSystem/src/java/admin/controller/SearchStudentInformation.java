@@ -20,7 +20,7 @@ public class SearchStudentInformation extends HttpServlet {
             ProfileDAO dao = new ProfileDAO();
             List<StudentProfile> list = dao.SearchStudent(name);
             if(!list.isEmpty()){
-                request.setAttribute("LIST_STUDENT", list);
+                request.setAttribute("SHOWLIST_STUDENT", list);
             }else{
                 request.setAttribute("ERROR_DU", "No Record !!");
             }

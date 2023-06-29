@@ -2,6 +2,7 @@ package adminDAO;
 
 import DBUtil.Util;
 import DTO.ClassInformation;
+import DTO.Semester;
 import DTO.StudentProfile;
 import DTO.Subject;
 import DTO.TopicAssign;
@@ -10,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ClassDAO {
@@ -62,7 +62,7 @@ public class ClassDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT b.ID, b.SubjectCode, b.SubjectID, b.LecName, c.Name, b.CourseID, "
+                String sql = "SELECT b.ID, b.SubjectCode, b.SubjectID, b.LecName, c.Name, c.Code, b.CourseID, "
                         + "c.StartDate, c.EndDate,c.SemesterID, b.Status FROM (SELECT a.*, "
                         + "lec.Name AS [LecName] FROM (SELECT s.*, "
                         + "su.Code as [SubjectCode] "
@@ -83,8 +83,60 @@ public class ClassDAO {
                     String end = rs.getString("EndDate");
                     boolean status = rs.getBoolean("Status");
                     int semeID = rs.getInt("SemesterID");
+                    int CourseCode = rs.getInt("Code");
                     list.add(new ClassInformation(ID, subCode, subID, lecName,
-                            Coursecode, CourseID, start, end, status, semeID));
+                            Coursecode, CourseID,CourseCode, start, end, status, semeID));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("Err at getListSubject!!!");
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    
+    //getListClassSP2022
+    public List<ClassInformation> getListClassSP2022() throws SQLException {
+        List<ClassInformation> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT b.ID, b.SubjectCode, b.SubjectID, b.LecName, c.Name, c.Code, b.CourseID,"
+                        + "c.StartDate, c.EndDate,c.SemesterID, b.Status FROM (SELECT a.*, "
+                        + "lec.Name AS [LecName] FROM (SELECT s.*, "
+                        + "su.Code as [SubjectCode] "
+                        + "FROM SubjectInClass s LEFT JOIN Subject su "
+                        + "ON s.SubjectID = su.ID) AS a LEFT JOIN Lecturer lec "
+                        + "ON a.LecturerID = lec.ID) AS b "
+                        + "LEFT JOIN Course c ON b.CourseID = c.ID WHERE SemesterID = 11111";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int ID = rs.getInt("ID");
+                    String subCode = rs.getString("SubjectCode");
+                    int subID = rs.getInt("SubjectID");
+                    String lecName = rs.getString("LecName");
+                    String Coursecode = rs.getString("Name");
+                    int CourseID = rs.getInt("CourseID");
+                    String start = rs.getString("StartDate");
+                    String end = rs.getString("EndDate");
+                    boolean status = rs.getBoolean("Status");
+                    int semeID = rs.getInt("SemesterID");
+                    int CourseCode = rs.getInt("Code");
+                    list.add(new ClassInformation(ID, subCode, subID, lecName,
+                            Coursecode, CourseID,CourseCode, start, end, status, semeID));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -103,6 +155,108 @@ public class ClassDAO {
         return list;
     }
 
+    //getListClassFA2022
+    public List<ClassInformation> getListClassFA2022() throws SQLException {
+        List<ClassInformation> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT b.ID, b.SubjectCode, b.SubjectID, b.LecName, c.Name, c.Code, b.CourseID,"
+                        + "c.StartDate, c.EndDate,c.SemesterID, b.Status FROM (SELECT a.*, "
+                        + "lec.Name AS [LecName] FROM (SELECT s.*, "
+                        + "su.Code as [SubjectCode] "
+                        + "FROM SubjectInClass s LEFT JOIN Subject su "
+                        + "ON s.SubjectID = su.ID) AS a LEFT JOIN Lecturer lec "
+                        + "ON a.LecturerID = lec.ID) AS b "
+                        + "LEFT JOIN Course c ON b.CourseID = c.ID WHERE SemesterID = 11112";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int ID = rs.getInt("ID");
+                    String subCode = rs.getString("SubjectCode");
+                    int subID = rs.getInt("SubjectID");
+                    String lecName = rs.getString("LecName");
+                    String Coursecode = rs.getString("Name");
+                    int CourseID = rs.getInt("CourseID");
+                    String start = rs.getString("StartDate");
+                    String end = rs.getString("EndDate");
+                    boolean status = rs.getBoolean("Status");
+                    int semeID = rs.getInt("SemesterID");
+                    int CourseCode = rs.getInt("Code");
+                    list.add(new ClassInformation(ID, subCode, subID, lecName,
+                            Coursecode, CourseID,CourseCode, start, end, status, semeID));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("Err at getListSubject!!!");
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    
+    //getListClassSP2023
+    public List<ClassInformation> getListClassSP2023() throws SQLException {
+        List<ClassInformation> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT b.ID, b.SubjectCode, b.SubjectID, b.LecName, c.Name, c.Code, b.CourseID,"
+                        + "c.StartDate, c.EndDate,c.SemesterID, b.Status FROM (SELECT a.*, "
+                        + "lec.Name AS [LecName] FROM (SELECT s.*, "
+                        + "su.Code as [SubjectCode] "
+                        + "FROM SubjectInClass s LEFT JOIN Subject su "
+                        + "ON s.SubjectID = su.ID) AS a LEFT JOIN Lecturer lec "
+                        + "ON a.LecturerID = lec.ID) AS b "
+                        + "LEFT JOIN Course c ON b.CourseID = c.ID WHERE SemesterID = 11113";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int ID = rs.getInt("ID");
+                    String subCode = rs.getString("SubjectCode");
+                    int subID = rs.getInt("SubjectID");
+                    String lecName = rs.getString("LecName");
+                    String Coursecode = rs.getString("Name");
+                    int CourseID = rs.getInt("CourseID");
+                    String start = rs.getString("StartDate");
+                    String end = rs.getString("EndDate");
+                    boolean status = rs.getBoolean("Status");
+                    int semeID = rs.getInt("SemesterID");
+                    int CourseCode = rs.getInt("Code");
+                    list.add(new ClassInformation(ID, subCode, subID, lecName,
+                            Coursecode, CourseID,CourseCode, start, end, status, semeID));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("Err at getListSubject!!!");
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    
     //getListClass
     public List<ClassInformation> getListClass(String search) throws SQLException {
         List<ClassInformation> list = new ArrayList<>();
@@ -112,7 +266,7 @@ public class ClassDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT b.ID, b.SubjectCode, b.SubjectID, b.LecName, c.Name, b.CourseID, "
+                String sql = "SELECT b.ID, b.SubjectCode, b.SubjectID, b.LecName, c.Name, b.Code, b.CourseID, "
                         + "c.StartDate, c.EndDate,c.SemesterID, b.Status FROM (SELECT a.*, "
                         + "lec.Name AS [LecName] FROM (SELECT s.*, "
                         + "su.Code as [SubjectCode] "
@@ -129,14 +283,15 @@ public class ClassDAO {
                     String subCode = rs.getString("SubjectCode");
                     int subID = rs.getInt("SubjectID");
                     String lecName = rs.getString("LecName");
-                    String Coursecode = rs.getString("Name");
+                    String CourseName = rs.getString("Name");
                     String start = rs.getString("StartDate");
                     String end = rs.getString("EndDate");
                     boolean status = rs.getBoolean("Status");
                     int CourseID = rs.getInt("CourseID");
                     int semeID = rs.getInt("SemesterID");
+                    int CourseCode = rs.getInt("Code");
                     list.add(new ClassInformation(ID, subCode, subID, lecName,
-                            Coursecode, CourseID, start, end, status, semeID));
+                            CourseName, CourseID,CourseCode, start, end, status, semeID));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -381,7 +536,7 @@ public class ClassDAO {
         return check;
     }
     
-    public boolean CreateNewCourse(int id, String name, int semester, 
+    public boolean CreateNewCourse(int id, String name,String code, int semester, 
             String stDate, String endDate) throws SQLException{
         boolean check = true;
         Connection conn = null;
@@ -390,11 +545,12 @@ public class ClassDAO {
             conn = Util.getConnection();
             if(conn != null){
                 String sql2 = "INSERT INTO Course "
-                            + "VALUES(?,?,?,?,?)";
+                            + "VALUES(?,?,?,?,?,?)";
                     stm = conn.prepareStatement(sql2);
                     stm.setInt(1, id);
                     stm.setString(2, name);
-                    stm.setInt(3, semester);
+                    stm.setString(3, code);
+                    stm.setInt(4, semester);
                     stm.setString(4, stDate);
                     stm.setString(5, endDate);
                     check = stm.executeUpdate() > 0;
@@ -516,6 +672,7 @@ public class ClassDAO {
     }
     
     //-------------------------
+    //CreateCourseSubjectInClass
     public boolean CreateCourse(int lecID, int subID, int CourseID) throws SQLException{
         boolean check = true;
         Connection conn = null;
@@ -544,7 +701,7 @@ public class ClassDAO {
         }
         return check;
     }
-    
+    //UpdateSubjectInClass
     public boolean UpdateSubjectInClass(int id,int subID, int CourseID, int lecID, boolean status) throws SQLException{
         boolean check = false;
         Connection conn = null;
@@ -574,7 +731,7 @@ public class ClassDAO {
         }
         return check;
     }
-    
+    //UpdateCourse
     public boolean UpdateCourse(int CourseID,String stDate, String endDate) throws SQLException{
         boolean check = false;
         Connection conn = null;
@@ -602,7 +759,7 @@ public class ClassDAO {
         }
         return check;
     }
-    
+    //getDataFromFile
     public boolean getDataFromFile(double col2, double col3, String col4, String col5) throws SQLException{
         boolean check = false;
         Connection conn = null;
@@ -626,5 +783,43 @@ public class ClassDAO {
             if(stm != null) stm.close();
         }
         return check;
+    }
+    //List Semester
+    public List<Semester> getSemester() throws SQLException{
+        List<Semester> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn= Util.getConnection();
+            if(conn != null){
+                String sql = "SELECT * FROM Semester "
+                        + "WHERE Status = 'Unavailable'";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while(rs.next()){
+                    int ID = rs.getInt("ID");
+                    int year = rs.getInt("Year");
+                    String name = rs.getString("Name");
+                    String status = rs.getString("Status");
+                    String stDate = rs.getString("StartDate");
+                    String eDate = rs.getString("EndDate");
+                    list.add(new Semester(ID, year, name, status, stDate, eDate));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }finally{
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
     }
 }

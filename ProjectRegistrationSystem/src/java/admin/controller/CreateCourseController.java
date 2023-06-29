@@ -27,6 +27,7 @@ public class CreateCourseController extends HttpServlet {
             String lecName = request.getParameter("lecName");
             String subRoll = request.getParameter("subRoll");
             String subName = request.getParameter("subName");
+            String courseName = request.getParameter("courseName");
             int credit = Integer.parseInt(request.getParameter("Credit"));
             //----------------------------------------
             String regex = "^(NJS|SE)-\\d+$";
@@ -50,7 +51,7 @@ public class CreateCourseController extends HttpServlet {
                 boolean result = dao.checkCourse(courseID, name, semesterNumber,
                         startDate, endDate);
                 if (result == false) {
-                    dao.CreateNewCourse(courseID, name, semesterNumber,
+                    dao.CreateNewCourse(courseID, name,courseName, semesterNumber,
                             startDate, endDate);
                     check = true;
                 }

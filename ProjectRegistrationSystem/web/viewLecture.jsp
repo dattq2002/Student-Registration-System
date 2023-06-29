@@ -30,7 +30,6 @@
                 <i class="bx bx-menu" id="sidebarOpen"></i>
                 <img src="images/logo_fpt.png" alt=""></i>FPT University
             </div>
-
             <!-- <div class="search_bar">
                 <input type="text" placeholder="Search" />
               </div> -->
@@ -178,6 +177,22 @@
                 Search: <input type="text" name="searchLecture" value="" placeholder="search by ID"/>
                 <input type="submit" value="SearchLecture" name="action" />
             </form>
+            <%
+                String message = (String) request.getAttribute("MESSAGE");
+                if (message != null) {
+            %>
+            <h4 style="color: red"><%= message%></h4>
+            <%
+                }
+            %>
+            <%
+                String message1 = (String) request.getAttribute("MESSAGE_LECTURE");
+                if (message1 != null) {
+            %>
+            <h4 style="color: green"><%=message1%></h4>
+            <%
+                }
+            %>
             <h3>View Lecture</h3>
             <%
                 List<LectureProfile> listLecture = (List<LectureProfile>) request.getAttribute("SHOWLIST_LECTURE");
@@ -208,7 +223,7 @@
                     <tr>
                         <td><%=count++%></td>
                         <td>
-                            <%= dto.getCode() + dto.getID()%>
+                            <%= dto.getCode() + "-" + dto.getID()%>
                             <input type="hidden" name="id" value="<%= dto.getID()%>" />
                             <input type="hidden" name="code" value="<%= dto.getCode()%>" />
                         </td>
@@ -221,7 +236,8 @@
                         <td><%= dto.getAddress()%></td>
                         <td><%= dto.getCity()%></td>                     
                         <td>
-                            <input type="submit" value="UpdateLecture" name="action"/>
+                            <input type="submit" value="Update"/>
+                            <input type="hidden" value="UpdateLecture" name="action"/>
                             <input type="hidden" name="ID" value="<%= dto.getID()%>" />
                             <input type="hidden" name ="searchLecture" value="<%= search%>" />
                         </td>
@@ -243,73 +259,6 @@
                 <a href="addLecture.jsp" class="btn">Add</a>
             </div>
 
-            <%
-                List<LectureProfile> list = (List<LectureProfile>) request.getAttribute("LIST_LECTURE");
-                if (list != null) {
-                    if (!list.isEmpty()) {
-            %>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Lecture Code</th>
-                        <th>Name</th>
-                        <th>Birthday</th>
-                        <th>Phone Number</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>Update</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        int count = 1;
-                        for (LectureProfile dto2 : list) {
-                    %>
-                <form action="MainController" method="POST">
-
-                    <tr>
-                        <td><%=count++%></td>
-                        <td>
-                            <%= dto2.getCode() + dto2.getID()%>
-                            <input type="hidden" name="id" value="<%= dto2.getID()%>" />
-                            <input type="hidden" name="code" value="<%= dto2.getCode()%>" />
-                        </td>
-                        <td>                     
-                            <input type="text" name="Name" value="<%= dto2.getName()%>" />
-                        </td>
-                        <td><%= dto2.getBirthday()%></td>
-                        <td><%= dto2.getPhoneNumber()%></td>
-                        <td><%= dto2.getGender()%></td>
-                        <td><%= dto2.getAddress()%></td>
-                        <td><%= dto2.getCity()%></td>                     
-                        <td>
-                            <input type="submit" value="UpdateLecture" name="action"/>
-                            <input type="hidden" name="ID" value="<%= dto2.getID()%>" />
-                            <input type="hidden" name ="searchLecture" value="<%= search%>" />
-                        </td>
-                    </tr>
-                </form>
-                <%
-                    }
-                %>
-
-                </tbody>
-            </table>
-
-            <%
-                    }
-                }
-            %>
-            <%
-                String message = (String) request.getAttribute("MESSAGE");
-                if (message != null) {
-            %>
-            <h4 style="color: red"><%= message%></h4>
-            <%
-                }
-            %>
         </div>
     </body>
 </html>

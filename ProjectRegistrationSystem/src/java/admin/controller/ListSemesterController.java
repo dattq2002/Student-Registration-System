@@ -1,7 +1,7 @@
 package admin.controller;
 
-import DTO.LectureProfile;
-import adminDAO.ProfileDAO;
+import DTO.Semester;
+import adminDAO.ClassDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,31 +10,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SearchLectureInformation extends HttpServlet {
+public class ListSemesterController extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String name = request.getParameter("searchLecture");
-            ProfileDAO dao = new ProfileDAO();
-            List<LectureProfile> list = dao.getListLecture(name);
-            if(!list.isEmpty()){
-                request.setAttribute("SHOWLIST_LECTURE", list);
-            }else{
-                request.setAttribute("MESSAGE", "No record !!");
+            ClassDAO dao = new ClassDAO();
+            List<Semester> list = dao.getSemester();
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("LIST_SEMESTER", list);
+                }
             }
-        } catch (NumberFormatException | SQLException e) {
-            log("Error at SearchLectureProfile: "+ e.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }finally{
-            request.getRequestDispatcher("viewLecture.jsp").forward(request, response);
+            request.getRequestDispatcher("viewSemester.jsp").forward(request, response);
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -42,13 +40,12 @@ public class SearchLectureInformation extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -56,13 +53,12 @@ public class SearchLectureInformation extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

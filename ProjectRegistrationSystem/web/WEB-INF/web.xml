@@ -129,8 +129,32 @@
         <servlet-class>admin.controller.DeleteClassController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UploadFileController</servlet-name>
-        <servlet-class>admin.controller.UploadFileController</servlet-class>
+        <servlet-name>UploadFileAddStudentToClassController</servlet-name>
+        <servlet-class>admin.controller.UploadFileAddStudentToClassController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadFileLectureController</servlet-name>
+        <servlet-class>admin.controller.UploadFileLectureController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListSemesterController</servlet-name>
+        <servlet-class>admin.controller.ListSemesterController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LinkSemester</servlet-name>
+        <servlet-class>admin.controller.LinkSemester</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadFileLectureToClassController</servlet-name>
+        <servlet-class>admin.controller.UploadFileLectureToClassController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadFileStudentController</servlet-name>
+        <servlet-class>admin.controller.UploadFileStudentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadFileAccountController</servlet-name>
+        <servlet-class>admin.controller.UploadFileAccountController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -261,8 +285,32 @@
         <url-pattern>/DeleteClassController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UploadFileController</servlet-name>
-        <url-pattern>/UploadFileController</url-pattern>
+        <servlet-name>UploadFileAddStudentToClassController</servlet-name>
+        <url-pattern>/UploadFileAddStudentToClassController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadFileLectureController</servlet-name>
+        <url-pattern>/UploadFileLectureController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListSemesterController</servlet-name>
+        <url-pattern>/ListSemesterController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LinkSemester</servlet-name>
+        <url-pattern>/LinkSemester</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadFileLectureToClassController</servlet-name>
+        <url-pattern>/UploadFileLectureToClassController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadFileStudentController</servlet-name>
+        <url-pattern>/UploadFileStudentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadFileAccountController</servlet-name>
+        <url-pattern>/UploadFileAccountController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

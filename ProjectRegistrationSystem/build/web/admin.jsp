@@ -119,6 +119,15 @@
                         </a>
                     </li>
                     <!-- End -->
+                    <li class="item">
+                        <a href="ListSemesterController" class="nav_link">
+                            <span class="navlink_icon">
+                                <i class="bx bx-flag"></i>
+                            </span>
+                            <span class="navlink">Semester</span>
+                        </a>
+                    </li>
+                    <!-- End -->
                 </ul>
                 <ul class="menu_items">
                     <div class="menu_title menu_setting"></div>

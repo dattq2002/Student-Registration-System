@@ -66,7 +66,8 @@
                         <input type="text" name="lecName" value="<%=dto.getLecName()%>" />
                     </td>
                     <td>
-                        <input type="text" name="Courseid" 
+                        <%=dto.getCourseName() + "-" + dto.getCourseCode()%>
+                        <input type="hidden" name="Courseid" 
                                value="<%=dto.getCourseName() + "-" + dto.getCourseID()%>" />
                     </td>
                     <td>
@@ -117,6 +118,8 @@
     <%
             }
         }
+    %>
+    <%
         String message = (String) request.getAttribute("MESSAGE");
         if (message != null) {
     %>

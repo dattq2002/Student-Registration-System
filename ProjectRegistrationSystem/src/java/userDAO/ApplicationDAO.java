@@ -256,7 +256,7 @@ public class ApplicationDAO {
                         + "FROM (SELECT ID, LecID, Type, StudentID, CreateDate, "
                         + "ProcessDate, Status, CourseID, SubjectID, GroupID, "
                         + "Room, PresentDate, Time, Publish "
-                        + "FROM Form WHERE Type = 'Presentation Capstone' AND Status = 'Processed' "
+                        + "FROM Form WHERE Type = 'Presentation' AND Status = 'Processed' "
                         + "AND Publish IN ('unpublish','published')) AS a "
                         + "LEFT JOIN Lecturer l ON a.LecID = l.ID) AS f "
                         + "LEFT JOIN Course c ON f.CourseID = c.ID) AS qa "

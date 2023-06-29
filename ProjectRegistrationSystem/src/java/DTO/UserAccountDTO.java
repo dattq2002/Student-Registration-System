@@ -27,6 +27,16 @@ public class UserAccountDTO {
         this.FullName = FullName;
         this.Status = Status;
     }
+
+    public UserAccountDTO(String Code, String Email, String Password, String RoleID, String FullName, String Status) {
+        this.Code = Code;
+        this.Email = Email;
+        this.Password = Password;
+        this.RoleID = RoleID;
+        this.FullName = FullName;
+        this.Status = Status;
+    }
+    
     
     //getter,setter
     public int getID() {

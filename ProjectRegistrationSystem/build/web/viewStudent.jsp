@@ -177,7 +177,22 @@
                 Search: <input type="text" name="searchStudent" value="" placeholder="search by name"/>
                 <input type="submit" value="SearchStudent" name="action" />
             </form>
-
+            <%
+                String message = (String) request.getAttribute("ERROR_DU");
+                if (message != null) {
+            %>
+            <h4 style="color: red"><%= message%></h4>
+            <%
+                }
+            %>
+            <%
+                String message1 = (String) request.getAttribute("MESSAGE_STUDENT");
+                if(message1 != null){
+                    %>
+                    <h3 style="color: green"><%=message1%></h3>
+            <%
+                }
+            %>
             <%
                 List<StudentProfile> listStudent = (List<StudentProfile>) request.getAttribute("SHOWLIST_STUDENT");
                 if (listStudent != null) {
@@ -222,7 +237,8 @@
                         <td><%= dto.getCity()%></td>
                         <td><%= dto.getMajor()%></td>
                         <td>
-                            <input type="submit" value="UpdateStudent" name="action"/>
+                            <input type="submit" value="Update" />
+                            <input type="hidden" value="UpdateStudent" name="action"/>
                             <input type="hidden" name="ID" value="<%= dto.getID()%>" />
                             <input type="hidden" name ="searchStudent" value="<%= search%>" />
                         </td>
@@ -242,77 +258,6 @@
             <div class="button">
                 <a href="addStudent.jsp" class="btn">Add</a>
             </div>
-
-
-            <%
-                List<StudentProfile> list = (List<StudentProfile>) request.getAttribute("LIST_STUDENT");
-                if (list != null) {
-                    if (!list.isEmpty()) {
-            %>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Student Code</th>
-                        <th>Name</th>
-                        <th>Birthday</th>
-                        <th>Phone Number</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>Major</th>
-                        <th>Update</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        int count = 1;
-                        for (StudentProfile dto : list) {
-                    %>
-                <form action="MainController" method="POST">
-
-                    <tr>
-                        <td><%=count++%></td>
-                        <td>
-                            <%= dto.getCode() + dto.getID()%>
-                            <input type="hidden" name="id" value="<%= dto.getID()%>" />
-                            <input type="hidden" name="code" value="<%= dto.getCode()%>" />
-                        </td>
-                        <td>                     
-                            <input type="text" name="Name" value="<%= dto.getName()%>" />
-                        </td>
-                        <td><%= dto.getBirthday()%></td>
-                        <td><%= dto.getPhoneNumber()%></td>
-                        <td><%= dto.getGender()%></td>
-                        <td><%= dto.getAddress()%></td>
-                        <td><%= dto.getCity()%></td>
-                        <td><%= dto.getMajor()%></td>
-                        <td>
-                            <input type="submit" value="UpdateStudent" name="action"/>
-                            <input type="hidden" name="ID" value="<%= dto.getID()%>" />
-                            <input type="hidden" name ="searchStudent" value="<%= search%>" />
-                        </td>
-                    </tr>
-                </form>
-                <%
-                    }
-                %>
-
-                </tbody>
-            </table>
-
-            <%
-                    }
-                }
-            %>
-            <%
-                String message = (String) request.getAttribute("ERROR_DU");
-                if (message != null) {
-            %>
-            <h4 style="color: red"><%= message%></h4>
-            <%
-                }
-            %>
         </div>
     </body>
 </html>

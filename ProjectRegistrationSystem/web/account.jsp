@@ -98,5 +98,6 @@
             }
         }
     %>
+    <a href="addAccount.jsp">Add Account From File</a>
 </body>
 </html>

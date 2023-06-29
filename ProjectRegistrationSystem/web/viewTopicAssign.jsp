@@ -43,7 +43,7 @@
                 <tr>
                     <td><%=item.getTopicAssignID()%></td>
                     <td>
-                        <%=item.getTopicCode() + item.getTopicID()%>
+                        <%=item.getTopicCode() + "-" + item.getTopicID()%>
                         <input type="hidden" name="topicid" value="<%=item.getTopicID()%>" />
                     </td>
                     <td>

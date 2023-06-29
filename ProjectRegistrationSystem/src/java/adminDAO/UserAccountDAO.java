@@ -261,9 +261,8 @@ public class UserAccountDAO {
         }
         return check;
     }
-//
-    //updateAccount
 
+    //updateAccount
     public boolean updateAccount(int id, String name, UserAccountDTO acc) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -309,6 +308,39 @@ public class UserAccountDAO {
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Error at updateAccount");
         } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+    //AddAccountFromFile
+    public boolean addAccountFromFile(UserAccountDTO acc) throws SQLException{
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if(conn != null){
+                String sql = "INSERT INTO Account(Email, Password, FullName, "
+                        + "Role, Code, Status) "
+                        + "VALUES(?,?,?,?,?,?)";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, acc.getEmail());
+                stm.setString(2, acc.getPassword());
+                stm.setString(3, acc.getFullName());
+                stm.setString(4, acc.getRoleID());
+                stm.setString(5, acc.getCode());
+                stm.setString(6, acc.getStatus());
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }finally{
             if (stm != null) {
                 stm.close();
             }

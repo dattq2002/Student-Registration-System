@@ -10,8 +10,8 @@ public class ClassInformation extends Class{
     //contructor
 
     public ClassInformation(int ID, String SubjectCode, int SubjectID, String lecName, 
-            String CourseName, int CourseID, String StartDate, String EndDate, boolean Status,int SemesterID) {
-        super(CourseName, CourseID, StartDate, EndDate, SemesterID);
+            String CourseName, int CourseID,int CourseCode, String StartDate, String EndDate, boolean Status,int SemesterID) {
+        super(CourseName, CourseID, StartDate, EndDate, SemesterID, CourseCode);
         this.ID = ID;
         this.SubjectCode = SubjectCode;
         this.SubjectID = SubjectID;

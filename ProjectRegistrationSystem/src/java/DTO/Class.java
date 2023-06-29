@@ -5,6 +5,7 @@ public class Class {
     //props
     protected int CourseID;
     protected String CourseName;
+    protected int CourseCode;
     protected int SemesterID;
     protected String StartDate;
     protected String EndDate;
@@ -13,12 +14,13 @@ public class Class {
     public Class() {
     }
 
-    public Class(String CourseName, int CourseID, String StartDate, String EndDate, int SemesterID) {
+    public Class(String CourseName, int CourseID, String StartDate, String EndDate, int SemesterID, int CourseCode) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.StartDate = StartDate;
         this.EndDate = EndDate;
         this.SemesterID = SemesterID;
+        this.CourseCode = CourseCode;
     }
 
     public Class(int CourseID, String CourseName, int SemesterID, String StartDate, String EndDate) {
@@ -68,6 +70,14 @@ public class Class {
 
     public void setEndDate(String EndDate) {
         this.EndDate = EndDate;
+    }
+
+    public int getCourseCode() {
+        return CourseCode;
+    }
+
+    public void setCourseCode(int CourseCode) {
+        this.CourseCode = CourseCode;
     }
 
 }

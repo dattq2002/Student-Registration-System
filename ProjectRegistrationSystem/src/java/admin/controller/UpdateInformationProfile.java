@@ -25,12 +25,12 @@ public class UpdateInformationProfile extends HttpServlet {
             boolean check = dao.UpdateProfile(id, code, name);
             if (check && code.equals("LT")) {
                 url = SUCCESS1;
-                request.setAttribute("MESSAGE", "Update successfully!!");
-                Thread.sleep(2000);
+                request.setAttribute("MESSAGE_LECTURE", "Update successfully!!");
+                Thread.sleep(1000);
             } else {
                 url = SUCCESS;
-                request.setAttribute("ERROR_DU", "Update successfully!!");
-                Thread.sleep(2000);
+                request.setAttribute("MESSAGE_STUDENT", "Update successfully!!");
+                Thread.sleep(1000);
             }
 
         } catch (InterruptedException | NumberFormatException | SQLException e) {

@@ -1,33 +1,38 @@
 package admin.controller;
 
-import DTO.LectureProfile;
-import adminDAO.ProfileDAO;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SearchLectureInformation extends HttpServlet {
-    
+public class LinkSemester extends HttpServlet {
+
+    private static final String SPRING2022 = "spring2022.jsp";
+    private static final String FALL2022 = "fall2022.jsp";
+    private static final String SPRING2023 = "spring2023.jsp";
+    private static final String ERROR = "viewSemester.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String url = ERROR;
         try {
-            String name = request.getParameter("searchLecture");
-            ProfileDAO dao = new ProfileDAO();
-            List<LectureProfile> list = dao.getListLecture(name);
-            if(!list.isEmpty()){
-                request.setAttribute("SHOWLIST_LECTURE", list);
-            }else{
-                request.setAttribute("MESSAGE", "No record !!");
+            int id = Integer.parseInt(request.getParameter("id"));
+            if (id == 11111) {
+                url = SPRING2022;
+                request.setAttribute("11111", id);
+            } else if (id == 11112) {
+                url = FALL2022;
+                request.setAttribute("11112", id);
+            } else {
+                url = SPRING2023;
+                request.setAttribute("11113", id);
             }
-        } catch (NumberFormatException | SQLException e) {
-            log("Error at SearchLectureProfile: "+ e.toString());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }finally{
-            request.getRequestDispatcher("viewLecture.jsp").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

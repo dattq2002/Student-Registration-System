@@ -15,7 +15,7 @@
             }
         %>
         <h2>Input your file to add Student to Class</h2>
-        <form action="UploadFileController" method="POST" enctype="multipart/form-data">
+        <form action="UploadFileAddStudentToClassController" method="POST" enctype="multipart/form-data">
             Course: <select name="course">
                 <option value="null">Choose Course</option>
                 <option value="1701">NJS1701</option>
