@@ -187,9 +187,9 @@
             %>
             <%
                 String message1 = (String) request.getAttribute("MESSAGE_STUDENT");
-                if(message1 != null){
-                    %>
-                    <h3 style="color: green"><%=message1%></h3>
+                if (message1 != null) {
+            %>
+            <h3 style="color: green"><%=message1%></h3>
             <%
                 }
             %>
@@ -250,11 +250,12 @@
                 %>
 
                 </tbody>
-                <%
-                        }
-                    }
-                %>
             </table>
+            <%
+                    }
+                }
+            %>
+
             <div class="button">
                 <a href="addStudent.jsp" class="btn">Add</a>
             </div>

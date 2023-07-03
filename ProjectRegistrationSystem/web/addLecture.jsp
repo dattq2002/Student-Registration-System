@@ -14,7 +14,22 @@
                 return;
             }
         %>
+        <h2>Add Lecture</h2>
+        <form action="MainController" method="POST">
+            Lecture No Roll:
+            <input type="text" name="id" value="" placeholder="ex:LT-0453" required=""/><br>
+            Lecture Name: 
+            <input type="text" name="name" value="" required=""/><br>
+            Email:
+            <input type="text" name="email" value="" required=""/><br>
+            <input type="submit" value="Add" />
+            <input type="hidden" value="AddLecture" name="action" />
+        </form><br>
         <h2>Input your file to add Lecture</h2>
+        <a>Note in file .xlsx: + column(ID, code, name, birthday,
+            phoneNumber,gender,Address,city,Email)</a><br>
+                               + birthday in .xlsx: text("","yyyy-mm-dd")
+                               <a>ex: text("4/10/2020","yyyy-mm-dd")</a><br><br>
         <form action="UploadFileLectureController" method="POST" enctype="multipart/form-data">
             <input type="file" name="fileLec" accept=".xlsx"><br>
             <br>

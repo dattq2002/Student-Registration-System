@@ -132,7 +132,7 @@
                 <ul class="menu_items">
                     <div class="menu_title menu_setting"></div>
                     <li class="item">
-                        <a href="profileAdmin.html" class="nav_link">
+                        <a href="profileAdmin.jsp" class="nav_link">
                             <span class="navlink_icon">
                                 <i class="bx bx-flag"></i>
                             </span>

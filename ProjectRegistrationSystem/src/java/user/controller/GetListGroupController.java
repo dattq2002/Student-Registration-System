@@ -1,45 +1,37 @@
 package user.controller;
 
-import DTO.StudentProfile;
+import DTO.ClassInformation;
 import DTO.UserAccountDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import userDAO.ProfileStudentDAO;
 
-public class UpdateProfileController extends HttpServlet {
-    private static final String ERROR = "viewProfileStudent.jsp";
-    private static final String SUCCESS = "ProfileStudentController";
+public class GetListGroupController extends HttpServlet {
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
         try {
-            String name = request.getParameter("name");
-            String birthday = request.getParameter("birthday");
-            String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
-            String gender = request.getParameter("gender");
-            String addre = request.getParameter("address");
-            String city = request.getParameter("City");
-            StudentProfile st = new StudentProfile(name, birthday, phone, 
-                    gender, addre, city, email);
-            UserAccountDTO acc = new UserAccountDTO(email, name);
+            HttpSession session = request.getSession();
+            UserAccountDTO loginUser =(UserAccountDTO) session.getAttribute("LOGIN_USER");
             ProfileStudentDAO dao = new ProfileStudentDAO();
-            boolean check = dao.updateProfileStudent(st, acc);
-            if(check){
-                request.setAttribute("MESS_UPDATE", "Updating successfully!!");
-                url = SUCCESS;
-            }else{
-                request.setAttribute("MESS_UPDATE", "Fail updating!!!");
+            List<ClassInformation> list = dao.getListClassEnrollment(loginUser.getEmail());
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("LIST_GROUP", list);
+                }
             }
         } catch (SQLException e) {
-            log("Err at UpdateProfileController: " +e.toString());
+            e.printStackTrace();
         }finally{
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("createGroup.jsp").forward(request, response);
         }
     } 
 

@@ -194,7 +194,7 @@ public class ProfileDAO {
         }
         return list;
     }
-    
+
     //getListStudentSpring2023
     public List<StudentProfile> getListStudentSpring2023() throws SQLException {
         List<StudentProfile> list = new ArrayList<>();
@@ -240,7 +240,7 @@ public class ProfileDAO {
         }
         return list;
     }
-    
+
     //search Lecture profile
     public List<LectureProfile> getListLecture(String name) throws SQLException {
         List<LectureProfile> list = new ArrayList<>();
@@ -422,7 +422,7 @@ public class ProfileDAO {
         }
         return list;
     }
-    
+
     //getListLectureSP2023
     public List<LectureProfile> getListLectureSP2023() throws SQLException {
         List<LectureProfile> list = new ArrayList<>();
@@ -468,7 +468,7 @@ public class ProfileDAO {
         }
         return list;
     }
-    
+
     //-------------------------------------------------------
     //update Profile
     public boolean UpdateProfile(int id, String code, String name) throws SQLException {
@@ -547,8 +547,9 @@ public class ProfileDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "INSERT INTO Lecturer "
-                        + "VALUES(?,?,?,?,?,?,?,?,?)";
+                String sql = "INSERT INTO Lecturer(ID, Code, Name, Birthday, "
+                        + "PhoneNumber, Gender, Address, City, Email) "
+                        + "VALUES(?,?,?,?,?,?,?,?,?,?)";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, lec.getID());
                 stm.setString(2, lec.getCode());
@@ -573,7 +574,7 @@ public class ProfileDAO {
         }
         return check;
     }
-    
+
     //AddStudentProfile
     public boolean AddStudentProfile(StudentProfile stu) throws SQLException {
         boolean check = false;
@@ -582,7 +583,8 @@ public class ProfileDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "INSERT INTO Lecturer "
+                String sql = "INSERT INTO Student(ID, Code, Name, Birthday, "
+                        + "PhoneNumber, Gender, Address, City, Major, Email) "
                         + "VALUES(?,?,?,?,?,?,?,?,?,?)";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, stu.getID());
@@ -634,6 +636,108 @@ public class ProfileDAO {
             }
             if (stm != null) {
                 stm.close();
+            }
+        }
+        return check;
+    }
+
+    //check Email
+    public boolean checkEmailExistInAccount(String email) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try {
+            conn = Util.getConnection();
+            if(conn != null){
+                String sql = "SELECT * FROM Account "
+                        + "WHERE Email = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    check = true;
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return check;
+    }
+    
+    //check duplicate StudentID
+    public boolean checkStudentID(int id) throws SQLException{
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean check = true;
+        try {
+            conn = Util.getConnection();
+            if(conn != null){
+                String sql = "SELECT * FROM Student "
+                        + "WHERE ID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, id);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    check = false;
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return check;
+    }
+    
+    //check duplicate LectureID
+    public boolean checkLectureID(int id) throws SQLException{
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean check = true;
+        try {
+            conn = Util.getConnection();
+            if(conn != null){
+                String sql = "SELECT * FROM Lecturer "
+                        + "WHERE ID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, id);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    check = false;
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
             }
         }
         return check;

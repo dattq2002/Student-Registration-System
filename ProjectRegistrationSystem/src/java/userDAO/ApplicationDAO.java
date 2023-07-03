@@ -90,7 +90,8 @@ public class ApplicationDAO {
             if (conn != null) {
                 String sql = "SELECT f.ID, f.StudentID, f.CreateDate, f.Type, "
                         + "f.Reason, f.LecID, f.ProcessDate, f.Note, f.Status, "
-                        + "f.CourseID, s.Email FROM Form f LEFT JOIN  Student s "
+                        + "f.CourseID, s.Email, f.Room, f.PresentDate, f.Time "
+                        + "FROM Form f LEFT JOIN  Student s "
                         + "ON s.ID = f.StudentID WHERE s.Email = (SELECT Email "
                         + "FROM Account WHERE Email = ?)";
                 stm = conn.prepareStatement(sql);
@@ -110,9 +111,12 @@ public class ApplicationDAO {
                     String status = rs.getString("Status");
                     int CourseID = rs.getInt("CourseID");
                     String CourseName = getCourseName(CourseID);
+                    String room = rs.getString("Room");
+                    String preDate = rs.getString("PresentDate");
+                    String time = rs.getString("Time");
                     list.add(new Application(id, StID, Stcode, CreDate, type,
                             lecID, lecName, reason, lecNote, status, CourseID,
-                            CourseName, processDate, email));
+                            CourseName, processDate, email, room,preDate, time));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -420,7 +424,7 @@ public class ApplicationDAO {
                         + " a.Type FROM (SELECT f.CourseID, f.SubjectID, f.GroupID, "
                         + " f.Room, f.Time, f.PresentDate, f.Type, f.StudentID, s.Email "
                         + " FROM Form f LEFT JOIN Student s ON f.StudentID = s.ID "
-                        + " WHERE f.Type IN('Presentation Capstone','Presentation In Class') "
+                        + " WHERE f.Type IN('Presentation') "
                         + " AND f.Publish = 'published' "
                         + " AND s.Email = (SELECT Email FROM Account WHERE Email = ?)) AS a "
                         + " LEFT JOIN Course c ON a.CourseID = c.ID) AS b "
@@ -429,7 +433,7 @@ public class ApplicationDAO {
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
-                while(rs.next()){
+                while (rs.next()) {
                     int CourseID = rs.getInt("CourseID");
                     String CourseCode = rs.getString("CourseCode");
                     int SubID = rs.getInt("SubjectID");

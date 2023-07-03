@@ -1,45 +1,33 @@
 package user.controller;
 
 import DTO.StudentProfile;
-import DTO.UserAccountDTO;
+import adminDAO.ClassDAO;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import userDAO.ProfileStudentDAO;
 
-public class UpdateProfileController extends HttpServlet {
-    private static final String ERROR = "viewProfileStudent.jsp";
-    private static final String SUCCESS = "ProfileStudentController";
+public class GetListClassStudentEnrollment extends HttpServlet {
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
         try {
-            String name = request.getParameter("name");
-            String birthday = request.getParameter("birthday");
-            String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
-            String gender = request.getParameter("gender");
-            String addre = request.getParameter("address");
-            String city = request.getParameter("City");
-            StudentProfile st = new StudentProfile(name, birthday, phone, 
-                    gender, addre, city, email);
-            UserAccountDTO acc = new UserAccountDTO(email, name);
-            ProfileStudentDAO dao = new ProfileStudentDAO();
-            boolean check = dao.updateProfileStudent(st, acc);
-            if(check){
-                request.setAttribute("MESS_UPDATE", "Updating successfully!!");
-                url = SUCCESS;
-            }else{
-                request.setAttribute("MESS_UPDATE", "Fail updating!!!");
+            int id = Integer.parseInt(request.getParameter("CourseID"));
+            ClassDAO dao = new ClassDAO();
+            List<StudentProfile> list = dao.getDetailEnrollment(id);
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("CLASS_DETAIL", list);
+                }
             }
-        } catch (SQLException e) {
-            log("Err at UpdateProfileController: " +e.toString());
+        } catch (NumberFormatException | SQLException e) {
+            e.printStackTrace();
         }finally{
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("viewStudentClassEnrollment.jsp").forward(request, response);
         }
     } 
 

@@ -11,10 +11,17 @@ public abstract class Person {
     protected String Address;
     protected String City;
     protected String Email;
+    protected String image;
     
     //Contructor
 
-    public Person(int ID, String Code, String name, String birthday, String PhoneNumber, String Gender, String Address, String City, String Email) {
+    public Person(String Email, String image) {
+        this.Email = Email;
+        this.image = image;
+    }
+
+    public Person(int ID, String Code, String name, String birthday, 
+            String PhoneNumber, String Gender, String Address, String City, String Email) {
         this.ID = ID;
         this.Code = Code;
         this.name = name;
@@ -26,6 +33,24 @@ public abstract class Person {
         this.Email = Email;
     }
 
+    public Person(String name, String birthday, String PhoneNumber, String Gender, String Address, String City, String Email) {
+        this.name = name;
+        this.birthday = birthday;
+        this.PhoneNumber = PhoneNumber;
+        this.Gender = Gender;
+        this.Address = Address;
+        this.City = City;
+        this.Email = Email;
+    }
+
+    public Person(int ID, String Code, String name, String Email) {
+        this.ID = ID;
+        this.Code = Code;
+        this.name = name;
+        this.Email = Email;
+    }
+
+    
     //getter, setter
     public int getID() {
         return ID;
@@ -97,6 +122,14 @@ public abstract class Person {
 
     public void setEmail(String Email) {
         this.Email = Email;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
     
     

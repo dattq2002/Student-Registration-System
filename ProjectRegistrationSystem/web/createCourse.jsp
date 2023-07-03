@@ -48,7 +48,7 @@
             <input type="submit" value="Add Course" name="action"/>
         </form><br>
         <div>Or<br><br>
-            Note: LectureID, SubjectID, CourseID, Status<br><br>
+            Note in file .xlsx: + column(LectureID, SubjectID, CourseID, Status)<br><br>
             <form action="UploadFileLectureToClassController" method="POST" enctype="multipart/form-data">
                 <input type="file" name="fileLecToClass" accept=".xlsx"><br>
                 <br>

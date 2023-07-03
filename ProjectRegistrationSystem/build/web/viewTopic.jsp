@@ -26,12 +26,11 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>ID</th>
-                    <th>Code</th>
+                    <th>Topic Roll Number</th>
                     <th>Name</th>
-                    <th>ShortDescription</th>
-                    <th>FullDesCription</th>
-                    <th>LectureName</th>
+                    <th>Short Description</th>
+                    <th>Full DesCription</th>
+                    <th>Lecture Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,8 +40,7 @@
                 %>
                 <tr>
                     <td><%=count++ %></td>
-                    <td></td>
-                    <td></td>
+                    <td><%=item.getTopicCode() +"-"+item.getTopicID() %></td>
                     <td><%=item.getName() %></td>
                     <td><%=item.getShortDescription() %></td>
                     <td><%=item.getFullDescription() %></td>

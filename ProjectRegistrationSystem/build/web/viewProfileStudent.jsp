@@ -1,3 +1,5 @@
+<%@page import="DTO.StudentProfile"%>
+<%@page import="java.util.List"%>
 <%@page import="DTO.UserAccountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,14 +16,36 @@
                 return;
             }
         %>
-        <h3>Profile, <%=loginUser.getFullName()%></h3>
-        <form action="MainController">
-            Student Code: <%= (String) request.getAttribute("Code") + (int) request.getAttribute("ID")%><br>
-            Name: <input type="text" name="name" value="<%=request.getAttribute("Name")%>"/><br>
-            Birthday: <input type="text" name="birthday" value="<%=request.getAttribute("Birthday")%>"/><br>
-            Email: <%=request.getAttribute("Email")%><input type="hidden" name="email" value="<%=request.getAttribute("Email")%>" /> <br> 
-            <input type="submit" value="Update Profile" name="action" />
+        <h3>Profile, <%=loginUser.getEmail()%></h3>
+        <%
+            List<StudentProfile> list = (List<StudentProfile>) request.getAttribute("PROFILE");
+            if (list != null) {
+                if (!list.isEmpty()) {
+                    for (StudentProfile item : list) {
+        %>
+        <form action="MainController" method="POST">
+            Student No Roll: <%=item.getCode() + "-" + item.getID()%><br>
+            Student Name: <input type="text" name="name" value="<%=item.getName()%>" /><br>
+            Student birthday: <input type="date" name="birthday" value="<%=item.getBirthday()%>" /><br>
+            Phone Number: <input type="text" name="phone" value="<%=item.getPhoneNumber()%>" /><br>
+            Gender: <select name="gender">
+                <option value="male" <%=(item.getGender().equals("male")) ? "selected" : ""%>>Male</option>
+                <option value="female" <%=(item.getGender().equals("female")) ? "selected" : ""%>>FeMale</option>
+            </select><br>
+            Address: <input type="text" name="address" value="<%=item.getAddress()%>" /><br>
+            City: <input type="text" name="City" value="<%=item.getCity()%>" /><br>
+            Major: <%=item.getMajor()%><br>
+            Email: <%=item.getEmail()%> 
+            <input type="hidden" name="email" value="<%=item.getEmail()%>" /><br>
+            <input type="submit" value="Update" />
+            <input type="hidden" name="action" value="Update Profile" />
         </form>
+        <%
+                    }
+                }
+            }
+        %>
+        <!----------------------->
         <%
             String message = (String) request.getAttribute("MESS_UPDATE");
             if (message != null) {

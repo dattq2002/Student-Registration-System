@@ -15,11 +15,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 @MultipartConfig
 public class UploadFileStudentController extends HttpServlet {
-   
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         Part filePart = request.getPart("fileStu"); // Lấy phần tệp từ yêu cầu
         InputStream fileInputStream = filePart.getInputStream(); // Lấy luồng đầu vào từ tệp
@@ -42,13 +43,13 @@ public class UploadFileStudentController extends HttpServlet {
                     String gender = row.getCell(j + 5).getStringCellValue();
                     String Address = row.getCell(j + 6).getStringCellValue();
                     String city = row.getCell(j + 7).getStringCellValue();
-                    String major = row.getCell(j+8).getStringCellValue();
+                    String major = row.getCell(j + 8).getStringCellValue();
                     String Email = row.getCell(j + 9).getStringCellValue();
-                    StudentProfile stu = new StudentProfile(ID, code, name, 
-                           birthday, phoneNumber, gender, Address, city, major, Email);
-                    if(cell != null){
+                    StudentProfile stu = new StudentProfile(ID, code, name,
+                            birthday, phoneNumber, gender, Address, city, major, Email);
+                    if (cell != null) {
                         boolean result = dao.AddStudentProfile(stu);
-                        if(result == false){
+                        if (result == false) {
                             request.setAttribute("MESSAGE_UPLOAD", "Upload fail !!!");
                             return;
                         }
@@ -64,11 +65,12 @@ public class UploadFileStudentController extends HttpServlet {
         } finally {
             request.getRequestDispatcher("addStudent.jsp").forward(request, response);
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -76,12 +78,13 @@ public class UploadFileStudentController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -89,12 +92,13 @@ public class UploadFileStudentController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

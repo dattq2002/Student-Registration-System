@@ -26,6 +26,8 @@
             ....
         -->
         <!--body-->
+        <a href="createCourse.jsp">Create Class</a>
+        <a href="addStudentToClass.jsp">Add Student Class</a>
         <form action="MainController" method="POST">
             Search: <input type="text" name="searchClass" value="" placeholder="Search Subject Code"/>
             <input type="submit" value="Search Class" name="action" />
@@ -127,7 +129,5 @@
     <%
         }
     %>
-    <button><a href="createCourse.jsp">Create Class</a></button>
-    <button><a href="addStudentToClass.jsp">Add Student Class</a></button>
 </body>
 </html>

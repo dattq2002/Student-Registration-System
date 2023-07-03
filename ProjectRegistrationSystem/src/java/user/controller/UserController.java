@@ -1,44 +1,27 @@
 package user.controller;
 
-import DTO.StudentProfile;
-import DTO.UserAccountDTO;
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import userDAO.ProfileStudentDAO;
 
-public class UpdateProfileController extends HttpServlet {
-    private static final String ERROR = "viewProfileStudent.jsp";
-    private static final String SUCCESS = "ProfileStudentController";
+public class UserController extends HttpServlet {
+   
+    private static final String ERROR = "error.jsp";
+    private static final String CREATE_GROUP = "CreateGroupController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String name = request.getParameter("name");
-            String birthday = request.getParameter("birthday");
-            String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
-            String gender = request.getParameter("gender");
-            String addre = request.getParameter("address");
-            String city = request.getParameter("City");
-            StudentProfile st = new StudentProfile(name, birthday, phone, 
-                    gender, addre, city, email);
-            UserAccountDTO acc = new UserAccountDTO(email, name);
-            ProfileStudentDAO dao = new ProfileStudentDAO();
-            boolean check = dao.updateProfileStudent(st, acc);
-            if(check){
-                request.setAttribute("MESS_UPDATE", "Updating successfully!!");
-                url = SUCCESS;
-            }else{
-                request.setAttribute("MESS_UPDATE", "Fail updating!!!");
+            String action = request.getParameter("action");
+            if("CreateGroup".equals(action)){
+                url = CREATE_GROUP;
             }
-        } catch (SQLException e) {
-            log("Err at UpdateProfileController: " +e.toString());
-        }finally{
+        } catch (Exception e) {
+            log("Error at UserController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     } 

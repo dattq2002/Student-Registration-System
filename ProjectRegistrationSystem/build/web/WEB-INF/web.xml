@@ -156,6 +156,34 @@
         <servlet-name>UploadFileAccountController</servlet-name>
         <servlet-class>admin.controller.UploadFileAccountController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateStudentController</servlet-name>
+        <servlet-class>admin.controller.CreateStudentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateLectureController</servlet-name>
+        <servlet-class>admin.controller.CreateLectureController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListClassStudentController</servlet-name>
+        <servlet-class>user.controller.GetListClassStudentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListClassStudentEnrollment</servlet-name>
+        <servlet-class>user.controller.GetListClassStudentEnrollment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>user.controller.UserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListGroupController</servlet-name>
+        <servlet-class>user.controller.GetListGroupController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateGroupController</servlet-name>
+        <servlet-class>user.controller.CreateGroupController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -311,6 +339,34 @@
     <servlet-mapping>
         <servlet-name>UploadFileAccountController</servlet-name>
         <url-pattern>/UploadFileAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateStudentController</servlet-name>
+        <url-pattern>/CreateStudentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateLectureController</servlet-name>
+        <url-pattern>/CreateLectureController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListClassStudentController</servlet-name>
+        <url-pattern>/GetListClassStudentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListClassStudentEnrollment</servlet-name>
+        <url-pattern>/GetListClassStudentEnrollment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/UserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListGroupController</servlet-name>
+        <url-pattern>/GetListGroupController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateGroupController</servlet-name>
+        <url-pattern>/CreateGroupController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

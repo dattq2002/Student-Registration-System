@@ -35,6 +35,8 @@
                     <th>Lecture Name</th>
                     <th>Course Name</th>
                     <th>Room</th>
+                    <th>Present Date</th>
+                    <th>Time</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +54,8 @@
                     <td><%=item.getLecName()%></td>
                     <td><%=item.getCourseName() + item.getCourseID()%></td>
                     <td><%=item.getRoom()%></td>
+                    <td><%=item.getPresentDate()%></td>
+                    <td><%=item.getTime()%></td>
                 </tr>
                 <%
                     }

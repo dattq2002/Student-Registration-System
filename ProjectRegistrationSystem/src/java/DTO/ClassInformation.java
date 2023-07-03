@@ -18,6 +18,12 @@ public class ClassInformation extends Class{
         this.lecName = lecName;
         this.Status = Status;
     }
+
+    public ClassInformation(String SubjectCode, int SubjectID, int CourseID, String CourseName, int CourseCode) {
+        super(CourseID, CourseName, CourseCode);
+        this.SubjectCode = SubjectCode;
+        this.SubjectID = SubjectID;
+    }
     
     //getter,setter
 

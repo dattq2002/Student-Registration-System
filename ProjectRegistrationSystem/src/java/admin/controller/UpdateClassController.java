@@ -39,10 +39,8 @@ public class UpdateClassController extends HttpServlet {
                     return;
                 }
                 String tmp[] = subint.split("-");
-                String subCode = tmp[0];
                 int subID = Integer.parseInt(tmp[1]);
                 String tmp1[] = Courseid.split("-");
-                String CourseCode = tmp1[0];
                 int CourseID = Integer.parseInt(tmp1[1]);
                 boolean check = dao.UpdateSubjectInClass(id, subID, CourseID, lecID, status);
                 if(check){

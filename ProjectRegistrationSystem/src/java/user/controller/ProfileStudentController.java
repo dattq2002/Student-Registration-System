@@ -1,44 +1,49 @@
 package user.controller;
 
+import DTO.StudentProfile;
+import DTO.UserAccountDTO;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import userDAO.ProfileStudentDAO;
 
 public class ProfileStudentController extends HttpServlet {
-   
+
+    private static final String ERROR = "viewProfileStudent.jsp";
+    private static final String SUCCESS = "viewProfileStudent.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-//        try {
-//            HttpSession session = request.getSession();
-//            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
-//            ProfileStudentDAO dao = new ProfileStudentDAO();
-//            StudentProfile student = dao.profileStudent(loginUser.getEmail());
-//            if(student != null){
-//                int ID = student.getID();
-//                String code = student.getCode();
-//                String Name = student.getName();
-//                String birth = student.getBirthday();
-//                String email = student.getEmail();
-//                request.setAttribute("ID", ID);
-//                request.setAttribute("Name", Name);
-//                request.setAttribute("Code", code);
-//                request.setAttribute("Birthday", birth);
-//                request.setAttribute("Email", email);
-//            }
-//        } catch (Exception e) {
-//            log("Err at ProfileStudentController: " + e.toString());
-//        }finally{
-//            request.getRequestDispatcher("viewProfileStudent.jsp").forward(request, response);
-//        }
-        
-    } 
+        String url = ERROR;
+        try {
+            HttpSession session = request.getSession();
+            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
+            ProfileStudentDAO dao = new ProfileStudentDAO();
+            List<StudentProfile> list = dao.profileStudent(loginUser.getEmail());
+            if (list != null) {
+                if (!list.isEmpty()) {
+                    request.setAttribute("PROFILE", list);
+                    url = SUCCESS;
+                }
+            }
+        } catch (SQLException e) {
+            log("Err at ProfileStudentController: " + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -46,12 +51,13 @@ public class ProfileStudentController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -59,12 +65,13 @@ public class ProfileStudentController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

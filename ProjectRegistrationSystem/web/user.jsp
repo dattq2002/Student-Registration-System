@@ -17,8 +17,11 @@
         
         <a href="ListTopic">Topic</a></br>
         <a href="sendApplication.jsp">Send Application</a><br>
-        <a href="ListForm">View Application</a>
-        <a href="ProfileStudentController">View Profile</a>
-        <a href="ListPresentationCapstone">View Presentation</a>
+        <a href="ListForm">View Application</a><br>
+        <a href="ProfileStudentController">View Profile</a><br>
+        <a href="ListPresentationCapstone">View Presentation</a><br>
+        <a href="GetListClassStudentController">View Class</a><br>
+        <a href="GetListGroupController">Create Group</a>
+        <a href="#">View Group</a>
     </body>
 </html>

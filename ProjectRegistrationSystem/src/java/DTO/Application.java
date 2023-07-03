@@ -51,7 +51,8 @@ public class Application {
     //view Form
     public Application(int id, int StID, String Stcode, String CreDate, String type, 
             int lecID, String lecName, String reason, String lecNote, String status, 
-            int CourseID, String CourseName, String processDate,String email) {
+            int CourseID, String CourseName, String processDate,String email, 
+            String room, String PresentDate, String time) {
         this.ID = id;
         this.LecID = lecID;
         this.lecName = lecName;
@@ -66,6 +67,9 @@ public class Application {
         this.CourseName = CourseName;
         this.type = type;
         this.Email = email;
+        this.room = room;
+        this.presentDate = PresentDate;
+        this.time = time;
     }
 
     //Presentation Capstone

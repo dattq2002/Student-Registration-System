@@ -1,4 +1,4 @@
-<%@page import="DTO.Topic"%>
+<%@page import="DTO.StudentProfile"%>
 <%@page import="java.util.List"%>
 <%@page import="DTO.UserAccountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Topic Page</title>
+        <title>JSP Page</title>
     </head>
     <body>
         <%
@@ -16,35 +16,38 @@
                 return;
             }
         %>
-        <h2>View Topic</h2>
+        <h3></h3>
         <%
-            List<Topic> list = (List<Topic>) request.getAttribute("SHOWLIST_TOPIC");
+            List<StudentProfile> list = (List<StudentProfile>) request.getAttribute("CLASS_DETAIL");
             if (list != null) {
                 if (!list.isEmpty()) {
         %>
         <table border="1">
             <thead>
                 <tr>
-                    <th>No</th>
-                    <th>Topic Roll Number</th>
-                    <th>Name</th>
-                    <th>Short Description</th>
-                    <th>Full DesCription</th>
-                    <th>Lecture Name</th>
+                    <th>Student No Roll</th>
+                    <th>Student Name</th>
+                    <th>Birthday</th>
+                    <th>Phone Number</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Major</th>
                 </tr>
             </thead>
             <tbody>
                 <%
-                    int count = 1;
-                    for (Topic item : list) {
+                    for (StudentProfile item : list) {
                 %>
                 <tr>
-                    <td><%=count++ %></td>
-                    <td><%=item.getTopicCode() +"-"+item.getTopicID() %></td>
-                    <td><%=item.getName() %></td>
-                    <td><%=item.getShortDescription() %></td>
-                    <td><%=item.getFullDescription() %></td>
-                    <td><%=item.getLecName()%></td>
+                    <td><%=item.getCode() + "-" + item.getID()%></td>
+                    <td><%=item.getName()%></td>
+                    <td><%=item.getBirthday()%></td>
+                    <td><%=item.getPhoneNumber()%></td>
+                    <td><%=item.getGender()%></td>
+                    <td><%=item.getAddress()%></td>
+                    <td><%=item.getCity()%></td>
+                    <td><%=item.getMajor()%></td>
                 </tr>
                 <%
                     }

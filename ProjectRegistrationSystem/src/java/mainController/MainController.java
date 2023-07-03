@@ -27,7 +27,9 @@ public class MainController extends HttpServlet {
     private static final String CREATE_COURSE = "CreateCourseController";
     private static final String DELETE_CLASS_CONTROLLER = "DeleteClassController";
     private static final String UPDATE_CLASS_CONTROLLER = "UpdateClassController";
-    private static final String UPLOAD_FILE = "UpdateClassController";
+    private static final String CREATE_STUDENT = "CreateStudentController";
+    private static final String CREATE_LECTURE = "CreateLectureController";
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -69,8 +71,10 @@ public class MainController extends HttpServlet {
                 url = DELETE_CLASS_CONTROLLER;
             }else if("Update Class".equals(action)){
                 url = UPDATE_CLASS_CONTROLLER;
-            }else if("Upload".equals(action)){
-                url = UPLOAD_FILE;
+            }else if("AddStudent".equals(action)){
+                url = CREATE_STUDENT;
+            }else if("AddLecture".equals(action)){
+                url = CREATE_LECTURE;
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

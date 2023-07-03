@@ -14,6 +14,12 @@ public class Class {
     public Class() {
     }
 
+    public Class(int CourseID, String CourseName, int CourseCode) {
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.CourseCode = CourseCode;
+    }
+
     public Class(String CourseName, int CourseID, String StartDate, String EndDate, int SemesterID, int CourseCode) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
@@ -31,6 +37,12 @@ public class Class {
         this.EndDate = EndDate;
     }
 
+    public Class(int CourseID, String CourseName, String StartDate) {
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.StartDate = StartDate;
+    }
+    
     //getter,setter
     public int getCourseID() {
         return CourseID;

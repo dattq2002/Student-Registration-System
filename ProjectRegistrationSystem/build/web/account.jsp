@@ -20,6 +20,7 @@
             }
         %>
         <a href="ListAccountController">List of Account</a>
+        <a href="addAccount.jsp">Add Account From File</a>
         <form action="SearchAccountController">
             <input type="text" name="SearchAccount" value="" />
             <input type="submit" value="SearchAccount"/>
@@ -98,6 +99,5 @@
             }
         }
     %>
-    <a href="addAccount.jsp">Add Account From File</a>
 </body>
 </html>

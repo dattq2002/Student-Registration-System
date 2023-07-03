@@ -15,6 +15,7 @@
             }
         %>
         <h2>Input your file to add Account</h2>
+        <a>Note in file .xlsx: +column: Email,password,Role,Code,Status</a><br><br>
         <form action="UploadFileAccountController" method="POST" enctype="multipart/form-data">
             <input type="file" name="fileAcc" accept=".xlsx"><br>
             <br>
