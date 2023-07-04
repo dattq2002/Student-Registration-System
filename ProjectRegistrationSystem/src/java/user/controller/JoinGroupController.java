@@ -1,31 +1,36 @@
 package user.controller;
 
+import DTO.Group;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import userDAO.ProfileStudentDAO;
 
-public class UserController extends HttpServlet {
-   
-    private static final String ERROR = "error.jsp";
-    private static final String CREATE_GROUP = "CreateGroupController";
-    private static final String JOIN_GROUP = "GroupEnrollmentController";
+public class JoinGroupController extends HttpServlet {
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
         try {
-            String action = request.getParameter("action");
-            if("CreateGroup".equals(action)){
-                url = CREATE_GROUP;
-            }else if("JoinGroup".equals(action)){
-                url = JOIN_GROUP;
+            int courseID = Integer.parseInt(request.getParameter("courseID"));
+            int subID = Integer.parseInt(request.getParameter("subID"));
+            request.setAttribute("CourseID", courseID);
+            request.setAttribute("subID", subID);
+            ProfileStudentDAO dao = new ProfileStudentDAO();
+            List<Group> list = dao.joinGroup(subID, courseID);
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("LIST_JOIN", list);
+                }
             }
-        } catch (Exception e) {
-            log("Error at UserController: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        } catch (NumberFormatException | SQLException e) {
+            e.printStackTrace();
+        }finally{
+            request.getRequestDispatcher("joinGroup.jsp").forward(request, response);
         }
     } 
 

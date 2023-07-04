@@ -34,24 +34,30 @@ public class ListStudentInformation extends HttpServlet {
                             request.setAttribute("11111", id);
                             request.setAttribute("LIST_ST_SPRING2022", list);
                             url = STUDENT_SP2022;
+                        } else {
+                            request.setAttribute("ERROR_CODE", "No student in Class");
                         }
                     }
-                }else if(id.equals("11112")){
+                } else if (id.equals("11112")) {
                     List<StudentProfile> list = dao.getListStudentFall2022();
-                    if(list != null){
-                        if(!list.isEmpty()){
+                    if (list != null) {
+                        if (!list.isEmpty()) {
                             request.setAttribute("11112", id);
                             request.setAttribute("LIST_ST_FALL022", list);
                             url = STUDENT_FA2022;
+                        } else {
+                            request.setAttribute("ERROR_CODE", "No student in Class");
                         }
                     }
-                }else if(id.equals("11113")){
+                } else if (id.equals("11113")) {
                     List<StudentProfile> list = dao.getListStudentSpring2023();
-                    if(list != null){
-                        if(!list.isEmpty()){
+                    if (list != null) {
+                        if (!list.isEmpty()) {
                             request.setAttribute("11113", id);
                             request.setAttribute("LIST_ST_SPRING2023", list);
                             url = STUDENT_SP2023;
+                        } else {
+                            request.setAttribute("ERROR_CODE", "No student in Class");
                         }
                     }
                 }
@@ -60,6 +66,8 @@ public class ListStudentInformation extends HttpServlet {
                 if (!list.isEmpty()) {
                     request.setAttribute("SHOWLIST_STUDENT", list);
                     url = SUCCESS;
+                } else {
+                    request.setAttribute("ERROR_CODE", "No student in Class");
                 }
             }
         } catch (SQLException e) {

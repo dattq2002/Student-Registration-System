@@ -1,30 +1,43 @@
 package user.controller;
 
+import DTO.Group;
+import DTO.UserAccountDTO;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import userDAO.ProfileStudentDAO;
 
-public class UserController extends HttpServlet {
-   
-    private static final String ERROR = "error.jsp";
-    private static final String CREATE_GROUP = "CreateGroupController";
-    private static final String JOIN_GROUP = "GroupEnrollmentController";
+public class GetListGroupStudentEnrollment extends HttpServlet {
+    private static final String SUCCESS = "memberInGroup.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
+        String url = SUCCESS;
         try {
-            String action = request.getParameter("action");
-            if("CreateGroup".equals(action)){
-                url = CREATE_GROUP;
-            }else if("JoinGroup".equals(action)){
-                url = JOIN_GROUP;
+            int CourseID = Integer.parseInt(request.getParameter("CourseID"));
+            int subID = Integer.parseInt(request.getParameter("SubID"));
+            request.setAttribute("CourseID", CourseID);
+            request.setAttribute("subID", subID);
+            HttpSession session = request.getSession();
+            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
+            ProfileStudentDAO dao = new ProfileStudentDAO();
+            List<Group> list = dao.getListMember(loginUser.getEmail(), CourseID, subID);
+            int count = list.size();
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("LIST_MEMBER", list);
+                    request.setAttribute("AMOUNT", count);
+                    url = SUCCESS;
+                }
             }
-        } catch (Exception e) {
-            log("Error at UserController: " + e.toString());
-        } finally {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }
     } 

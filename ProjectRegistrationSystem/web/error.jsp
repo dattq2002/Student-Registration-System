@@ -6,7 +6,8 @@
         <title>ERROR Page</title>
     </head>
     <body>
-        <h1>ERROR: <%= session.getAttribute("ERROR_FUNC") %></h1>
+        <h1>ERROR function: <%= session.getAttribute("ERROR_FUNC") %></h1>
+        <h1>ERROR Code: <%= request.getAttribute("ERROR_CODE") %></h1>
         <a href="login.jsp">Try again !!!</a>
     </body>
 </html>

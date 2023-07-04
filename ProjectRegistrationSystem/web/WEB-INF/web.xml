@@ -184,6 +184,22 @@
         <servlet-name>CreateGroupController</servlet-name>
         <servlet-class>user.controller.CreateGroupController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetListClassGroupController</servlet-name>
+        <servlet-class>user.controller.GetListClassGroupController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListGroupStudentEnrollment</servlet-name>
+        <servlet-class>user.controller.GetListGroupStudentEnrollment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JoinGroupController</servlet-name>
+        <servlet-class>user.controller.JoinGroupController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GroupEnrollmentController</servlet-name>
+        <servlet-class>user.controller.GroupEnrollmentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -367,6 +383,22 @@
     <servlet-mapping>
         <servlet-name>CreateGroupController</servlet-name>
         <url-pattern>/CreateGroupController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListClassGroupController</servlet-name>
+        <url-pattern>/GetListClassGroupController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListGroupStudentEnrollment</servlet-name>
+        <url-pattern>/GetListGroupStudentEnrollment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JoinGroupController</servlet-name>
+        <url-pattern>/JoinGroupController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GroupEnrollmentController</servlet-name>
+        <url-pattern>/GroupEnrollmentController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -2,6 +2,7 @@ package userDAO;
 
 import DBUtil.Util;
 import DTO.ClassInformation;
+import DTO.Group;
 import DTO.StudentProfile;
 import DTO.UserAccountDTO;
 import java.sql.Connection;
@@ -222,7 +223,7 @@ public class ProfileStudentDAO {
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, groupName);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     check = false;
                 }
             }
@@ -241,14 +242,14 @@ public class ProfileStudentDAO {
         }
         return check;
     }
-    
-    public boolean CreateGroup(int courseID, String Group) throws SQLException{
+
+    public boolean CreateGroup(int courseID, String Group) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "INSERT INTO Groupp "
                         + "VALUES('GR',?,?,'Deactive')";
                 stm = conn.prepareStatement(sql);
@@ -257,7 +258,7 @@ public class ProfileStudentDAO {
                 check = stm.executeUpdate() > 0;
             }
         } catch (Exception e) {
-        }finally {
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -267,7 +268,7 @@ public class ProfileStudentDAO {
         }
         return check;
     }
-    
+
     public int checkCourse(int CourseCode) throws SQLException {
         int ID = 0;
         Connection conn = null;
@@ -281,12 +282,200 @@ public class ProfileStudentDAO {
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, CourseCode);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     ID = rs.getInt("ID");
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return ID;
+    }
+
+    public List<Group> getListMember(String email, int courseID, int subjectID) throws SQLException {
+        List<Group> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int count = 0;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT a.*, s.Code AS [StudentCode], s.Name "
+                        + "FROM (SELECT m.*, g.Name AS [GroupName], g.CourseID "
+                        + "FROM Groupp g LEFT JOIN Member m "
+                        + "ON g.ID = m.GroupID WHERE g.CourseID IN (SELECT ID FROM Course "
+                        + "WHERE SemesterID = 11114 AND CourseID = ?) "
+                        + "AND m.GroupID IN (SELECT DISTINCT GroupID FROM Member "
+                        + "WHERE StudentID = (SELECT ID FROM Student "
+                        + "WHERE Email = (SELECT Email FROM Account "
+                        + "WHERE Email = ?))) AND m.StudentID IN (SELECT ID FROM Student "
+                        + "WHERE Email = (SELECT Email FROM Account "
+                        + "WHERE Email = ?)) AND m.SubjectID IN (?)) AS a "
+                        + "LEFT JOIN Student s ON a.StudentID = s.ID";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, courseID);
+                stm.setString(2, email);
+                stm.setString(3, email);
+                stm.setInt(4, subjectID);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    int grID = rs.getInt("GroupID");
+                    String sql1 = "SELECT a.*, s.Code AS [StudentCode], s.Name "
+                            + "FROM (SELECT m.*, g.Name AS [GroupName], g.CourseID "
+                            + "FROM Groupp g LEFT JOIN Member m "
+                            + "ON g.ID = m.GroupID WHERE g.CourseID IN (SELECT ID FROM Course "
+                            + "WHERE SemesterID = 11114 AND ID = ?) "
+                            + "AND m.GroupID = (SELECT DISTINCT GroupID FROM Member "
+                            + "WHERE StudentID = (SELECT ID FROM Student "
+                            + "WHERE Email = (SELECT Email FROM Account "
+                            + "WHERE Email = ?)) AND GroupID = ?) AND m.SubjectID IN (?)) AS a "
+                            + "LEFT JOIN Student s ON a.StudentID = s.ID";
+                    stm = conn.prepareStatement(sql1);
+                    stm.setInt(1, courseID);
+                    stm.setString(2, email);
+                    stm.setInt(3, grID);
+                    stm.setInt(4, subjectID);
+                    rs = stm.executeQuery();
+                    while (rs.next()) {
+                        int StuID = rs.getInt("StudentID");
+                        int GroupID = rs.getInt("GroupID");
+                        String StartDate = rs.getString("StartDate");
+                        String Major = rs.getString("Major");
+                        String isLeader = rs.getString("isLeader");
+                        String StudentCode = rs.getString("StudentCode");
+                        String StudentName = rs.getString("Name");
+                        String grName = rs.getString("GroupName");
+                        int CourseID = rs.getInt("CourseID");
+                        int SubID = rs.getInt("SubjectID");
+                        count++;
+                        list.add(new Group(StudentName, GroupID, grName, StartDate,
+                                Major, isLeader, StudentCode, StuID, CourseID, SubID));
+                    }
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
+    public List<Group> joinGroup(int subID, int courseID) throws SQLException {
+        List<Group> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT a.*, s.Code AS [StudentCode], s.Name "
+                        + "FROM (SELECT m.*, g.Name AS [GroupName], g.CourseID "
+                        + "FROM Groupp g LEFT JOIN Member m "
+                        + "ON g.ID = m.GroupID WHERE g.CourseID IN (SELECT ID FROM Course "
+                        + "WHERE SemesterID = 11114 AND CourseID = ?) "
+                        + "AND m.SubjectID IN (?)) AS a "
+                        + "LEFT JOIN Student s ON a.StudentID = s.ID WHERE a.isLeader = 'LD'";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, courseID);
+                stm.setInt(2, subID);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int StuID = rs.getInt("StudentID");
+                    int GroupID = rs.getInt("GroupID");
+                    String StartDate = rs.getString("StartDate");
+                    String Major = rs.getString("Major");
+                    String isLeader = rs.getString("isLeader");
+                    String StudentCode = rs.getString("StudentCode");
+                    String StudentName = rs.getString("Name");
+                    String grName = rs.getString("GroupName");
+                    int CourseID = rs.getInt("CourseID");
+                    int SubID = rs.getInt("SubjectID");
+                    list.add(new Group(StudentName, GroupID, grName, StartDate,
+                            Major, isLeader, StudentCode, StuID, CourseID, SubID));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
+    public boolean GroupEnrollment(int subID, int grID, int StudentID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql1 = "INSERT INTO Member "
+                        + "VALUES(?,?,GETDATE(),'SE','MB',?)";
+                stm = conn.prepareStatement(sql1);
+                stm.setInt(1, StudentID);
+                stm.setInt(2, grID);
+                stm.setInt(3, subID);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public int findStudentID(String email) throws SQLException {
+        int ID = 0;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT ID FROM Student "
+                        + "WHERE Email = (SELECT Email FROM Account "
+                        + "WHERE Email = ?)";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    ID = rs.getInt("ID");
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
         } finally {
             if (stm != null) {
                 stm.close();

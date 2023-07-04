@@ -1,30 +1,38 @@
 package user.controller;
 
+import DTO.Group;
+import DTO.UserAccountDTO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import userDAO.ProfileStudentDAO;
 
-public class UserController extends HttpServlet {
-   
-    private static final String ERROR = "error.jsp";
-    private static final String CREATE_GROUP = "CreateGroupController";
-    private static final String JOIN_GROUP = "GroupEnrollmentController";
+public class GroupEnrollmentController extends HttpServlet {
+    private static final String ERROR = "joinGroup.jsp";
+    private static final String SUCCESS = "GetListClassGroupController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String action = request.getParameter("action");
-            if("CreateGroup".equals(action)){
-                url = CREATE_GROUP;
-            }else if("JoinGroup".equals(action)){
-                url = JOIN_GROUP;
+            HttpSession session = request.getSession();
+            int subID = Integer.parseInt(request.getParameter("subID"));
+            int grID = Integer.parseInt(request.getParameter("groupID"));
+            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
+            ProfileStudentDAO dao = new ProfileStudentDAO();
+            int StudentID = dao.findStudentID(loginUser.getEmail());
+            boolean check = dao.GroupEnrollment(subID, grID, StudentID);
+            if(check){
+                request.setAttribute("SUCCESS", "Join Group successfully!!");
+                url = SUCCESS;
             }
-        } catch (Exception e) {
-            log("Error at UserController: " + e.toString());
-        } finally {
+        } catch (NumberFormatException | SQLException e) {
+            e.printStackTrace();
+        }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }
     } 
