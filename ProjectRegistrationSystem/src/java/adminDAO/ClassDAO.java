@@ -5,6 +5,7 @@ import DTO.ClassInformation;
 import DTO.Semester;
 import DTO.StudentProfile;
 import DTO.Subject;
+import DTO.Topic;
 import DTO.TopicAssign;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,7 +70,7 @@ public class ClassDAO {
                         + "FROM SubjectInClass s LEFT JOIN Subject su "
                         + "ON s.SubjectID = su.ID) AS a LEFT JOIN Lecturer lec "
                         + "ON a.LecturerID = lec.ID) AS b "
-                        + "LEFT JOIN Course c ON b.CourseID = c.ID";
+                        + "LEFT JOIN Course c ON b.CourseID = c.ID WHERE c.SemesterID = 11114";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -405,8 +406,8 @@ public class ClassDAO {
                         + "FROM TopicAssign t LEFT JOIN Topic a "
                         + "ON t.TopicID = a.ID) as a "
                         + "LEFT JOIN Subject s ON a.SubjectID = s.ID) as a "
-                        + "LEFT JOIN Semester s ON a.SemesterID = s.ID "
-                        + "WHERE a.Status = 0";
+                        + "LEFT JOIN Semester s ON a.SemesterID = s.ID ";
+                        
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -467,6 +468,73 @@ public class ClassDAO {
             }
         }
         return check;
+    }
+    
+    //approveTopic
+    public boolean declineTopic(int topicID, int SubjectID, boolean status) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "UPDATE TopicAssign SET Status = ? "
+                        + "WHERE TopicID = ? AND SubjectID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setBoolean(1, false);
+                stm.setInt(2, topicID);
+                stm.setInt(3, SubjectID);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+    public Topic getTopicDetail(int topID, int subID) throws SQLException{
+        Topic top = null;
+        Connection conn = null;
+        PreparedStatement stm= null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if(conn != null){
+                String sql = "SELECT * FROM Topic WHERE ID = (SELECT TopicID "
+                        + "FROM TopicAssign WHERE TopicID = ? "
+                        + "AND SubjectID = ?)";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, topID);
+                stm.setInt(2, subID);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    String topCode = rs.getString("Code");
+                    String topName = rs.getString("Name");
+                    String shortDes = rs.getString("ShortDescription");
+                    String fulltDes = rs.getString("FullDescription");
+                    top = new Topic(topID, topCode, topName, null, shortDes, fulltDes, 0);
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        }finally{
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return top;
     }
 
     //----------check----------
@@ -760,7 +828,7 @@ public class ClassDAO {
         return check;
     }
     //getDataFromFile
-    public boolean getDataFromFile(double col2, double col3, String col4, String col5) throws SQLException{
+    public boolean getDataFromFile(double col2, double col3, String col4,double col5,  String col6) throws SQLException{
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -773,7 +841,8 @@ public class ClassDAO {
                 stm.setDouble(1, col2);
                 stm.setDouble(2, col3);
                 stm.setString(3, col4);
-                stm.setString(4, col5);
+                stm.setDouble(4, col5);
+                stm.setString(5, col6);
                 check = stm.executeUpdate() > 0;
             }
         } catch (ClassNotFoundException | SQLException e) {

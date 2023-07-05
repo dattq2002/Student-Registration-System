@@ -1,6 +1,7 @@
 package adminDAO;
 
 import DBUtil.Util;
+import DTO.Group;
 import DTO.LectureProfile;
 import DTO.StudentProfile;
 import java.sql.Connection;
@@ -68,8 +69,9 @@ public class ProfileDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT * "
-                        + " FROM Student ";
+                String sql = "SELECT * FROM Student "
+                        + "WHERE ID IN (SELECT StudentID FROM Enrollment "
+                        + "WHERE CourseID IN (SELECT ID FROM Course WHERE SemesterID = 11114))";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -297,8 +299,9 @@ public class ProfileDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT * "
-                        + " FROM Lecturer ";
+                String sql = "SELECT * FROM Lecturer "
+                        + "WHERE ID IN (SELECT LecturerID FROM SubjectInClass "
+                        + "WHERE CourseID IN (SELECT ID FROM Course WHERE SemesterID = 11114))";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -547,9 +550,9 @@ public class ProfileDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "INSERT INTO Lecturer(ID, Code, Name, Birthday, "
+                String sql = "INSERT INTO Lecturer(ID, Code, Name, Birthday,"
                         + "PhoneNumber, Gender, Address, City, Email) "
-                        + "VALUES(?,?,?,?,?,?,?,?,?,?)";
+                        + "VALUES(?,?,?,?,?,?,?,?,?)";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, lec.getID());
                 stm.setString(2, lec.getCode());
@@ -649,13 +652,13 @@ public class ProfileDAO {
         boolean check = false;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "SELECT * FROM Account "
                         + "WHERE Email = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     check = true;
                 }
             }
@@ -674,22 +677,22 @@ public class ProfileDAO {
         }
         return check;
     }
-    
+
     //check duplicate StudentID
-    public boolean checkStudentID(int id) throws SQLException{
+    public boolean checkStudentID(int id) throws SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         boolean check = true;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "SELECT * FROM Student "
                         + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, id);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     check = false;
                 }
             }
@@ -708,22 +711,22 @@ public class ProfileDAO {
         }
         return check;
     }
-    
+
     //check duplicate LectureID
-    public boolean checkLectureID(int id) throws SQLException{
+    public boolean checkLectureID(int id) throws SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         boolean check = true;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "SELECT * FROM Lecturer "
                         + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, id);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     check = false;
                 }
             }

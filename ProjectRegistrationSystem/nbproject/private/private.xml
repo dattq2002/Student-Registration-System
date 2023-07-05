@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/web/memberInGroup.jsp</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/src/java/DTO/Group.java</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/src/java/user/controller/GroupEnrollmentController.java</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/web/joinGroup.jsp</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/src/java/user/controller/JoinGroupController.java</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/src/java/user/controller/GetListGroupStudentEnrollment.java</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/src/java/userDAO/ProfileStudentDAO.java</file>
-            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/web/groupEnrollment.jsp</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/web/viewClass.jsp</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/src/java/adminDAO/ClassDAO.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/src/java/admin/controller/DetailClassController.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/src/java/mainController/MainController.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/web/viewClassDetail.jsp</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391/ProjectRegistrationSystem/src/java/admin/controller/ClassController.java</file>
         </group>
     </open-files>
 </project-private>

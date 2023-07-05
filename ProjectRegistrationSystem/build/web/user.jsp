@@ -22,6 +22,7 @@
         <a href="ListPresentationCapstone">View Presentation</a><br>
         <a href="GetListClassStudentController">View Class</a><br>
         <a href="GetListGroupController">Create Group</a>
-        <a href="GetListClassGroupController">View Group</a>
+        <a href="GetListClassGroupController">View Detail Group</a>
+        <a href="GetListGroupEnRolled">Out Group Enrollment</a>
     </body>
 </html>

@@ -41,14 +41,19 @@ public class UploadFileAddStudentToClassController extends HttpServlet {
                         courseID = row.getCell(j + 1).getNumericCellValue();
                     }
                     String StartDate = row.getCell(j + 2).getStringCellValue();
-                    String Note = row.getCell(j + 3).getStringCellValue();
+                    double subjectID = row.getCell(j + 3).getNumericCellValue();
+                    String Note = row.getCell(j + 4).getStringCellValue();
                     if (cell != null) {
                         if (!course.equals("null")) {
-                            boolean check = dao.getDataFromFile(StuID, Double.parseDouble(course), StartDate, Note);
-                            if(check == false) return;
+                            boolean check = dao.getDataFromFile(StuID, Double.parseDouble(course), StartDate, subjectID, Note);
+                            if (check == false) {
+                                return;
+                            }
                         } else {
-                            boolean result = dao.getDataFromFile(StuID, courseID, StartDate, Note);
-                            if(result == false) return;
+                            boolean result = dao.getDataFromFile(StuID, courseID, StartDate, subjectID, Note);
+                            if (result == false) {
+                                return;
+                            }
                         }
                     }
                     break;

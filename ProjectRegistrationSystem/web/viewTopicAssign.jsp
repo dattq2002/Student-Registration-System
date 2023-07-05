@@ -32,14 +32,16 @@
                     <th>Modify Date</th>
                     <th>Semester</th>
                     <th>Status</th>
+                    <th>Detail</th>
                     <th>Approve</th>
+                    <th>Decline</th>
                 </tr>
             </thead>
             <tbody>
                 <%
                     for (TopicAssign item : list) {
                 %>
-            <form action="UpdateTopicAssign" method="POST">
+            <form action="MainController" method="POST">
                 <tr>
                     <td><%=item.getTopicAssignID()%></td>
                     <td>
@@ -57,8 +59,33 @@
                         <%=item.isStatus()%>
                         <input type="hidden" name="status" value="<%=item.isStatus()%>" />
                     </td>
+                    <%
+                        if (item.isStatus()) {
+                    %>
+                    <td>
+                        <a href="MainController?action=ViewTopicDetail&topicID=<%=item.getTopicID()%>&subID=<%=item.getSubjectID()%>">
+                            View_Detail
+                        </a>
+                    </td>
+                    <%
+                    } else {
+                    %>
+                    <td>
+                        <a href="#" style="color: red">Disable</a>
+                    </td>
+                    <%
+                        }
+                    %>
                     <td>
                         <input type="submit" value="Approve" />
+                        <input type="hidden" name="action" value="ApproveTopic" />
+                    </td>
+                    <td>                       
+                        <button>
+                            <a href="MainController?action=DeclineTopic&status=<%=item.isStatus()%>&topicid=<%=item.getTopicID()%>&subid=<%=item.getSubjectID()%>">
+                                Decline
+                            </a>
+                        </button>
                     </td>
                 </tr>
             </form>

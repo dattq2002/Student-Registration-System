@@ -22,6 +22,7 @@ public class DetailClassController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             int id = Integer.parseInt(request.getParameter("courseid"));
+            int subID = Integer.parseInt(request.getParameter("subjectID"));
             String lecName = request.getParameter("lecname");
             ClassDAO dao = new ClassDAO();
             List<StudentProfile> list = dao.getDetailEnrollment(id);

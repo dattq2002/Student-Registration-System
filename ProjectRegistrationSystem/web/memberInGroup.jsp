@@ -9,20 +9,20 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%
-            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
-            if (loginUser == null || !loginUser.getRoleID().equals("USER")) {
-                response.sendRedirect("login.jsp");
-                return;
-            }
-        %>
-        <h4>Amount Member in Group: <%=(request.getAttribute("AMOUNT") == null)? 
-                "0": request.getAttribute("AMOUNT")%></h4>
-        <%
-            List<Group> list = (List<Group>) request.getAttribute("LIST_MEMBER");
-            if (list != null) {
-                if (!list.isEmpty()) {
-        %>
+            <%
+                UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
+                if (loginUser == null || !loginUser.getRoleID().equals("USER")) {
+                    response.sendRedirect("login.jsp");
+                    return;
+                }
+            %>
+            <h4>Amount Member in Group: <%=(request.getAttribute("AMOUNT") == null)
+                ? "0" : request.getAttribute("AMOUNT")%></h4>
+            <%
+                List<Group> list = (List<Group>) request.getAttribute("LIST_MEMBER");
+                if (list != null) {
+                    if (!list.isEmpty()) {
+            %>
         <table border="1">
             <thead>
                 <tr>
@@ -35,9 +35,11 @@
                 </tr>
             </thead>
             <tbody>
+
                 <%
                     for (Group item : list) {
                 %>
+
                 <tr>
                     <td><%=item.getStudentCode() + "-" + item.getStudentID()%></td>
                     <td><%=item.getStudentName()%></td>
@@ -46,13 +48,15 @@
                     <td><%=item.getMajor()%></td>
                     <td><%=item.getIsLeader()%></td>
                 </tr>
+
+
                 <%
                     }
                 %>
 
-            </tbody>
-        </table>
 
+            </tbody>
+        </table>        
         <%
             }
         } else {
@@ -65,5 +69,6 @@
         <%
             }
         %>
+        
     </body>
 </html>

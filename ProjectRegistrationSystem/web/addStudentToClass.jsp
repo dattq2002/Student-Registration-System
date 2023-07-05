@@ -15,7 +15,7 @@
             }
         %>
         <h2>Input your file to add Student to Class</h2>
-        <a>Note in file .xlsx: +column: StudentID,CourseID,StartDate,Note</a><br>
+        <a>Note in file .xlsx: +column: StudentID,CourseID,StartDate,SubjectID, Note</a><br>
         <a>+ birthday in .xlsx: text("","yyyy-mm-dd")</a><br>
         <a>ex: text("4/10/2020","yyyy-mm-dd")</a><br><br>
         <form action="UploadFileAddStudentToClassController" method="POST" enctype="multipart/form-data">

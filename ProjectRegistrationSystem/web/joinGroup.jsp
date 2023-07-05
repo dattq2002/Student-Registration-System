@@ -14,7 +14,7 @@
             if (loginUser == null || !loginUser.getRoleID().equals("USER")) {
                 response.sendRedirect("login.jsp");
                 return;
-            }          
+            }
         %>
 
         <%
@@ -30,6 +30,7 @@
                     <th>Group Name</th>
                     <th>Start Date</th>
                     <th>Major</th>
+                    <th>Subject</th>
                     <th>isLeader</th>
                     <th>Join Group</th>
                 </tr>
@@ -45,12 +46,13 @@
                     <td><%=item.getGroupName()%></td>
                     <td><%=item.getStartDate()%></td>
                     <td><%=item.getMajor()%></td>
+                    <td><%=item.getSubjectName() + "-" + item.getSubjectID()%></td>
                     <td><%=item.getIsLeader()%></td>
                     <td>
                         <input type="submit" value="JoinGroup" name="action" />
                         <input type="hidden" name="courseID" value="<%=item.getCourseID()%>" />
                         <input type="hidden" name="subID" value="<%=item.getSubjectID()%>" />
-                        <input type="hidden" name="groupID" value="<%=item.getGroupID() %>" />
+                        <input type="hidden" name="groupID" value="<%=item.getGroupID()%>" />
                         <input type="hidden" name="groupName" value="<%=item.getGroupName()%>" />
                         <input type="hidden" name="stuID" value="<%=item.getStudentID()%>" />
                         <input type="hidden" name="stuCode" value="<%=item.getStudentCode()%>" />

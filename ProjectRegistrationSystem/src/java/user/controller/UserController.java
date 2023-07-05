@@ -11,6 +11,7 @@ public class UserController extends HttpServlet {
     private static final String ERROR = "error.jsp";
     private static final String CREATE_GROUP = "CreateGroupController";
     private static final String JOIN_GROUP = "GroupEnrollmentController";
+    private static final String OUT_GROUP = "OutGroupEnrollmentController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -21,6 +22,8 @@ public class UserController extends HttpServlet {
                 url = CREATE_GROUP;
             }else if("JoinGroup".equals(action)){
                 url = JOIN_GROUP;
+            }else if("OutGroup".equals(action)){
+                url = OUT_GROUP;
             }
         } catch (Exception e) {
             log("Error at UserController: " + e.toString());

@@ -19,9 +19,8 @@ public abstract class Person {
         this.Email = Email;
         this.image = image;
     }
-
-    public Person(int ID, String Code, String name, String birthday, 
-            String PhoneNumber, String Gender, String Address, String City, String Email) {
+    //profile Lecture and Student
+    public Person(int ID, String Code, String name, String birthday, String PhoneNumber, String Gender, String Address, String City, String Email, String image) {
         this.ID = ID;
         this.Code = Code;
         this.name = name;
@@ -31,9 +30,22 @@ public abstract class Person {
         this.Address = Address;
         this.City = City;
         this.Email = Email;
+        this.image = image;
     }
-
     public Person(String name, String birthday, String PhoneNumber, String Gender, String Address, String City, String Email) {
+        this.name = name;
+        this.birthday = birthday;
+        this.PhoneNumber = PhoneNumber;
+        this.Gender = Gender;
+        this.Address = Address;
+        this.City = City;
+        this.Email = Email;
+    }
+    //-----------------------------------------
+    public Person(int ID, String Code, String name, String birthday, 
+            String PhoneNumber, String Gender, String Address, String City, String Email) {
+        this.ID = ID;
+        this.Code = Code;
         this.name = name;
         this.birthday = birthday;
         this.PhoneNumber = PhoneNumber;

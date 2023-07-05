@@ -12,10 +12,11 @@ public class Group {
     private int StudentID;
     private int CourseID;
     private int SubjectID;
+    private String SubjectCode;
     //constructor
 
     public Group(String StudentName, int GroupID, String GroupName, String StartDate, String Major, 
-            String isLeader, String StudentCode, int StudentID, int CourseID, int SubjectID) {
+            String isLeader, String StudentCode, int StudentID, int CourseID, int SubjectID, String subCode) {
         this.StudentName = StudentName;
         this.GroupID = GroupID;
         this.StartDate = StartDate;
@@ -26,6 +27,7 @@ public class Group {
         this.CourseID = CourseID;
         this.GroupName = GroupName;
         this.SubjectID = SubjectID;
+        this.SubjectCode = subCode;
     }
     //getter
 
@@ -67,6 +69,10 @@ public class Group {
 
     public int getSubjectID() {
         return SubjectID;
+    }
+
+    public String getSubjectName() {
+        return SubjectCode;
     }
     
 }

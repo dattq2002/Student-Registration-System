@@ -113,8 +113,8 @@
         <servlet-class>admin.controller.ListTopicAssign</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UpdateTopicAssign</servlet-name>
-        <servlet-class>admin.controller.UpdateTopicAssign</servlet-class>
+        <servlet-name>ApproveTopicAssign</servlet-name>
+        <servlet-class>admin.controller.ApproveTopicAssign</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateClassController</servlet-name>
@@ -199,6 +199,90 @@
     <servlet>
         <servlet-name>GroupEnrollmentController</servlet-name>
         <servlet-class>user.controller.GroupEnrollmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ApproveApplicationController</servlet-name>
+        <servlet-class>manager.controller.ApproveApplicationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailApplicationMNGController</servlet-name>
+        <servlet-class>manager.controller.DetailApplicationMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListApplicationMNGController</servlet-name>
+        <servlet-class>manager.controller.ListApplicationMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RefuseApplicationController</servlet-name>
+        <servlet-class>manager.controller.RefuseApplicationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListClassMNGController</servlet-name>
+        <servlet-class>manager.controller.ListClassMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListStudentMNGController</servlet-name>
+        <servlet-class>manager.controller.ListStudentMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListPresentationMNGController</servlet-name>
+        <servlet-class>manager.controller.ListPresentationMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostPresentationMNGController</servlet-name>
+        <servlet-class>manager.controller.PostPresentationMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileMNGController</servlet-name>
+        <servlet-class>manager.controller.ProfileMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProfileMNGController</servlet-name>
+        <servlet-class>manager.controller.UpdateProfileMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateTopicController</servlet-name>
+        <servlet-class>manager.controller.CreateTopicController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteTopicController</servlet-name>
+        <servlet-class>manager.controller.DeleteTopicController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailTopicMNGController</servlet-name>
+        <servlet-class>manager.controller.DetailTopicMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListTopicMNGController</servlet-name>
+        <servlet-class>manager.controller.ListTopicMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchTopicMNGController</servlet-name>
+        <servlet-class>manager.controller.SearchTopicMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateTopicController</servlet-name>
+        <servlet-class>manager.controller.UpdateTopicController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManagerController</servlet-name>
+        <servlet-class>manager.controller.ManagerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OutGroupEnrollmentController</servlet-name>
+        <servlet-class>user.controller.OutGroupEnrollmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListGroupEnRolled</servlet-name>
+        <servlet-class>user.controller.GetListGroupEnRolled</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeclineTopicAssign</servlet-name>
+        <servlet-class>admin.controller.DeclineTopicAssign</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewTopicDetailController</servlet-name>
+        <servlet-class>admin.controller.ViewTopicDetailController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -313,8 +397,8 @@
         <url-pattern>/ListTopicAssign</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UpdateTopicAssign</servlet-name>
-        <url-pattern>/UpdateTopicAssign</url-pattern>
+        <servlet-name>ApproveTopicAssign</servlet-name>
+        <url-pattern>/ApproveTopicAssign</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateClassController</servlet-name>
@@ -399,6 +483,90 @@
     <servlet-mapping>
         <servlet-name>GroupEnrollmentController</servlet-name>
         <url-pattern>/GroupEnrollmentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApproveApplicationController</servlet-name>
+        <url-pattern>/ApproveApplicationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailApplicationMNGController</servlet-name>
+        <url-pattern>/DetailApplicationMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListApplicationMNGController</servlet-name>
+        <url-pattern>/ListApplicationMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RefuseApplicationController</servlet-name>
+        <url-pattern>/RefuseApplicationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListClassMNGController</servlet-name>
+        <url-pattern>/ListClassMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListStudentMNGController</servlet-name>
+        <url-pattern>/ListStudentMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListPresentationMNGController</servlet-name>
+        <url-pattern>/ListPresentationMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostPresentationMNGController</servlet-name>
+        <url-pattern>/PostPresentationMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileMNGController</servlet-name>
+        <url-pattern>/ProfileMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProfileMNGController</servlet-name>
+        <url-pattern>/UpdateProfileMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTopicController</servlet-name>
+        <url-pattern>/CreateTopicController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteTopicController</servlet-name>
+        <url-pattern>/DeleteTopicController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailTopicMNGController</servlet-name>
+        <url-pattern>/DetailTopicMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListTopicMNGController</servlet-name>
+        <url-pattern>/ListTopicMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchTopicMNGController</servlet-name>
+        <url-pattern>/SearchTopicMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateTopicController</servlet-name>
+        <url-pattern>/UpdateTopicController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagerController</servlet-name>
+        <url-pattern>/ManagerController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OutGroupEnrollmentController</servlet-name>
+        <url-pattern>/OutGroupEnrollmentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListGroupEnRolled</servlet-name>
+        <url-pattern>/GetListGroupEnRolled</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeclineTopicAssign</servlet-name>
+        <url-pattern>/DeclineTopicAssign</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewTopicDetailController</servlet-name>
+        <url-pattern>/ViewTopicDetailController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

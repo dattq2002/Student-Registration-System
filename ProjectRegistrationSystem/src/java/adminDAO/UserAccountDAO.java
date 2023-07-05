@@ -280,29 +280,31 @@ public class UserAccountDAO {
                 stm.setString(3, acc.getStatus());
                 stm.setInt(4, id);
                 check = stm.executeUpdate() > 0;
-                String sql2 = "SELECT Email FROM Account WHERE AccountID = ?";
-                stm = conn.prepareStatement(sql2);
-                stm.setInt(1, id);
-                rs = stm.executeQuery();
-                if(rs.next()){
-                    email = rs.getString("Email");
-                }
-                if (email.contains("@fe.edu.vn")) {
-                    String sql3 = "UPDATE Lecturer SET Name = ? "
-                            + "WHERE Email = (SELECT Email FROM Account "
-                            + "WHERE AccountID = ?)";
-                    stm = conn.prepareStatement(sql3);
-                    stm.setString(1, name);
-                    stm.setInt(2, id);
-                    check = stm.executeUpdate() > 0;
-                } else {
-                    String sql4 = "UPDATE Student SET Name = ? "
-                            + "WHERE Email = (SELECT Email FROM Account "
-                            + "WHERE AccountID = ?)";
-                    stm = conn.prepareStatement(sql4);
-                    stm.setString(1, name);
-                    stm.setInt(2, id);
-                    check = stm.executeUpdate() > 0;
+                if (!acc.getRoleID().equals("ADMIN")) {
+                    String sql2 = "SELECT Email FROM Account WHERE AccountID = ?";
+                    stm = conn.prepareStatement(sql2);
+                    stm.setInt(1, id);
+                    rs = stm.executeQuery();
+                    if (rs.next()) {
+                        email = rs.getString("Email");
+                    }
+                    if (email.contains("@fe.edu.vn")) {
+                        String sql3 = "UPDATE Lecturer SET Name = ? "
+                                + "WHERE Email = (SELECT Email FROM Account "
+                                + "WHERE AccountID = ?)";
+                        stm = conn.prepareStatement(sql3);
+                        stm.setString(1, name);
+                        stm.setInt(2, id);
+                        check = stm.executeUpdate() > 0;
+                    } else {
+                        String sql4 = "UPDATE Student SET Name = ? "
+                                + "WHERE Email = (SELECT Email FROM Account "
+                                + "WHERE AccountID = ?)";
+                        stm = conn.prepareStatement(sql4);
+                        stm.setString(1, name);
+                        stm.setInt(2, id);
+                        check = stm.executeUpdate() > 0;
+                    }
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -317,15 +319,15 @@ public class UserAccountDAO {
         }
         return check;
     }
-    
+
     //AddAccountFromFile
-    public boolean addAccountFromFile(UserAccountDTO acc) throws SQLException{
+    public boolean addAccountFromFile(UserAccountDTO acc) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "INSERT INTO Account(Email, Password, FullName, "
                         + "Role, Code, Status) "
                         + "VALUES(?,?,?,?,?,?)";
@@ -340,7 +342,7 @@ public class UserAccountDAO {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             if (stm != null) {
                 stm.close();
             }

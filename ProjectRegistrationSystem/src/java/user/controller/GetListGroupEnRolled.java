@@ -1,39 +1,38 @@
-package admin.controller;
+package user.controller;
 
-import adminDAO.ClassDAO;
+import DTO.Group;
+import DTO.UserAccountDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import userDAO.ProfileStudentDAO;
 
-/**
- *
- * @author meryc
- */
-public class UpdateTopicAssign extends HttpServlet {
-    
+
+public class GetListGroupEnRolled extends HttpServlet {
+    private static final String SUCCESS = "outGroup.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String url = SUCCESS;
         try {
-            boolean status = Boolean.parseBoolean(request.getParameter("status"));
-            int topicID = Integer.parseInt(request.getParameter("topicid"));
-            int subID = Integer.parseInt(request.getParameter("subid"));
-            ClassDAO dao = new ClassDAO();
-            boolean check = dao.approveTopic(topicID, subID, status);
-            if(check){
-                request.setAttribute("MESSAGE", "Approved !!");
-            }else{
-                request.setAttribute("MESSAGE", "Fail !!!");
+            HttpSession session = request.getSession();
+            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
+            ProfileStudentDAO dao = new ProfileStudentDAO();
+            List<Group> list = dao.GetListGroupEnRolled(loginUser.getEmail());
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("LIST_EROLLED", list);
+                }
             }
-            
-        } catch (NumberFormatException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }finally{
-            request.getRequestDispatcher("ListTopicAssign").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     } 
 

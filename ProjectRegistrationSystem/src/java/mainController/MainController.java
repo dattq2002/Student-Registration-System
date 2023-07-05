@@ -29,7 +29,9 @@ public class MainController extends HttpServlet {
     private static final String UPDATE_CLASS_CONTROLLER = "UpdateClassController";
     private static final String CREATE_STUDENT = "CreateStudentController";
     private static final String CREATE_LECTURE = "CreateLectureController";
-    
+    private static final String APPROVE_TOPIC = "ApproveTopicAssign";
+    private static final String DECLINE_TOPIC = "DeclineTopicAssign";
+    private static final String VIEW_TOPIC_DETAIL = "ViewTopicDetailController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,8 +41,14 @@ public class MainController extends HttpServlet {
             String action = request.getParameter("action");
             if ("Login".equals(action)) {
                 url = LOGIN;
+            } else if ("ViewTopicDetail".equals(action)) {
+                url = VIEW_TOPIC_DETAIL;    
             } else if ("SearchStudent".equals(action)) {
                 url = SEARCH_STUDENT;
+            } else if ("ApproveTopic".equals(action)) {
+                url = APPROVE_TOPIC;
+            } else if ("DeclineTopic".equals(action)) {
+                url = DECLINE_TOPIC;    
             } else if ("UpdateStudent".equals(action)) {
                 url = UPDATE_STUDENT;
             } else if ("SearchLecture".equals(action)) {
@@ -65,15 +73,15 @@ public class MainController extends HttpServlet {
                 url = SEARCH_CLASS_INFO;
             } else if ("Search Form".equals(action)) {
                 url = SEARCH_FORM;
-            }else if("Add Course".equals(action)){
+            } else if ("Add Course".equals(action)) {
                 url = CREATE_COURSE;
-            }else if("DeleteClass".equals(action)){
+            } else if ("DeleteClass".equals(action)) {
                 url = DELETE_CLASS_CONTROLLER;
-            }else if("Update Class".equals(action)){
+            } else if ("Update Class".equals(action)) {
                 url = UPDATE_CLASS_CONTROLLER;
-            }else if("AddStudent".equals(action)){
+            } else if ("AddStudent".equals(action)) {
                 url = CREATE_STUDENT;
-            }else if("AddLecture".equals(action)){
+            } else if ("AddLecture".equals(action)) {
                 url = CREATE_LECTURE;
             } else {
                 HttpSession session = request.getSession();

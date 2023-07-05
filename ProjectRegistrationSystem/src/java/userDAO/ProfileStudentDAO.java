@@ -171,14 +171,14 @@ public class ProfileStudentDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT S.Code, Q.SubjectID, Q.CourseName, Q.CourseCode, Q.CourseID "
-                        + "FROM (SELECT distinct a.*, e.StudentID "
-                        + "FROM (SELECT s.*, c.Name AS [CourseName], c.Code AS [CourseCode] "
-                        + "FROM SubjectInClass s LEFT JOIN Course c "
-                        + "ON s.CourseID = c.ID WHERE c.SemesterID = 11114) AS a "
-                        + "LEFT JOIN Enrollment e ON a.CourseID = e.CourseID "
-                        + "WHERE e.StudentID = (SELECT ID FROM Student WHERE Email = ?)) AS Q "
-                        + "LEFT JOIN Subject S ON Q.SubjectID = S.ID";
+                String sql = "SELECT A.*, S.Code "
+                        + "FROM (SELECT E.SubjectID, C.Code AS [CourseCode], "
+                        + "C.Name AS [CourseName], E.CourseID "
+                        + "FROM Enrollment E LEFT JOIN Course C "
+                        + "ON E.CourseID = C.ID "
+                        + "WHERE E.StudentID = (SELECT ID FROM Student WHERE "
+                        + "Email = ?) AND C.SemesterID = 11114) AS A "
+                        + "LEFT JOIN Subject S ON A.SubjectID = S.ID";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
@@ -218,7 +218,7 @@ public class ProfileStudentDAO {
             if (conn != null) {
                 String sql = "SELECT * FROM (SELECT g.* "
                         + "FROM Groupp g LEFT JOIN Course c ON g.CourseID = c.ID "
-                        + "WHERE c.SemesterID = 11114) AS ld "
+                        + "WHERE c.SemesterID = 11114 AND g.Status = 'True' ) AS ld "
                         + "WHERE Name = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, groupName);
@@ -251,7 +251,7 @@ public class ProfileStudentDAO {
             conn = Util.getConnection();
             if (conn != null) {
                 String sql = "INSERT INTO Groupp "
-                        + "VALUES('GR',?,?,'Deactive')";
+                        + "VALUES('GR',?,?,'False')";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, Group);
                 stm.setInt(2, courseID);
@@ -321,7 +321,7 @@ public class ProfileStudentDAO {
                         + "WHERE Email = (SELECT Email FROM Account "
                         + "WHERE Email = ?))) AND m.StudentID IN (SELECT ID FROM Student "
                         + "WHERE Email = (SELECT Email FROM Account "
-                        + "WHERE Email = ?)) AND m.SubjectID IN (?)) AS a "
+                        + "WHERE Email = ?)) AND m.SubjectID IN (?) AND g.Status = 'True') AS a "
                         + "LEFT JOIN Student s ON a.StudentID = s.ID";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, courseID);
@@ -331,7 +331,8 @@ public class ProfileStudentDAO {
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     int grID = rs.getInt("GroupID");
-                    String sql1 = "SELECT a.*, s.Code AS [StudentCode], s.Name "
+                    String sql1 = "SELECT QW.*, S.Code "
+                            + "FROM (SELECT a.*, s.Code AS [StudentCode], s.Name "
                             + "FROM (SELECT m.*, g.Name AS [GroupName], g.CourseID "
                             + "FROM Groupp g LEFT JOIN Member m "
                             + "ON g.ID = m.GroupID WHERE g.CourseID IN (SELECT ID FROM Course "
@@ -339,8 +340,10 @@ public class ProfileStudentDAO {
                             + "AND m.GroupID = (SELECT DISTINCT GroupID FROM Member "
                             + "WHERE StudentID = (SELECT ID FROM Student "
                             + "WHERE Email = (SELECT Email FROM Account "
-                            + "WHERE Email = ?)) AND GroupID = ?) AND m.SubjectID IN (?)) AS a "
-                            + "LEFT JOIN Student s ON a.StudentID = s.ID";
+                            + "WHERE Email = ?)) AND GroupID = ?) "
+                            + "AND m.SubjectID IN (?) AND g.Status = 'True') AS a "
+                            + "LEFT JOIN Student s ON a.StudentID = s.ID) AS QW "
+                            + "LEFT JOIN Subject S ON QW.SubjectID = S.ID";
                     stm = conn.prepareStatement(sql1);
                     stm.setInt(1, courseID);
                     stm.setString(2, email);
@@ -358,9 +361,10 @@ public class ProfileStudentDAO {
                         String grName = rs.getString("GroupName");
                         int CourseID = rs.getInt("CourseID");
                         int SubID = rs.getInt("SubjectID");
+                        String subCode = rs.getString("Code");
                         count++;
                         list.add(new Group(StudentName, GroupID, grName, StartDate,
-                                Major, isLeader, StudentCode, StuID, CourseID, SubID));
+                                Major, isLeader, StudentCode, StuID, CourseID, SubID, subCode));
                     }
                 }
             }
@@ -388,13 +392,15 @@ public class ProfileStudentDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT a.*, s.Code AS [StudentCode], s.Name "
+                String sql = "SELECT WQ.*, S.Code "
+                        + "FROM (SELECT a.*, s.Code AS [StudentCode], s.Name "
                         + "FROM (SELECT m.*, g.Name AS [GroupName], g.CourseID "
                         + "FROM Groupp g LEFT JOIN Member m "
                         + "ON g.ID = m.GroupID WHERE g.CourseID IN (SELECT ID FROM Course "
                         + "WHERE SemesterID = 11114 AND CourseID = ?) "
-                        + "AND m.SubjectID IN (?)) AS a "
-                        + "LEFT JOIN Student s ON a.StudentID = s.ID WHERE a.isLeader = 'LD'";
+                        + "AND m.SubjectID IN (?) AND g.Status = 'True') AS a "
+                        + "LEFT JOIN Student s ON a.StudentID = s.ID WHERE a.isLeader = 'LD') AS WQ "
+                        + "LEFT JOIN Subject S ON WQ.SubjectID = S.ID";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, courseID);
                 stm.setInt(2, subID);
@@ -410,8 +416,9 @@ public class ProfileStudentDAO {
                     String grName = rs.getString("GroupName");
                     int CourseID = rs.getInt("CourseID");
                     int SubID = rs.getInt("SubjectID");
+                    String subCode = rs.getString("Code");
                     list.add(new Group(StudentName, GroupID, grName, StartDate,
-                            Major, isLeader, StudentCode, StuID, CourseID, SubID));
+                            Major, isLeader, StudentCode, StuID, CourseID, SubID, subCode));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -488,5 +495,84 @@ public class ProfileStudentDAO {
             }
         }
         return ID;
+    }
+
+    public boolean OutGroupMember(int subID, String email) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "DELETE Member WHERE SubjectID = ? "
+                        + "AND StudentID = (SELECT ID FROM Student "
+                        + "WHERE Email = ?)";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, subID);
+                stm.setString(2, email);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public List<Group> GetListGroupEnRolled(String email) throws SQLException {
+        List<Group> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT EQ.*, S.Code "
+                        + "FROM (SELECT B.*, S.Name, S.Code AS [StudentCode] "
+                        + "FROM (SELECT A.*, G.Name AS [GroupName], G.CourseID "
+                        + "FROM (SELECT * FROM Member "
+                        + "WHERE StudentID = (SELECT ID FROM Student "
+                        + "WHERE Email = ?)) AS A "
+                        + "LEFT JOIN Groupp G ON A.GroupID = G.ID WHERE G.Status = 'True') AS B "
+                        + "LEFT JOIN Student S ON B.StudentID = S.ID) AS EQ "
+                        + "LEFT JOIN Subject S ON EQ.SubjectID = S.ID";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int StuID = rs.getInt("StudentID");
+                    int GroupID = rs.getInt("GroupID");
+                    String StartDate = rs.getString("StartDate");
+                    String Major = rs.getString("Major");
+                    String isLeader = rs.getString("isLeader");
+                    String StudentCode = rs.getString("StudentCode");
+                    String StudentName = rs.getString("Name");
+                    String grName = rs.getString("GroupName");
+                    int CourseID = rs.getInt("CourseID");
+                    int SubID = rs.getInt("SubjectID");
+                    String subCode = rs.getString("Code");
+                    list.add(new Group(StudentName, GroupID, grName, StartDate,
+                            Major, isLeader, StudentCode, StuID, CourseID, SubID, subCode));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
     }
 }
