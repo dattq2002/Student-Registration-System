@@ -32,6 +32,7 @@
                     <th>Major</th>
                     <th>Subject</th>
                     <th>isLeader</th>
+                    <th>View Detail</th>
                     <th>Join Group</th>
                 </tr>
             </thead>
@@ -48,6 +49,11 @@
                     <td><%=item.getMajor()%></td>
                     <td><%=item.getSubjectName() + "-" + item.getSubjectID()%></td>
                     <td><%=item.getIsLeader()%></td>
+                    <td>
+                        <a href="ViewDetailGroupToJoin?courseID=<%=item.getCourseID()%>&subID=<%=item.getSubjectID()%>&grID=<%=item.getGroupID()%>">
+                            View_Detail_Group
+                        </a>
+                    </td>
                     <td>
                         <input type="submit" value="JoinGroup" name="action" />
                         <input type="hidden" name="courseID" value="<%=item.getCourseID()%>" />
@@ -72,6 +78,14 @@
 
     <%
             }
+        }
+    %>
+    <%
+        String message = (String) request.getAttribute("ERROR_MESSAGE");
+        if (message != null) {
+    %>
+    <a><%=message%></a>
+    <%
         }
     %>
 </body>

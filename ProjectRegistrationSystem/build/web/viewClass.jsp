@@ -88,7 +88,7 @@
                         if (dto.isStatus()) {
                     %>
                     <td>
-                        <a href="MainController?action=ViewDetail&courseid=<%=dto.getCourseID()%>&lecname=<%=dto.getLecName()%>&subjectID=<%=dto.getSubjectID() %>">
+                        <a href="MainController?action=ViewDetail&courseid=<%=dto.getCourseID()%>&lecname=<%=dto.getLecName()%>">
                             View_Detail
                         </a>
                     </td>
@@ -108,7 +108,9 @@
                     </td>
                     <td>
                         <button>
-                            <a href="MainController?action=DeleteClass&id=<%=dto.getID()%>">Delete</a>
+                            <a href="MainController?action=DeleteClass&id=<%=dto.getID()%>&lecName=<%=dto.getLecName()%>&courseID=<%=dto.getCourseID()%>">
+                                Delete
+                            </a>
                         </button>
                     </td>
                 </tr>

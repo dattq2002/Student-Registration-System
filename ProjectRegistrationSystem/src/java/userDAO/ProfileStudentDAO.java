@@ -384,6 +384,60 @@ public class ProfileStudentDAO {
         return list;
     }
 
+    public List<Group> getListMember(int courseID, int subjectID, int grID) throws SQLException {
+        List<Group> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT QW.*, S.Code "
+                        + "FROM (SELECT a.*, s.Code AS [StudentCode], s.Name "
+                        + "FROM (SELECT m.*, g.Name AS [GroupName], g.CourseID "
+                        + "FROM Groupp g LEFT JOIN Member m "
+                        + "ON g.ID = m.GroupID WHERE g.CourseID IN (SELECT ID FROM Course "
+                        + "WHERE SemesterID = 11114 AND ID = ?) "
+                        + "AND m.GroupID = ? "
+                        + "AND m.SubjectID IN (?) AND g.Status = 'True') AS a "
+                        + "LEFT JOIN Student s ON a.StudentID = s.ID) AS QW "
+                        + "LEFT JOIN Subject S ON QW.SubjectID = S.ID";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, courseID);
+                    stm.setInt(2, grID);
+                    stm.setInt(3, subjectID);
+                    rs = stm.executeQuery();
+                    while (rs.next()) {
+                        int StuID = rs.getInt("StudentID");
+                        int GroupID = rs.getInt("GroupID");
+                        String StartDate = rs.getString("StartDate");
+                        String Major = rs.getString("Major");
+                        String isLeader = rs.getString("isLeader");
+                        String StudentCode = rs.getString("StudentCode");
+                        String StudentName = rs.getString("Name");
+                        String grName = rs.getString("GroupName");
+                        int CourseID = rs.getInt("CourseID");
+                        int SubID = rs.getInt("SubjectID");
+                        String subCode = rs.getString("Code");
+                        list.add(new Group(StudentName, GroupID, grName, StartDate,
+                                Major, isLeader, StudentCode, StuID, CourseID, SubID, subCode));
+                    }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        }finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
     public List<Group> joinGroup(int subID, int courseID) throws SQLException {
         List<Group> list = new ArrayList<>();
         Connection conn = null;

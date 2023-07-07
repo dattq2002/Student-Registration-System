@@ -32,61 +32,10 @@
             <input type="submit" name="action" value="SearchTopic"/>
         </form>       
 
-    <%
-        List<TopicMNG> listTopic = (List<TopicMNG>) request.getAttribute("LIST_TOPIC");
-        if (listTopic != null) {
-            if (!listTopic.isEmpty()) {
-    %>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Topic ID</th>
-                <th>Topic Code</th>
-                <th>Topic Name</th>
-                <th>Detail</th>
-            </tr>
-        </thead>
-        <tbody>
-            <%
-                int count = 1;
-                for (TopicMNG dto : listTopic) {
-            %>
-        <form action="ManagerController">
-            <tr>
-                <td> <%= count++%> </td>
-                <td> <%= dto.getTopicID()%> </td>
-                <td> <%= dto.getTopicCode()%> </td>
-                <td> <%= dto.getTopicName()%> </td> 
-                <td>
-                    <form action="MainController">
-                        <input type="hidden" name="detail" value="<%= dto.getTopicID() %>"/>
-                        <input type="submit" name="action" value="DetailTopic"/>
-                    </form>
-                </td>
-            </tr>
-        </form>
         <%
-            }
-        %>
-    </tbody>
-</table>
-<%
-    }
-    String error_message = (String) request.getAttribute("ERROR_MESSAGE");
-    if (error_message == null) {
-        error_message = "";
-    }
-%>
-
-<%
-    }
-%> 
-
-<%
-            List<TopicMNG> searchTopic = (List<TopicMNG>) request.getAttribute("SEARCH_TOPIC");
-            if (searchTopic != null) {
-                if (!searchTopic.isEmpty()) {
+            List<TopicMNG> listTopic = (List<TopicMNG>) request.getAttribute("LIST_TOPIC");
+            if (listTopic != null) {
+                if (!listTopic.isEmpty()) {
         %>
         <table border="1">
             <thead>
@@ -101,20 +50,18 @@
             <tbody>
                 <%
                     int count = 1;
-                    for (TopicMNG dto : searchTopic) {
+                    for (TopicMNG dto : listTopic) {
                 %>
             <form action="ManagerController">
                 <tr>
                     <td> <%= count++%> </td>
-                <td> <%= dto.getTopicID()%> </td>
-                <td> <%= dto.getTopicCode()%> </td>
-                <td> <%= dto.getTopicName()%> </td> 
-                <td>
-                    <form action="MainController">
-                        <input type="hidden" name="detail" value="<%= dto.getTopicID() %>"/>
+                    <td> <%= dto.getTopicID()%> </td>
+                    <td> <%= dto.getTopicCode()%> </td>
+                    <td> <%= dto.getTopicName()%> </td> 
+                    <td>
+                        <input type="hidden" name="detail" value="<%= dto.getTopicID()%>"/>
                         <input type="submit" name="action" value="DetailTopic"/>
-                    </form>
-                </td>
+                    </td>
                 </tr>
             </form>
             <%
@@ -122,8 +69,6 @@
             %>
         </tbody>
     </table>
-  
-        
     <%
         }
         String error_message = (String) request.getAttribute("ERROR_MESSAGE");
@@ -136,7 +81,60 @@
         }
     %> 
 
-    <a href="createTopic.jsp">Create Topic</a>
+    <%
+        List<TopicMNG> searchTopic = (List<TopicMNG>) request.getAttribute("SEARCH_TOPIC");
+        if (searchTopic != null) {
+            if (!searchTopic.isEmpty()) {
+    %>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Topic ID</th>
+                <th>Topic Code</th>
+                <th>Topic Name</th>
+                <th>Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+                int count = 1;
+                for (TopicMNG dto : searchTopic) {
+            %>
+        <form action="ManagerController">
+            <tr>
+                <td> <%= count++%> </td>
+                <td> <%= dto.getTopicID()%> </td>
+                <td> <%= dto.getTopicCode()%> </td>
+                <td> <%= dto.getTopicName()%> </td> 
+                <td>
+                    <form action="MainController">
+                        <input type="hidden" name="detail" value="<%= dto.getTopicID()%>"/>
+                        <input type="submit" name="action" value="DetailTopic"/>
+                    </form>
+                </td>
+            </tr>
+        </form>
+        <%
+            }
+        %>
+    </tbody>
+</table>
+
+
+<%
+    }
+    String error_message = (String) request.getAttribute("ERROR_MESSAGE");
+    if (error_message == null) {
+        error_message = "";
+    }
+%>
+
+<%
+    }
+%> 
+
+<a href="createTopic.jsp">Create Topic</a>
 
 </body>
 </html>

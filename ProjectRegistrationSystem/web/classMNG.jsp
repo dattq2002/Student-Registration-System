@@ -50,11 +50,11 @@
                     <td> <%= dto.getStartDate()%> </td>
                     <td> <%= dto.getEndDate()%> </td>
                     <td>
-                    <form action="MainController">
-                        <input type="hidden" name="join" value="<%= dto.getID() %>"/>
-                        <input type="submit" name="action" value="Join Class"/>
-                    </form>
-                </td>
+                        <form action="MainController">
+                            <input type="hidden" name="join" value="<%= dto.getID()%>"/>
+                            <input type="submit" name="action" value="Join Class"/>
+                        </form>
+                    </td>
                 </tr>
             </form>
             <%
@@ -63,15 +63,15 @@
         </tbody>
     </table>
     <%
-        }
+            }
         }
     %> 
     <%
         String error_message = (String) request.getAttribute("ERROR_MESSAGE");
         if (error_message != null) {
-            %>
-            <p><%=error_message%></p>
-        <%
+    %>
+    <p><%=error_message%></p>
+    <%
         }
     %>
 </body>

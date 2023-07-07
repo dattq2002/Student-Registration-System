@@ -49,13 +49,13 @@
                     <td><%=item.getCreateDate()%></td>
                     <td><%=item.getType()%></td>
                     <td><%=item.getReason()%></td>
-                    <td><%=item.getLecNote()%></td>
+                    <td><%=(item.getLecNote() == null) ? "" : item.getLecNote()%></td>
                     <td><%=item.getStatus()%></td>
                     <td><%=item.getLecName()%></td>
                     <td><%=item.getCourseName() + item.getCourseID()%></td>
-                    <td><%=item.getRoom()%></td>
-                    <td><%=item.getPresentDate()%></td>
-                    <td><%=item.getTime()%></td>
+                    <td><%=(item.getRoom() == null) ? "" : item.getRoom()%></td>
+                    <td><%=(item.getPresentDate() == null) ? "" : item.getPresentDate()%></td>
+                    <td><%=(item.getTime() == null) ? "" : item.getTime()%></td>
                 </tr>
                 <%
                     }

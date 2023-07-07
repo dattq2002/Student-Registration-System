@@ -1,35 +1,43 @@
-package admin.controller;
+package user.controller;
 
-import adminDAO.ClassDAO;
+import DTO.Group;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import userDAO.ProfileStudentDAO;
 
-public class DeleteClassController extends HttpServlet {
-    
+public class ViewDetailGroupToJoin extends HttpServlet {
+    private static final String ERROR = "JoinGroupController";
+    private static final String SUCCESS = "viewDetailGroupToJoin.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String url = ERROR;
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String lecName = request.getParameter("lecName");
             int courseID = Integer.parseInt(request.getParameter("courseID"));
-            ClassDAO dao = new ClassDAO();
-            int lecID = dao.checkLectureName(lecName);
-            boolean check = dao.DeleteClass(id,lecID, courseID);
-            if(check){
-                request.setAttribute("MESSAGE", "Delete Successfully !!");
-            }else{
-                request.setAttribute("MESSAGE", "Update Fail !!");
+            int subID = Integer.parseInt(request.getParameter("subID"));
+            int grID = Integer.parseInt(request.getParameter("grID"));
+            ProfileStudentDAO dao = new ProfileStudentDAO();
+            List<Group> list = dao.getListMember(courseID, subID, grID);
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("LIST_DETAIL_MEMBER", list);
+                    url = SUCCESS;
+                }else{
+                    request.setAttribute("ERROR_MESSAGE", "Empty member!!!");
+                    url = ERROR;
+                }
             }
         } catch (NumberFormatException | SQLException e) {
+            e.printStackTrace();
         }finally{
-            request.getRequestDispatcher("ClassController").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
-//    chỉnh status bên course sang SubjectInClass
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

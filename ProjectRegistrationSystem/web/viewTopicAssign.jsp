@@ -53,7 +53,7 @@
                         <input type="hidden" name="subid" value="<%=item.getSubjectID()%>" />
                     </td>
                     <td><%=item.getStartDate()%></td>
-                    <td><%=item.getModifyDate()%></td>
+                    <td><%=(item.getModifyDate() == null) ? "" : item.getModifyDate()%></td>
                     <td><%=item.getSemester()%></td>
                     <td>
                         <%=item.isStatus()%>

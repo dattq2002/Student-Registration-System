@@ -9,20 +9,19 @@
         <title>JSP Page</title>
     </head>
     <body>
-            <%
-                UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
-                if (loginUser == null || !loginUser.getRoleID().equals("USER")) {
-                    response.sendRedirect("login.jsp");
-                    return;
-                }
-            %>
-            <h4>Amount Member in Group: <%=(request.getAttribute("AMOUNT") == null)
-                    ? "0" : request.getAttribute("AMOUNT")%></h4>
-            <%
-                List<Group> list = (List<Group>) request.getAttribute("LIST_MEMBER");
-                if (list != null) {
-                    if (!list.isEmpty()) {
-            %>
+        <%
+            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
+            if (loginUser == null || !loginUser.getRoleID().equals("USER")) {
+                response.sendRedirect("login.jsp");
+                return;
+            }
+        %>
+        <h3>Detail Group Member</h3>
+        <%
+            List<Group> list = (List<Group>) request.getAttribute("LIST_DETAIL_MEMBER");
+            if (list != null) {
+                if (!list.isEmpty()) {
+        %>
         <table border="1">
             <thead>
                 <tr>
@@ -50,19 +49,11 @@
                     }
                 %>
             </tbody>
-        </table>        
-        <%
-            }
-        } else {
-        %>
-        <h1>You don't have a group please Join</h1>
-        <button>
-            <a href="JoinGroupController?courseID=<%=request.getAttribute("CourseID")%>&subID=<%=request.getAttribute("subID")%>">
-                Join Group</a>
-        </button>
-        <%
-            }
-        %>
+        </table>
 
+        <%
+                }
+            }
+        %>
     </body>
 </html>

@@ -27,32 +27,37 @@ public class CreateCourseController extends HttpServlet {
             String lecName = request.getParameter("lecName");
             String subRoll = request.getParameter("subRoll");
             String subName = request.getParameter("subName");
-            String courseName = request.getParameter("courseName");
+            int courseCode = Integer.parseInt(request.getParameter("courseName"));
             int credit = Integer.parseInt(request.getParameter("Credit"));
             //----------------------------------------
             String regex = "^(NJS|SE)-\\d+$";
             String regex2 = "^[A-Za-z]+-\\d+$";
             boolean check = false;
+            int courseID = 0;
+            int subID = 0;
             //----------------------------------------
             //check
             ClassDAO dao = new ClassDAO();
             if (!dao.checkSemester(semesterNumber)) {
                 request.setAttribute("MESSAGE", "Semester is not exsit!!");
                 return;
-            }
-            int courseID = 0;
-            if (!courseRoll.matches(regex)) {
+            } else if (!courseRoll.matches(regex)) {
                 request.setAttribute("MESSAGE", "Course not Match !!!");
                 return;
             } else {
                 String tmp[] = courseRoll.split("-");
-                String name = tmp[0];
+                String CourseName = tmp[0];
                 courseID = Integer.parseInt(tmp[1]);
-                boolean result = dao.checkCourse(courseID, name, semesterNumber,
-                        startDate, endDate);
+                boolean result = dao.checkCourse(courseID);
                 if (result == false) {
-                    dao.CreateNewCourse(courseID, name,courseName, semesterNumber,
+                    boolean check1 = dao.CreateNewCourse(courseID, CourseName, courseCode, semesterNumber,
                             startDate, endDate);
+                    if (check1) {
+                        check = true;
+                    }else{
+                        return;
+                    }
+                }else{
                     check = true;
                 }
             }
@@ -61,7 +66,6 @@ public class CreateCourseController extends HttpServlet {
                 request.setAttribute("MESSAGE", "Lecturer is not found!!!");
                 return;
             }
-            int subID = 0;
             if (!subRoll.matches(regex2)) {
                 request.setAttribute("MESSAGE", "Sub Roll is not match!!");
                 return;
@@ -71,8 +75,8 @@ public class CreateCourseController extends HttpServlet {
                 subID = Integer.parseInt(tmp[1]);
                 boolean result = dao.checkSubject(subID, subCode, subName, credit);
                 if (result == false) {
-                    dao.createNewSubject(subID, subCode, subName, credit);
-                    check = true;
+                    boolean result1 = dao.createNewSubject(subID, subCode, subName, credit);
+                    if(result1) check = true;
                 }
             }
             //create

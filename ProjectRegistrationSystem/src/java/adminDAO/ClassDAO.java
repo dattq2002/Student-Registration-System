@@ -86,7 +86,7 @@ public class ClassDAO {
                     int semeID = rs.getInt("SemesterID");
                     int CourseCode = rs.getInt("Code");
                     list.add(new ClassInformation(ID, subCode, subID, lecName,
-                            Coursecode, CourseID,CourseCode, start, end, status, semeID));
+                            Coursecode, CourseID, CourseCode, start, end, status, semeID));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -104,7 +104,7 @@ public class ClassDAO {
         }
         return list;
     }
-    
+
     //getListClassSP2022
     public List<ClassInformation> getListClassSP2022() throws SQLException {
         List<ClassInformation> list = new ArrayList<>();
@@ -137,7 +137,7 @@ public class ClassDAO {
                     int semeID = rs.getInt("SemesterID");
                     int CourseCode = rs.getInt("Code");
                     list.add(new ClassInformation(ID, subCode, subID, lecName,
-                            Coursecode, CourseID,CourseCode, start, end, status, semeID));
+                            Coursecode, CourseID, CourseCode, start, end, status, semeID));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -188,7 +188,7 @@ public class ClassDAO {
                     int semeID = rs.getInt("SemesterID");
                     int CourseCode = rs.getInt("Code");
                     list.add(new ClassInformation(ID, subCode, subID, lecName,
-                            Coursecode, CourseID,CourseCode, start, end, status, semeID));
+                            Coursecode, CourseID, CourseCode, start, end, status, semeID));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -206,7 +206,7 @@ public class ClassDAO {
         }
         return list;
     }
-    
+
     //getListClassSP2023
     public List<ClassInformation> getListClassSP2023() throws SQLException {
         List<ClassInformation> list = new ArrayList<>();
@@ -239,7 +239,7 @@ public class ClassDAO {
                     int semeID = rs.getInt("SemesterID");
                     int CourseCode = rs.getInt("Code");
                     list.add(new ClassInformation(ID, subCode, subID, lecName,
-                            Coursecode, CourseID,CourseCode, start, end, status, semeID));
+                            Coursecode, CourseID, CourseCode, start, end, status, semeID));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -257,7 +257,7 @@ public class ClassDAO {
         }
         return list;
     }
-    
+
     //getListClass
     public List<ClassInformation> getListClass(String search) throws SQLException {
         List<ClassInformation> list = new ArrayList<>();
@@ -267,14 +267,15 @@ public class ClassDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT b.ID, b.SubjectCode, b.SubjectID, b.LecName, c.Name, b.Code, b.CourseID, "
-                        + "c.StartDate, c.EndDate,c.SemesterID, b.Status FROM (SELECT a.*, "
-                        + "lec.Name AS [LecName] FROM (SELECT s.*, "
-                        + "su.Code as [SubjectCode] "
+                String sql = "SELECT b.ID, b.SubjectCode, b.SubjectID, b.LecName, "
+                        + "c.Name, c.Code, b.CourseID, c.StartDate, c.EndDate, "
+                        + "c.SemesterID, b.Status FROM (SELECT a.*, lec.Name AS "
+                        + "[LecName] FROM (SELECT s.*, su.Code as [SubjectCode] "
                         + "FROM SubjectInClass s LEFT JOIN Subject su "
                         + "ON s.SubjectID = su.ID) AS a LEFT JOIN Lecturer lec "
                         + "ON a.LecturerID = lec.ID) AS b "
-                        + "LEFT JOIN Course c ON b.CourseID = c.ID WHERE b.SubjectCode LIKE ? ";
+                        + "LEFT JOIN Course c ON b.CourseID = c.ID WHERE "
+                        + "b.SubjectCode LIKE ? AND c.SemesterID = 11114";
                 stm = conn.prepareStatement(sql);
                 String tmp = search.substring(0, 3);
                 stm.setString(1, "%" + tmp + "%");
@@ -292,7 +293,7 @@ public class ClassDAO {
                     int semeID = rs.getInt("SemesterID");
                     int CourseCode = rs.getInt("Code");
                     list.add(new ClassInformation(ID, subCode, subID, lecName,
-                            CourseName, CourseID,CourseCode, start, end, status, semeID));
+                            CourseName, CourseID, CourseCode, start, end, status, semeID));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -358,19 +359,28 @@ public class ClassDAO {
     }
 
     //UpdateClass
-    public boolean DeleteClass(int id) throws SQLException {
+    public boolean DeleteClass(int ID, int lecID, int courseID) throws SQLException {
         boolean check = false;
+        boolean check1 = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "UPDATE SubjectInClass SET Status = ? "
-                        + "WHERE ID = ?";
+                String sql = "DELETE SubjectInClass WHERE LecturerID = ? "
+                        + "AND CourseID = ? AND ID = ?";
                 stm = conn.prepareStatement(sql);
-                stm.setBoolean(1, false);
-                stm.setInt(2, id);
-                check = stm.executeUpdate() > 0;
+                stm.setInt(1, lecID);
+                stm.setInt(2, courseID);
+                stm.setInt(3, ID);
+                check1 = stm.executeUpdate() > 0;
+                if(check1){
+                    String sql1 = "DELETE Course "
+                            + "WHERE ID = ? AND SemesterID = 11114";
+                    stm = conn.prepareStatement(sql1);
+                    stm.setInt(1, courseID);
+                    check = stm.executeUpdate() > 0;
+                }
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -407,7 +417,7 @@ public class ClassDAO {
                         + "ON t.TopicID = a.ID) as a "
                         + "LEFT JOIN Subject s ON a.SubjectID = s.ID) as a "
                         + "LEFT JOIN Semester s ON a.SemesterID = s.ID ";
-                        
+
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -469,7 +479,7 @@ public class ClassDAO {
         }
         return check;
     }
-    
+
     //approveTopic
     public boolean declineTopic(int topicID, int SubjectID, boolean status) throws SQLException {
         boolean check = false;
@@ -498,15 +508,15 @@ public class ClassDAO {
         }
         return check;
     }
-    
-    public Topic getTopicDetail(int topID, int subID) throws SQLException{
+
+    public Topic getTopicDetail(int topID, int subID) throws SQLException {
         Topic top = null;
         Connection conn = null;
-        PreparedStatement stm= null;
+        PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "SELECT * FROM Topic WHERE ID = (SELECT TopicID "
                         + "FROM TopicAssign WHERE TopicID = ? "
                         + "AND SubjectID = ?)";
@@ -514,7 +524,7 @@ public class ClassDAO {
                 stm.setInt(1, topID);
                 stm.setInt(2, subID);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     String topCode = rs.getString("Code");
                     String topName = rs.getString("Name");
                     String shortDes = rs.getString("ShortDescription");
@@ -523,7 +533,7 @@ public class ClassDAO {
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
-        }finally{
+        } finally {
             if (rs != null) {
                 rs.close();
             }
@@ -545,13 +555,13 @@ public class ClassDAO {
         ResultSet rs = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "SELECT * FROM Semester "
                         + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, semester);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     check = true;
                 }
             }
@@ -570,27 +580,26 @@ public class ClassDAO {
         }
         return check;
     }
-    
-    public boolean checkCourse(int id, String name, int semester, 
-            String stDate, String endDate) throws SQLException{
-        boolean check = true;
+
+    public boolean checkCourse(int id) throws SQLException {
+        boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "SELECT * FROM Course "
                         + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, id);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     check = true;
                 }
             }
         } catch (Exception e) {
-        }finally {
+        } finally {
             if (rs != null) {
                 rs.close();
             }
@@ -603,28 +612,28 @@ public class ClassDAO {
         }
         return check;
     }
-    
-    public boolean CreateNewCourse(int id, String name,String code, int semester, 
-            String stDate, String endDate) throws SQLException{
-        boolean check = true;
+
+    public boolean CreateNewCourse(int id, String name, int code, int semester,
+            String stDate, String endDate) throws SQLException {
+        boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
-                String sql2 = "INSERT INTO Course "
-                            + "VALUES(?,?,?,?,?,?)";
-                    stm = conn.prepareStatement(sql2);
-                    stm.setInt(1, id);
-                    stm.setString(2, name);
-                    stm.setString(3, code);
-                    stm.setInt(4, semester);
-                    stm.setString(4, stDate);
-                    stm.setString(5, endDate);
-                    check = stm.executeUpdate() > 0;
+            if (conn != null) {
+                String sql = "INSERT INTO Course "
+                        + "VALUES (?,?,?,?,?,?)";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, id);
+                stm.setString(2, name);
+                stm.setInt(3, code);
+                stm.setInt(4, semester);
+                stm.setString(5, stDate);
+                stm.setString(6, endDate);
+                check = stm.executeUpdate() > 0;
             }
-        } catch (Exception e) {
-        }finally{
+        } catch (ClassNotFoundException | SQLException e) {
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -634,26 +643,26 @@ public class ClassDAO {
         }
         return check;
     }
-    
-    public int checkLectureName (String name) throws SQLException{
+
+    public int checkLectureName(String name) throws SQLException {
         int id = 0;
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "SELECT * FROM Lecturer "
                         + "WHERE Name = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, name);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     id = rs.getInt("ID");
                 }
             }
         } catch (Exception e) {
-        }finally {
+        } finally {
             if (rs != null) {
                 rs.close();
             }
@@ -666,23 +675,23 @@ public class ClassDAO {
         }
         return id;
     }
-    
-    public boolean checkSubject(int id, String code, String name, int credit) throws SQLException{
+
+    public boolean checkSubject(int id, String code, String name, int credit) throws SQLException {
         boolean check = true;
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "SELECT * FROM Subject "
                         + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, id);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     check = true;
-                }else{
+                } else {
                     String sql2 = "INSERT INTO Subject "
                             + "VALUES(?,?,?,?,?)";
                     stm = conn.prepareStatement(sql2);
@@ -696,7 +705,7 @@ public class ClassDAO {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (rs != null) {
                 rs.close();
             }
@@ -709,26 +718,26 @@ public class ClassDAO {
         }
         return check;
     }
-    
-    public boolean createNewSubject(int id, String code, String name, int credit) throws SQLException{
+
+    public boolean createNewSubject(int id, String code, String name, int credit) throws SQLException {
         boolean check = true;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
-            conn= Util.getConnection();
-            if(conn != null){
+            conn = Util.getConnection();
+            if (conn != null) {
                 String sql2 = "INSERT INTO Subject "
-                            + "VALUES(?,?,?,?,?)";
-                    stm = conn.prepareStatement(sql2);
-                    stm.setInt(1, id);
-                    stm.setString(2, code);
-                    stm.setString(2, name);
-                    stm.setString(3, null);
-                    stm.setInt(4, credit);
-                    check = stm.executeUpdate() > 0;
+                        + "VALUES(?,?,?,?,?)";
+                stm = conn.prepareStatement(sql2);
+                stm.setInt(1, id);
+                stm.setString(2, code);
+                stm.setString(2, name);
+                stm.setString(3, null);
+                stm.setInt(4, credit);
+                check = stm.executeUpdate() > 0;
             }
         } catch (Exception e) {
-        }finally {
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -738,16 +747,16 @@ public class ClassDAO {
         }
         return check;
     }
-    
+
     //-------------------------
     //CreateCourseSubjectInClass
-    public boolean CreateCourse(int lecID, int subID, int CourseID) throws SQLException{
-        boolean check = true;
+    public boolean CreateCourse(int lecID, int subID, int CourseID) throws SQLException {
+        boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "INSERT INTO SubjectInClass(LecturerID, SubjectID, "
                         + "CourseID, Status) VALUES(?,?,?,?)";
                 stm = conn.prepareStatement(sql);
@@ -759,7 +768,7 @@ public class ClassDAO {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -769,14 +778,15 @@ public class ClassDAO {
         }
         return check;
     }
+
     //UpdateSubjectInClass
-    public boolean UpdateSubjectInClass(int id,int subID, int CourseID, int lecID, boolean status) throws SQLException{
+    public boolean UpdateSubjectInClass(int id, int subID, int CourseID, int lecID, boolean status) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "UPDATE SubjectInClass SET LecturerID = ?,"
                         + "SubjectID = ?, CourseID = ?, Status = ? "
                         + "WHERE ID = ?";
@@ -789,7 +799,7 @@ public class ClassDAO {
                 check = stm.executeUpdate() > 0;
             }
         } catch (ClassNotFoundException | SQLException e) {
-        }finally{
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -799,14 +809,15 @@ public class ClassDAO {
         }
         return check;
     }
+
     //UpdateCourse
-    public boolean UpdateCourse(int CourseID,String stDate, String endDate) throws SQLException{
+    public boolean UpdateCourse(int CourseID, String stDate, String endDate) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "UPDATE Course SET StartDate = ?, "
                         + "EndDate = ? "
                         + "WHERE ID = ?";
@@ -817,7 +828,7 @@ public class ClassDAO {
                 check = stm.executeUpdate() > 0;
             }
         } catch (ClassNotFoundException | SQLException e) {
-        }finally{
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -827,14 +838,15 @@ public class ClassDAO {
         }
         return check;
     }
+
     //getDataFromFile
-    public boolean getDataFromFile(double col2, double col3, String col4,double col5,  String col6) throws SQLException{
+    public boolean getDataFromFile(double col2, double col3, String col4, double col5, String col6) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "INSERT INTO Enrollment(StudentID, CourseID, StartDate, Note) "
                         + "VALUES(?,?,?,?) ";
                 stm = conn.prepareStatement(sql);
@@ -847,26 +859,31 @@ public class ClassDAO {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-        }finally{
-            if(conn != null) conn.close();
-            if(stm != null) stm.close();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
         }
         return check;
     }
+
     //List Semester
-    public List<Semester> getSemester() throws SQLException{
+    public List<Semester> getSemester() throws SQLException {
         List<Semester> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            conn= Util.getConnection();
-            if(conn != null){
+            conn = Util.getConnection();
+            if (conn != null) {
                 String sql = "SELECT * FROM Semester "
                         + "WHERE Status = 'Unavailable'";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
-                while(rs.next()){
+                while (rs.next()) {
                     int ID = rs.getInt("ID");
                     int year = rs.getInt("Year");
                     String name = rs.getString("Name");
@@ -878,7 +895,7 @@ public class ClassDAO {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             if (rs != null) {
                 rs.close();
             }

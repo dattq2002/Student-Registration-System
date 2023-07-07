@@ -30,13 +30,15 @@ public class Application {
     public Application() {
     }
 
-    //fill_form
-    public Application(String type, int LecID, int StuID, String reason, int CourseID) {
+    //fill_form USER
+    public Application(String type, int LecID, int StuID, String reason, int CourseID, int subID, int grID) {
         this.type = type;
         this.LecID = LecID;
         this.StuID = StuID;
         this.reason = reason;
         this.CourseID = CourseID;
+        this.subID= subID;
+        this.grID = grID;
     }
 
     //updateForm
@@ -72,7 +74,7 @@ public class Application {
         this.time = time;
     }
 
-    //Presentation Capstone
+    //Presentation Capstone ADMIN
     public Application(int ID, String type, String lecName, String CreateDate, 
             String processDate, String Status, int CourseID, String CourseName, 
             int subID, String subCode, int grID, String grName, String room, 

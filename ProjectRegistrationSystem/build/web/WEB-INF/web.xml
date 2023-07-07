@@ -284,6 +284,10 @@
         <servlet-name>ViewTopicDetailController</servlet-name>
         <servlet-class>admin.controller.ViewTopicDetailController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewDetailGroupToJoin</servlet-name>
+        <servlet-class>user.controller.ViewDetailGroupToJoin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -567,6 +571,10 @@
     <servlet-mapping>
         <servlet-name>ViewTopicDetailController</servlet-name>
         <url-pattern>/ViewTopicDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailGroupToJoin</servlet-name>
+        <url-pattern>/ViewDetailGroupToJoin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

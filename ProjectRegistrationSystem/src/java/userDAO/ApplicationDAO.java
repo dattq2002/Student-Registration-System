@@ -21,8 +21,9 @@ public class ApplicationDAO {
             conn = Util.getConnection();
             if (conn != null) {
                 String sql = "INSERT INTO "
-                        + "Form(LecID, Type, StudentID, Reason, CreateDate, Status,CourseID) "
-                        + "VALUES (?,?,?,?,GETDATE(),?,?)";
+                        + "Form(LecID, Type, StudentID, Reason, CreateDate, "
+                        + "Status,CourseID, subjectID, GroupID) "
+                        + "VALUES (?,?,?,?,GETDATE(),?,?,?,?)";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, form.getLecID());
                 stm.setString(2, form.getType());
@@ -30,6 +31,8 @@ public class ApplicationDAO {
                 stm.setString(4, form.getReason());
                 stm.setString(5, "processing");
                 stm.setInt(6, form.getCourseID());
+                stm.setInt(7, form.getSubID());
+                stm.setInt(8, form.getGrID());
                 check = stm.executeUpdate() > 0;
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -135,6 +138,39 @@ public class ApplicationDAO {
         return list;
     }
 
+    //getGroupID
+    public int getGroupID(String team, int courseID) throws SQLException{
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int GroupID = 0;
+        try {
+            conn = Util.getConnection();
+            if(conn != null){
+                String sql = "SELECT ID FROM Groupp "
+                        + "WHERE Name = ? AND CourseID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, team);
+                stm.setInt(2, courseID);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    GroupID = rs.getInt("ID");
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        }finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return GroupID;
+    }
     //getnameCourse
     public String getCourseName(int ID) throws SQLException {
         Connection conn = null;
