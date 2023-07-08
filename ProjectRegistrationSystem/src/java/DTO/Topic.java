@@ -9,6 +9,7 @@ public class Topic {
     protected String ShortDescription;
     protected String FullDescription;
     protected int SemesterID;
+    protected int lecturerID;
     
     //constructor
 
@@ -28,7 +29,35 @@ public class Topic {
         this.SemesterID = SemesterID;
     }
 
-    
+    public Topic(int topicID, String topicCode, String topicName, 
+            String shortDescription, String fullDescription) {
+        this.TopicID = topicID;
+        this.TopicCode = topicCode;
+        this.name = topicName;
+        this.ShortDescription = shortDescription;
+        this.FullDescription = fullDescription;
+    }
+
+    public Topic(int topicID, String topicCode, String topicName, int lecturerID, 
+            String shortDescription, String fullDescription, int semester) {
+        this.TopicID = topicID;
+        this.TopicCode = topicCode;
+        this.name = topicName;
+        this.lecturerID = lecturerID;
+        this.ShortDescription = shortDescription;
+        this.FullDescription = fullDescription;
+        this.SemesterID = semester;
+    }
+     
+    public Topic(int topicID, String topicCode, String topicName, int lecturerID, 
+            String shortDescription, String fullDescription) {
+        this.TopicID = topicID;
+        this.TopicCode = topicCode;
+        this.name = topicName;
+        this.lecturerID = lecturerID;
+        this.ShortDescription = shortDescription;
+        this.FullDescription = fullDescription;
+    }
     
     //getter,setter
 
@@ -86,6 +115,14 @@ public class Topic {
 
     public void setSemesterID(int SemesterID) {
         this.SemesterID = SemesterID;
+    }
+
+    public int getLecturerID() {
+        return lecturerID;
+    }
+
+    public void setLecturerID(int lecturerID) {
+        this.lecturerID = lecturerID;
     }
     
 }

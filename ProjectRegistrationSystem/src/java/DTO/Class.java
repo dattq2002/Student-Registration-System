@@ -42,7 +42,19 @@ public class Class {
         this.CourseName = CourseName;
         this.StartDate = StartDate;
     }
-    
+    //--------------------------------------------------------------------------
+    //constructor Lecture
+   
+    public Class(int CourseID, String CourseName, int CourseCode, int SemesterID, 
+            String StartDate, String EndDate) {
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.CourseCode = CourseCode;
+        this.SemesterID = SemesterID;
+        this.StartDate = StartDate;
+        this.EndDate = EndDate;
+    }
+    //--------------------------------------------------------------------------
     //getter,setter
     public int getCourseID() {
         return CourseID;

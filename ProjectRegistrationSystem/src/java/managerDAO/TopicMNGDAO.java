@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package managerDAO;
 
 import DBUtil.Util;
-import DTO.TopicMNG;
+import DTO.Topic;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,13 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Nam An
- */
 public class TopicMNGDAO {
-    public List<TopicMNG> getListTopicMNG() throws SQLException {
-        List<TopicMNG> list = new ArrayList<>();
+    public List<Topic> getListTopicMNG() throws SQLException {
+        List<Topic> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -36,9 +27,11 @@ public class TopicMNGDAO {
                     int topicID = rs.getInt("ID");
                     String topicCode = rs.getString("Code");
                     String topicName = rs.getString("Name");
+                    int lecturerID = rs.getInt("LecturerID");
                     String topicShort = rs.getString("ShortDescription");
                     String topicFull = rs.getString("FullDescription");
-                    list.add(new TopicMNG(topicID, topicCode, topicName, topicShort, topicFull));
+                    list.add(new Topic(topicID, topicCode, topicName, lecturerID, 
+                            topicShort, topicFull));
                 }
             }
         } catch (Exception e) {
@@ -51,8 +44,8 @@ public class TopicMNGDAO {
         return list;
     }
     
-    public List<TopicMNG> searchTopicByID(String search) throws SQLException {
-        List<TopicMNG> list = new ArrayList<>();
+    public List<Topic> searchTopicByID(String search) throws SQLException {
+        List<Topic> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -73,7 +66,7 @@ public class TopicMNGDAO {
                     String topicName = rs.getString("Name");
                     String topicShort = rs.getString("ShortDescription");
                     String topicFull = rs.getString("FullDescription");
-                    list.add(new TopicMNG(topicID, topicCode, topicName, topicShort, topicFull));
+                    list.add(new Topic(topicID, topicCode, topicName, topicShort, topicFull));
                 }
             }
         } catch (Exception e) {
@@ -145,7 +138,7 @@ public class TopicMNGDAO {
         return check;
     }
     
-    public boolean createTopic(int topicID, String topicCode, String topicName, int LecturerID, String shorDescription, String fullDescription, int subjectID, int  semesterID) throws SQLException {
+    public boolean createTopic(int topicID, String topicCode, String topicName, int LecturerID, String shorDescription, String fullDescription) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -162,14 +155,30 @@ public class TopicMNGDAO {
                 stm.setString(5, shorDescription);
                 stm.setString(6, fullDescription);
                 check = stm.executeUpdate()>0;  
-                
-                String sql2 = "Insert into TopicAssign(TopicID, SubjectID, StartDate, SemesterID, Status)"
-                        + " values(?,?,GETDATE(),?,0)";
-                stm = conn.prepareStatement(sql2);       
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(stm != null) stm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
+    }
+    
+    public boolean assignTopic(int topicID, int subjectID, int semesterID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if(conn != null) {
+                String sql = "Insert into TopicAssign(TopicID, SubjectID, SemesterID, StartDate, Status)"
+                        + " values(?,?,?,GETDATE(),0)";
+                stm = conn.prepareStatement(sql);
                 stm.setInt(1, topicID);
                 stm.setInt(2, subjectID);
                 stm.setInt(3, semesterID);
-                check = stm.executeUpdate()>0;
+                check = stm.executeUpdate()>0;  
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -295,6 +304,34 @@ public class TopicMNGDAO {
         return check;
     }
     
+    public boolean findSubjectID(int subjectID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if(conn != null) {
+                String sql = "Select SubjectID"
+                        + " from TopicAssign"
+                        + " where SubjectID=?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, subjectID);
+                rs = stm.executeQuery();
+                if(rs.next()) {
+                    check = true;
+                } 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(stm != null) stm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
+    }
+    
     public int getSemesterID(int year, String name) throws SQLException {
         int result = 0;
         Connection conn = null;
@@ -355,4 +392,5 @@ public class TopicMNGDAO {
         }
         return result;
     }
+    
 }

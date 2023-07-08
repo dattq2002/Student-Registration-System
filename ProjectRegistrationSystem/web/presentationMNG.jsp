@@ -1,5 +1,5 @@
-<%@page import="DTO.PresentationMNG"%>
 <%@page import="DTO.UserAccountDTO"%>
+<%@page import="DTO.Application"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,25 +15,23 @@
                 response.sendRedirect("login.jsp");
                 return;
             }
-
         %>
 
         <a href="manager.jsp">Home Page</a>
 
         <%
-            List<PresentationMNG> listPresentation = (List<PresentationMNG>) request.getAttribute("LIST_PRESENTATION");
-            if (listPresentation != null) {
-                if (!listPresentation.isEmpty()) {
+            List<Application> listApplication = (List<Application>) request.getAttribute("LIST_APPLICATION");
+            if (listApplication != null) {
+                if (!listApplication.isEmpty()) {
         %>
         <table border="1">
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Presentation ID</th>
-                    <th>Type</th>
                     <th>Subject ID</th>
                     <th>Course ID</th>
                     <th>Group ID</th>
+                    <th>Topic Code</th>
                     <th>Room</th>
                     <th>Presentation Date</th>
                     <th>Time</th>
@@ -42,19 +40,18 @@
             <tbody>
                 <%
                     int count = 1;
-                    for (PresentationMNG dto : listPresentation) {
+                    for (Application dto : listApplication) {
                 %>
-            <form action="ManagerController" method="POST">
+            <form action="ManagerController">
                 <tr>
                     <td> <%= count++%> </td>
-                    <td> <%= dto.getID()%> </td>
-                    <td> <%= dto.getType()%> </td>
-                    <td> <%= dto.getSubjectID()%> </td>
-                    <td> <%= dto.getCourseID()%> </td>
-                    <td> <%= dto.getGroupID()%> </td>
-                    <td> <%= dto.getRoom()%> </td>
+                    <td> <%= dto.getSubCode() + "-" + dto.getSubID()%> </td>
+                    <td> <%= dto.getCourseName() + "-" + dto.getCourseID()%> </td>
+                    <td> <%= dto.getGrName()%> </td>
+                    <td> <%= dto.getTopicCode() + "-" + dto.getTopicID()%> </td>  
+                    <td> <%= dto.getRoom() %> </td>
                     <td> <%= dto.getPresentDate()%> </td>
-                    <td> <%= dto.getTime()%> </td>
+                    <td> <%= dto.getTime() %> </td>
                 </tr>
             </form>
             <%
@@ -62,19 +59,13 @@
             %>
         </tbody>
     </table>
-    <%
-            }
 
+    <%
+        }
+    %>
+
+    <%
         }
     %> 
-    <%
-        String error_message = (String) request.getAttribute("ERROR_MESSAGE");
-        if (error_message != null) {
-    %>
-    <p><%=error_message%></p>
-    <%
-        }
-    %>
-    <a href="postPresentation.jsp">Post Presentation</a>
 </body>
 </html>

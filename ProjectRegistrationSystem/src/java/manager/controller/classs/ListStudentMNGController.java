@@ -1,0 +1,77 @@
+package manager.controller.classs;
+
+import DTO.StudentProfile;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import managerDAO.ClassMNGDAO;
+
+public class ListStudentMNGController extends HttpServlet {
+   
+    private static final String ERROR = "studentInClassMNG.jsp";
+    private static final String SUCCESS = "studentInClassMNG.jsp";
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String url = ERROR;
+        try {
+            int courseID = Integer.parseInt(request.getParameter("courseID"));
+            int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+            String courseName = request.getParameter("courseName");
+            int courseCode = Integer.parseInt(request.getParameter("courseCode"));
+            request.setAttribute("COURSE_CODE", courseName + courseCode);
+            ClassMNGDAO dao = new ClassMNGDAO();
+            List<StudentProfile> list = dao.getListStudentByID(courseID, subjectID);
+            if (!list.isEmpty()) {
+                request.setAttribute("LIST_STUDENT", list);
+                url = SUCCESS;
+            } 
+        } catch (NumberFormatException | SQLException e) {
+            log("Error at ListStudentMNGController: " + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+    } 
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /** 
+     * Handles the HTTP <code>GET</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
+
+    /** 
+     * Handles the HTTP <code>POST</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /** 
+     * Returns a short description of the servlet.
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

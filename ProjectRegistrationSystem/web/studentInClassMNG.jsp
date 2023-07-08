@@ -1,6 +1,7 @@
-<%@page import="DTO.UserAccountDTO"%>
-<%@page import="DTO.StudentMNG"%>
+<%@page import="DTO.ClassInformation"%>
+<%@page import="DTO.StudentProfile"%>
 <%@page import="java.util.List"%>
+<%@page import="DTO.UserAccountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,17 +16,15 @@
                 response.sendRedirect("login.jsp");
                 return;
             }
-            
-            String searchE = loginUser.getEmail();
         %>
-        
+
         <a href="manager.jsp">Home Page</a>
-        <span> > </span>
-        <a href="MainController?action=Lecturer's Class&searchE=<%= searchE %>">Class</a>
+        <a href="ManagerController?action=LecturerClass">Class</a>
         
+        <h1>List student of Class: <%=request.getAttribute("COURSE_CODE") %></h1>
         
         <%
-            List<StudentMNG> listStudent = (List<StudentMNG>) request.getAttribute("LIST_STUDENT");
+            List<StudentProfile> listStudent = (List<StudentProfile>) request.getAttribute("LIST_STUDENT");
             if (listStudent != null) {
                 if (!listStudent.isEmpty()) {
         %>
@@ -33,36 +32,30 @@
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Student ID</th>
-                    <th>Gender</th>
+                    <th>Student Code</th>
                     <th>Student Name</th>
                     <th>Birthday</th>
+                    <th>Phone Number</th>
+                    <th>Gender</th>
                     <th>Address</th>
                     <th>City</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Group Name</th>
-                    <th>Member</th>
                 </tr>
             </thead>
             <tbody>
                 <%
                     int count = 1;
-                    for (StudentMNG dto : listStudent) {
+                    for (StudentProfile dto : listStudent) {
                 %>
-            <form action="MainController">
+            <form action="ManagerController">
                 <tr>
                     <td> <%= count++%> </td>
-                    <td> <%= dto.getStudentID() %> </td>
-                    <td> <%= dto.getGender() %> </td>
-                    <td> <%= dto.getStudentName() %> </td>
-                    <td> <%= dto.getBirthday() %> </td>
-                    <td> <%= dto.getAddress() %> </td>
-                    <td> <%= dto.getCity() %> </td>
-                    <td> <%= dto.getPhoneNumber() %> </td>
-                    <td> <%= dto.getEmail() %> </td>
-                    <td> <%= dto.getGroupName() %> </td>
-                    <td> <%= dto.getMember() %> </td>
+                    <td> <%= dto.getCode() + dto.getID() %> </td>
+                    <td> <%= dto.getName()%> </td>
+                    <td> <%= dto.getBirthday()%> </td>
+                    <td> <%= dto.getPhoneNumber()%> </td>
+                    <td> <%= dto.getGender()%> </td>
+                    <td> <%= dto.getAddress()%> </td>
+                    <td> <%= dto.getCity()%> </td>
                 </tr>
             </form>
             <%
@@ -81,5 +74,5 @@
     <%
         }
     %> 
-    </body>
+</body>
 </html>

@@ -1,7 +1,6 @@
-<%@page import="DTO.ApplicationMNG"%>
-<%@page import="DTO.UserAccountDTO"%>
 <%@page import="DTO.Application"%>
 <%@page import="java.util.List"%>
+<%@page import="DTO.UserAccountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,24 +15,15 @@
                 response.sendRedirect("login.jsp");
                 return;
             }
-
-            String search = (String) request.getParameter("search");
-            if (search == null) {
-                search = "";
-            }
-
-            String searchE = loginUser.getEmail();
-            if (search == null) {
-                search = "";
-            }
         %>
 
         <a href="manager.jsp">Home Page</a>
-        <span> > </span>
-        <a href="ManagerController?action=Lecturer's Application&searchE=<%= searchE%>">List of Application</a>
+        <a href="ManagerController?action=LecturerApplication">Application</a>
+        <a href="ManagerController?action=ProcessedApplication">Approved Application</a>
 
-        <%
-            List<ApplicationMNG> listApplication = (List<ApplicationMNG>) request.getAttribute("LIST_APPLICATION");
+
+        <%            
+            List<Application> listApplication = (List<Application>) request.getAttribute("LIST_APPLICATION");
             if (listApplication != null) {
                 if (!listApplication.isEmpty()) {
         %>
@@ -45,29 +35,33 @@
                     <th>Type</th>
                     <th>Subject ID</th>
                     <th>Course ID</th>
-                    <th>Group ID</th>
+                    <th>Group ID</th>              
+                    <th>Topic Code</th>
                     <th>Student ID</th>
+                    <th>Status</th>         
                     <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
                 <%
                     int count = 1;
-                    for (ApplicationMNG dto : listApplication) {
+                    for (Application dto : listApplication) {
                 %>
             <form action="ManagerController">
                 <tr>
                     <td> <%= count++%> </td>
                     <td> <%= dto.getID()%> </td>
                     <td> <%= dto.getType()%> </td>
-                    <td> <%= dto.getSubjectID()%> </td>
-                    <td> <%= dto.getCourseID()%> </td>
-                    <td> <%= dto.getGroupID()%> </td>
-                    <td> <%= dto.getStudentID()%> </td>
+                    <td> <%= dto.getSubCode() + "-" + dto.getSubID()%> </td>
+                    <td> <%= dto.getCourseName() + "-" + dto.getCourseID()%> </td>
+                    <td> <%= dto.getGrName()%> </td>
+                    <td> <%= dto.getTopicCode() + "-" + dto.getTopicID() %> </td>
+                    <td> <%= dto.getStuCode() + "-" + dto.getStuID()%> </td>                
+                    <td> <%= dto.getStatus() %> </td>                
                     <td>
-                        <input type="hidden" name="type" value="<%= dto.getType()%>"/>
-                        <input type="hidden" name="detail" value="<%= dto.getID()%>"/>
-                        <input type="submit" name="action" value="DetailApplication"/>
+                        <input type="submit" value="Detail" />
+                        <input type="hidden" name="formID" value="<%= dto.getID()%>"/>
+                        <input type="hidden" name="action" value="DetailApplication"/>
                     </td>
                 </tr>
             </form>
@@ -77,17 +71,12 @@
         </tbody>
     </table>
     <%
-            }
+        }
+    %>
+
+    <%
         }
     %> 
-    <%
-        String error_message = (String) request.getAttribute("ERROR_MESSAGE");
-        if (error_message != null) {
-    %>
-    <p><%=error_message%></p>
-    <%
-        }
-    %>
 
 </body>
 </html>

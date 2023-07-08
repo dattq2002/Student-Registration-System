@@ -27,6 +27,10 @@ public class StudentProfile extends Person {
         this.Major = Major;
     }
 
+    public StudentProfile(int ID, String Code, String name, String birthday, 
+            String PhoneNumber, String Gender, String Address, String City) {
+        super(ID, Code, name, birthday, PhoneNumber, Gender, Address, City);
+    }
     public StudentProfile(String Email, String image) {
         super(Email, image);
     }

@@ -134,7 +134,73 @@ public class Application {
         this.presentDate = presentDate;
         this.time = time;
     }
+    //--------------------------------------------------------
+    //contructor Lecturer
+    public Application(int ID, String LecNote, String Status) {
+        this.ID = ID;
+        this.LecNote = LecNote;
+        this.Status = Status;
+    }
+
     
+    
+    public Application(String type, int ID, int LecID, String lecName, int StuID, 
+            String StuCode, String reason, String LecNote, String CreateDate, 
+            String processDate, String Status, int CourseID, String CourseName, 
+            int subID, String subCode, int grID, String grName, int topicID, 
+            String topicCode) {
+        this.type = type;
+        this.ID = ID;
+        this.LecID = LecID;
+        this.lecName = lecName;
+        this.StuID = StuID;
+        this.StuCode = StuCode;
+        this.reason = reason;
+        this.LecNote = LecNote;
+        this.CreateDate = CreateDate;
+        this.processDate = processDate;
+        this.Status = Status;
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.subID = subID;
+        this.subCode = subCode;
+        this.grID = grID;
+        this.grName = grName;
+        this.topicID = topicID;
+        this.topicCode = topicCode;
+    }
+
+    public Application(String type, int ID, int LecID, String lecName, int StuID, 
+            String StuCode, String reason, String LecNote, String CreateDate, 
+            String processDate, String Status, int CourseID, String CourseName, 
+            int subID, String subCode, int grID, String grName, String room, 
+            String presentDate, String time, String publish, int topicID, 
+            String topicCode) {
+        this.type = type;
+        this.ID = ID;
+        this.LecID = LecID;
+        this.lecName = lecName;
+        this.StuID = StuID;
+        this.StuCode = StuCode;
+        this.reason = reason;
+        this.LecNote = LecNote;
+        this.CreateDate = CreateDate;
+        this.processDate = processDate;
+        this.Status = Status;
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.subID = subID;
+        this.subCode = subCode;
+        this.grID = grID;
+        this.grName = grName;
+        this.room = room;
+        this.presentDate = presentDate;
+        this.time = time;
+        this.publish = publish;
+        this.topicID = topicID;
+        this.topicCode = topicCode;
+    }
+    //--------------------------------------------------------
     //getter,setter
     public String getType() {
         return type;
@@ -310,6 +376,22 @@ public class Application {
 
     public void setPublish(String publish) {
         this.publish = publish;
+    }
+
+    public int getTopicID() {
+        return topicID;
+    }
+
+    public void setTopicID(int topicID) {
+        this.topicID = topicID;
+    }
+
+    public String getTopicCode() {
+        return topicCode;
+    }
+
+    public void setTopicCode(String topicCode) {
+        this.topicCode = topicCode;
     }
 
 }

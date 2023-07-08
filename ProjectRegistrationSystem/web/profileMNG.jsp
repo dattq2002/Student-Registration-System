@@ -1,6 +1,6 @@
-<%@page import="DTO.UserAccountDTO"%>
-<%@page import="DTO.ProfileMNG"%>
+<%@page import="DTO.LectureProfile"%>
 <%@page import="java.util.List"%>
+<%@page import="DTO.UserAccountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,35 +18,57 @@
         %>
         <a href="manager.jsp">Home Page</a>
 
-        <h2>Lecturer's Profile</h2>
-
         <%
-            List<ProfileMNG> profile = (List<ProfileMNG>) request.getAttribute("PROFILE");
+            List<LectureProfile> profile = (List<LectureProfile>) request.getAttribute("PROFILE");
             if (profile != null) {
                 if (!profile.isEmpty()) {
         %>
 
         <%
-            for (ProfileMNG dto : profile) {
+            for (LectureProfile dto : profile) {
         %>
-        <form action="ManagerController" method="POST">
+        <form action="ManagerController">
             <br><img src="<%= dto.getImage()%>" alt="Image"><br>
 
+            <div>
+                Lecturer ID:<%= dto.getCode()+ '-' + dto.getID()%>
+            </div>
 
-            <br>Lecturer ID: <%= dto.getLecturerID()%> <br>
-            <br>Name: <input type="text" name="name" value="<%= dto.getName()%>"/> <br>
-            <br>Gender:
-            <input type="radio" name="gender" value="male" <% if ("male".equals(dto.getGender())) { %> checked <% } %>> Male
-            <input type="radio" name="gender" value="female" <% if ("female".equals(dto.getGender())) { %> checked <% }%>> Female
-            <br>
-            <br>Birthday: <input type="date" name="birthday" value="<%= dto.getBirthday()%>"/> <br>
-            <br>Address: <input type="text" name="address" value="<%= dto.getAddress()%>"/> <br>
-            <br>City: <input type="text" name="city" value="<%= dto.getCity()%>"/> <br>
-            <br>Phone Number: <input type="text" name="phoneNumber" value="<%= dto.getPhoneNumber()%>"/> <br>
-            <br>Email: <%= dto.getEmail()%> <br> <br>
+            <div>
+                Name: <input type="text" name="name" value="<%= dto.getName()%>"/>
+            </div>
 
-            <input type="submit" name="action" value="Update Profile"/>
-            <input type="hidden" name="email" value="<%= dto.getEmail()%>"/>
+            <div>
+                Gender:
+                <input type="radio" name="gender" value="male" <% if ("male".equals(dto.getGender())) { %> checked <% } %>> Male
+                <input type="radio" name="gender" value="female" <% if ("female".equals(dto.getGender())) { %> checked <% }%>> Female
+            </div>
+
+            <div>
+                Birthday: <input type="date" name="birthday" value="<%= dto.getBirthday()%>"/>
+            </div>
+
+            <div>
+                Address: <input type="text" name="address" value="<%= dto.getAddress()%>"/>
+            </div>
+
+            <div>
+                City: <input type="text" name="city" value="<%= dto.getCity()%>"/>
+            </div>
+
+            <div>
+                Phone Number: <input type="text" name="phoneNumber" value="<%= dto.getPhoneNumber()%>"/>
+            </div>
+
+            <div>
+                Email: <%= dto.getEmail()%>
+            </div>
+
+            <div>
+                <input type="submit" name="action" value="Update Profile"/>
+                <input type="hidden" name="email" value="<%= dto.getEmail()%>"/>        
+            </div>
+
         </form>
         <%
             }
@@ -54,18 +76,25 @@
     </tbody>
 </table>
 <%
-        }
     }
-%> 
-<%
     String error_message = (String) request.getAttribute("ERROR_MESSAGE");
-    if (error_message != null) {
-%>
-<p><%=error_message%></p>
-<%
+    if (error_message == null) {
+        error_message = "";
     }
 %>
 
+<%
+    }
+%> 
+
+<%
+    String message = (String) request.getAttribute("MESSAGE");
+    if (message != null) {
+%>
+<div><%=message%></div>
+<%
+    }
+%>
 
 </body>
 </html>

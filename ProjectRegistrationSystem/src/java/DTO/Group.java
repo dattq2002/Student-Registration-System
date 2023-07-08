@@ -2,21 +2,27 @@ package DTO;
 
 public class Group {
     //props
-    private String StudentName;
-    private int GroupID;
-    private String GroupName;
-    private String StartDate;
-    private String Major;
-    private String isLeader;
-    private String StudentCode;
-    private int StudentID;
-    private int CourseID;
-    private int SubjectID;
-    private String SubjectCode;
+    protected String StudentName;
+    protected int GroupID;
+    protected String GroupName;
+    protected String StartDate;
+    protected String Major;
+    protected String isLeader;
+    protected String StudentCode;
+    protected int StudentID;
+    protected int CourseID;
+    protected int SubjectID;
+    protected String SubjectCode;
+    protected String CourseName;
+    protected int CourseCode;
+    protected int MemberID;
+    protected int TopicID;
+    protected String TopicName;
     //constructor
 
-    public Group(String StudentName, int GroupID, String GroupName, String StartDate, String Major, 
-            String isLeader, String StudentCode, int StudentID, int CourseID, int SubjectID, String subCode) {
+    public Group(String StudentName, int GroupID, String GroupName, 
+            String StartDate, String Major, String isLeader, String StudentCode, 
+            int StudentID, int CourseID, int SubjectID, String subCode) {
         this.StudentName = StudentName;
         this.GroupID = GroupID;
         this.StartDate = StartDate;
@@ -29,6 +35,54 @@ public class Group {
         this.SubjectID = SubjectID;
         this.SubjectCode = subCode;
     }
+
+    public Group(String GroupName, int CourseID, int TopicID) {
+        this.GroupName = GroupName;
+        this.CourseID = CourseID;
+        this.TopicID = TopicID;
+    }
+    //--------------------------------------------------------------------------
+    //constructor Lecture
+    public Group(String GroupName, int SubjectID, String SubjectCode, 
+            String CourseName, int CourseCode, int GroupID) {
+        this.GroupName = GroupName;
+        this.SubjectID = SubjectID;
+        this.SubjectCode = SubjectCode;
+        this.CourseName = CourseName;
+        this.CourseCode = CourseCode;
+        this.GroupID = GroupID;
+    }
+    
+    public Group(String StudentName, String GroupName, String isLeader, 
+            String StudentCode, int StudentID, int MemberID) {
+        this.StudentName = StudentName;
+        this.GroupName = GroupName;
+        this.isLeader = isLeader;
+        this.StudentCode = StudentCode;
+        this.StudentID = StudentID;
+        this.MemberID = MemberID;
+    }    
+
+    public Group(int GroupID, String StudentName, String GroupName, 
+            String isLeader, String StudentCode, int StudentID, int SubjectID, 
+            String SubjectCode, String CourseName, int CourseCode) {
+        this.GroupID = GroupID;
+        this.StudentName = StudentName;
+        this.GroupName = GroupName;
+        this.isLeader = isLeader;
+        this.StudentCode = StudentCode;
+        this.StudentID = StudentID;
+        this.SubjectID = SubjectID;
+        this.SubjectCode = SubjectCode;
+        this.CourseName = CourseName;
+        this.CourseCode = CourseCode;
+    }
+
+    public Group(int TopicID, String TopicName) {
+        this.TopicID = TopicID;
+        this.TopicName = TopicName;
+    }
+    //--------------------------------------------------------------------------
     //getter
 
     public String getStudentName() {
@@ -73,6 +127,46 @@ public class Group {
 
     public String getSubjectName() {
         return SubjectCode;
+    }
+
+    public String getSubjectCode() {
+        return SubjectCode;
+    }
+
+    public int getTopicID() {
+        return TopicID;
+    }
+
+    public String getCourseName() {
+        return CourseName;
+    }
+
+    public void setCourseName(String CourseName) {
+        this.CourseName = CourseName;
+    }
+
+    public int getCourseCode() {
+        return CourseCode;
+    }
+
+    public void setCourseCode(int CourseCode) {
+        this.CourseCode = CourseCode;
+    }
+
+    public int getMemberID() {
+        return MemberID;
+    }
+
+    public void setMemberID(int MemberID) {
+        this.MemberID = MemberID;
+    }
+
+    public String getTopicName() {
+        return TopicName;
+    }
+
+    public void setTopicName(String TopicName) {
+        this.TopicName = TopicName;
     }
     
 }

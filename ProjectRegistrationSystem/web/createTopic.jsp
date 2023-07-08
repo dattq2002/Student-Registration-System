@@ -13,14 +13,8 @@
                 response.sendRedirect("login.jsp");
                 return;
             }
-
-            String search = loginUser.getEmail();
-            if (search == null) {
-                search = "";
-            }
         %>
         <a href="manager.jsp">Home Page</a>
-        <span> > </span>
         <a href="ListTopicMNGController">List of Topic</a>
         <h3>Create Topic</h3>
         <form action="ManagerController">
@@ -34,12 +28,8 @@
             
             Full Description: <textarea name="fullDescription" style="width: 300px; height: 100px;" required=""></textarea> <br>
             
-            Subject ID: <input type="text" name="subject" values="" required="" placeholder="FER-201"/> <br>
-            
-            Semester ID: <input type="text" name="semester" values="" required="" placeholder="Spring-2022"/> <br>
-            
-            <input type="submit" value="CreateTopic" name="action" />
-            <input type="hidden" name="searchE" value="<%=search%>"/>
+            <input type="submit" value="Create" />
+            <input type="hidden" value="CreateTopic" name="action" />
             <input type="reset" value="Reset" />
         </form>
         <%

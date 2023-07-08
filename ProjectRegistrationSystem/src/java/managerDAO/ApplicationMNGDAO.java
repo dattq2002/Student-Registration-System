@@ -1,7 +1,7 @@
 package managerDAO;
 
 import DBUtil.Util;
-import DTO.ApplicationMNG;
+import DTO.Application;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,256 +9,333 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Nam An
- */
 public class ApplicationMNGDAO {
-    public List<ApplicationMNG> getListApplicationMNG(String search) throws SQLException {
-        List<ApplicationMNG> list = new ArrayList<>();
+
+    public List<Application> getListProcessingApplicationMNG(String search) throws SQLException {
+        List<Application> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        
+
         try {
             conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "SELECT na.*, tv.Email "
-                        + "FROM (SELECT na.ID, na.Type, tv.SubjectID, na.CourseID, "
-                        + "na.GroupID, na.StudentID, na.Reason, na.CreateDate, na.Note, na.LecID, na.Status "
-                        + "FROM (SELECT na.ID, na.Type, na.SubjectID, na.CourseID, "
-                        + "na.GroupID, tv.StudentID, na.Reason, na.CreateDate, na.Note, na.LecID, na.Status "
-                        + "FROM (SELECT f.ID, f.Type, f.SubjectID, na.CourseID, "
-                        + "f.GroupID, f.StudentID, f.Reason, f.CreateDate, f.Note, f.LecID, f.Status "
-                        + "FROM Form f LEFT JOIN (SELECT ID, CONCAT(Name, CAST(ID AS VARCHAR)) as CourseID "
-                        + "FROM Course) as na ON f.CourseID = na.ID) AS na LEFT JOIN "
-                        + "(SELECT ID, CONCAT(Code, CAST(ID AS VARCHAR)) as StudentID "
-                        + "FROM Student) as tv ON na.StudentID = tv.ID) as na LEFT JOIN "
-                        + "(SELECT ID, CONCAT(Code, CAST(ID AS VARCHAR)) as SubjectID "
-                        + "FROM Subject) as tv ON na.SubjectID = tv.ID) as na LEFT JOIN "
-                        + "(SELECT ID, Email FROM Lecturer) as tv "
-                        + "ON na.LecID = tv.ID "
-                        + "WHERE tv.Email =?";
+            if (conn != null) {
+                String sql = "select ID, LecID, LecturerName, LecturerEmail, Type, StudentID, StudentCode, Reason, "
+                        + "CreateDate, ProcessDate, Status, CourseID, CourseName, Note, SubjectID, "
+                        + "SubjectCode, GroupID, GroupName, Room, PresentDate, Time, Publish, TopicID, TopicCode "
+                        + "from (select na.*, t.Code as TopicCode "
+                        + "from (select na.*, p.TopicID as TopicID "
+                        + "from (select na.*, g.Name as GroupName "
+                        + "from (select na.*, s.Code as SubjectCode "
+                        + "from (select na.*, c.Name as CourseName "
+                        + "from (select na.*, s.Code as StudentCode "
+                        + "from (select f.*, l.Name as LecturerName, l.Email as LecturerEmail "
+                        + "from Form f LEFT JOIN Lecturer l "
+                        + "ON f.LecID = l.ID) as na LEFT JOIN Student s "
+                        + "ON na.StudentID = s.ID) as na LEFT JOIN Course c "
+                        + "ON na.CourseID = c.ID) as na LEFT JOIN Subject s "
+                        + "ON na.SubjectID = s.ID) as na LEFT JOIN Groupp g "
+                        + "ON na.GroupID = g.ID) as na LEFT JOIN Project p "
+                        + "ON na.GroupID = p.GroupID) as na LEFT JOIN Topic t "
+                        + "ON na.TopicID = t.ID) as na "
+                        + "where LecturerEmail = ? and Status = 'Processing'";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, search);
                 rs = stm.executeQuery();
-                while(rs.next()) {
-                    int formID = rs.getInt("ID");  
+                while (rs.next()) {
+                    int formID = rs.getInt("ID");
+                    int lecID = rs.getInt("LecID");
+                    String lecturerName = rs.getString("LecturerName");
                     String type = rs.getString("Type");
-                    String subjectID = rs.getString("SubjectID");
-                    String courseID = rs.getString("CourseID");
-                    int groupID = rs.getInt("GroupID");
-                    String studentID = rs.getString("StudentID");
-                    String reason = rs.getString("Reason");
+                    int studentID = rs.getInt("StudentID");
+                    String StudentCode = rs.getString("StudentCode");
+                    String Reason = rs.getString("Reason");
                     String createDate = rs.getString("CreateDate");
+                    String ProcessDate = rs.getString("ProcessDate");
+                    String Status = rs.getString("Status");
+                    int CourseID = rs.getInt("CourseID");
+                    String CourseName = rs.getString("CourseName");
                     String note = rs.getString("Note");
-                    list.add(new ApplicationMNG(formID, type, subjectID, 
-                            courseID, groupID, studentID, reason, createDate, note));
+                    int SubjectID = rs.getInt("SubjectID");
+                    String SubjectCode = rs.getString("SubjectCode");
+                    int GroupID = rs.getInt("GroupID");
+                    String GroupName = rs.getString("GroupName");
+                    int TopicID = rs.getInt("TopicID");
+                    String TopicCode = rs.getString("TopicCode");
+                    list.add(new Application(type, formID, lecID, lecturerName,
+                            studentID, StudentCode, Reason, note, createDate,
+                            ProcessDate, Status, CourseID, CourseName, SubjectID,
+                            SubjectCode, GroupID, GroupName, TopicID, TopicCode));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) rs.close();
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return list;
     }
-    
-    public List<ApplicationMNG> searchReportApplicationByID(String search) throws SQLException {
-        List<ApplicationMNG> list = new ArrayList<>();
+
+    public List<Application> getListProcessedApplicationMNG(String search) throws SQLException {
+        List<Application> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        
+
         try {
             conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "SELECT na.*, tv.Email "
-                        + "FROM (SELECT na.ID, na.Type, tv.SubjectID, na.CourseID, na.GroupID, na.StudentID, na.Reason, na.CreateDate, na.Note, na.LecID, na.Status "
-                        + "FROM (SELECT na.ID, na.Type, na.SubjectID, na.CourseID, na.GroupID, tv.StudentID, na.Reason, na.CreateDate, na.Note, na.LecID, na.Status "
-                        + "FROM (SELECT f.ID, f.Type, f.SubjectID, na.CourseID, f.GroupID, f.StudentID, f.Reason, f.CreateDate, f.Note, f.LecID, f.Status "
-                        + "FROM Form f LEFT JOIN (SELECT ID, CONCAT(Name, CAST(ID AS VARCHAR)) as CourseID "
-                        + "FROM Course) as na ON f.CourseID = na.ID) AS na LEFT JOIN (SELECT ID, CONCAT(Code, CAST(ID AS VARCHAR)) as StudentID "
-                        + "FROM Student) as tv ON na.StudentID = tv.ID) as na LEFT JOIN (SELECT ID, CONCAT(Code, CAST(ID AS VARCHAR)) as SubjectID "
-                        + "FROM Subject) as tv ON na.SubjectID = tv.ID) as na LEFT JOIN (SELECT ID, Email FROM Lecturer) as tv "
-                        + "ON na.LecID = tv.ID "
-                        + "WHERE na.ID =? and na.Status = 'Processing' and na.Type = 'Report'";
+            if (conn != null) {
+                String sql = "select ID, LecID, LecturerName, LecturerEmail, Type, StudentID, StudentCode, Reason, "
+                        + "CreateDate, ProcessDate, Status, CourseID, CourseName, Note, SubjectID, "
+                        + "SubjectCode, GroupID, GroupName, Room, PresentDate, Time, Publish, TopicID, TopicCode "
+                        + "from (select na.*, t.Code as TopicCode "
+                        + "from (select na.*, p.TopicID as TopicID "
+                        + "from (select na.*, g.Name as GroupName "
+                        + "from (select na.*, s.Code as SubjectCode "
+                        + "from (select na.*, c.Name as CourseName "
+                        + "from (select na.*, s.Code as StudentCode "
+                        + "from (select f.*, l.Name as LecturerName, l.Email as LecturerEmail "
+                        + "from Form f LEFT JOIN Lecturer l "
+                        + "ON f.LecID = l.ID) as na LEFT JOIN Student s "
+                        + "ON na.StudentID = s.ID) as na LEFT JOIN Course c "
+                        + "ON na.CourseID = c.ID) as na LEFT JOIN Subject s "
+                        + "ON na.SubjectID = s.ID) as na LEFT JOIN Groupp g "
+                        + "ON na.GroupID = g.ID) as na LEFT JOIN Project p "
+                        + "ON na.GroupID = p.GroupID) as na LEFT JOIN Topic t "
+                        + "ON na.TopicID = t.ID) as na "
+                        + "where LecturerEmail = ? and Status = 'Processed' or "
+                        + "Status = 'Not Processed'";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, search);
                 rs = stm.executeQuery();
-                while(rs.next()) {
-                    int formID = rs.getInt("ID");  
+                while (rs.next()) {
+                    int formID = rs.getInt("ID");
+                    int lecID = rs.getInt("LecID");
+                    String lecturerName = rs.getString("LecturerName");
                     String type = rs.getString("Type");
-                    String subjectID = rs.getString("SubjectID");
-                    String courseID = rs.getString("CourseID");
-                    int groupID = rs.getInt("GroupID");
-                    String studentID = rs.getString("StudentID");
-                    String reason = rs.getString("Reason");
+                    int studentID = rs.getInt("StudentID");
+                    String StudentCode = rs.getString("StudentCode");
+                    String Reason = rs.getString("Reason");
                     String createDate = rs.getString("CreateDate");
+                    String ProcessDate = rs.getString("ProcessDate");
+                    String Status = rs.getString("Status");
+                    int CourseID = rs.getInt("CourseID");
+                    String CourseName = rs.getString("CourseName");
                     String note = rs.getString("Note");
-                    list.add(new ApplicationMNG(formID, type, subjectID, courseID, groupID, studentID, reason, createDate, note));
+                    int SubjectID = rs.getInt("SubjectID");
+                    String SubjectCode = rs.getString("SubjectCode");
+                    int GroupID = rs.getInt("GroupID");
+                    String GroupName = rs.getString("GroupName");
+                    int TopicID = rs.getInt("TopicID");
+                    String TopicCode = rs.getString("TopicCode");
+                    list.add(new Application(type, formID, lecID, lecturerName,
+                            studentID, StudentCode, Reason, note, createDate,
+                            ProcessDate, Status, CourseID, CourseName, SubjectID,
+                            SubjectCode, GroupID, GroupName, TopicID, TopicCode));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) rs.close();
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return list;
     }
-    
-    public List<ApplicationMNG> searchPresenApplicationByID(String search) throws SQLException {
-        List<ApplicationMNG> list = new ArrayList<>();
+
+    public List<Application> getListApplicationMNG(int id) throws SQLException {
+        List<Application> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        
+
         try {
             conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "SELECT na.*, tv.Email "
-                        + "FROM (SELECT na.ID, na.Type, tv.SubjectID, na.CourseID, na.GroupID, na.StudentID, na.Reason, na.CreateDate, na.Note, na.LecID, na.Status, na.Room, na.PresentDate, na.Time "
-                        + "FROM (SELECT na.ID, na.Type, na.SubjectID, na.CourseID, na.GroupID, tv.StudentID, na.Reason, na.CreateDate, na.Note, na.LecID, na.Status, na.Room, na.PresentDate, na.Time "
-                        + "FROM (SELECT f.ID, f.Type, f.SubjectID, na.CourseID, f.GroupID, f.StudentID, f.Reason, f.CreateDate, f.Note, f.LecID, f.Status, f.Room, f.PresentDate, f.Time "
-                        + "FROM Form f LEFT JOIN (SELECT ID, CONCAT(Name, CAST(ID AS VARCHAR)) as CourseID "
-                        + "FROM Course) as na ON f.CourseID = na.ID) AS na LEFT JOIN (SELECT ID, CONCAT(Code, CAST(ID AS VARCHAR)) as StudentID "
-                        + "FROM Student) as tv ON na.StudentID = tv.ID) as na LEFT JOIN (SELECT ID, CONCAT(Code, CAST(ID AS VARCHAR)) as SubjectID "
-                        + "FROM Subject) as tv ON na.SubjectID = tv.ID) as na LEFT JOIN (SELECT ID, Email FROM Lecturer) as tv "
-                        + "ON na.LecID = tv.ID "
-                        + "WHERE na.ID =? and na.Status = 'Processing' and na.Type = 'Presentation'";
+            if (conn != null) {
+                String sql = "select ID, LecID, LecturerName, LecturerEmail, Type, StudentID, StudentCode, Reason, "
+                        + "CreateDate, ProcessDate, Status, CourseID, CourseName, Note, SubjectID, "
+                        + "SubjectCode, GroupID, GroupName, Room, PresentDate, Time, Publish, TopicID, TopicCode "
+                        + "from (select na.*, t.Code as TopicCode "
+                        + "from (select na.*, p.TopicID as TopicID "
+                        + "from (select na.*, g.Name as GroupName "
+                        + "from (select na.*, s.Code as SubjectCode "
+                        + "from (select na.*, c.Name as CourseName "
+                        + "from (select na.*, s.Code as StudentCode "
+                        + "from (select f.*, l.Name as LecturerName, l.Email as LecturerEmail "
+                        + "from Form f LEFT JOIN Lecturer l "
+                        + "ON f.LecID = l.ID) as na LEFT JOIN Student s "
+                        + "ON na.StudentID = s.ID) as na LEFT JOIN Course c "
+                        + "ON na.CourseID = c.ID) as na LEFT JOIN Subject s "
+                        + "ON na.SubjectID = s.ID) as na LEFT JOIN Groupp g "
+                        + "ON na.GroupID = g.ID) as na LEFT JOIN Project p "
+                        + "ON na.GroupID = p.GroupID) as na LEFT JOIN Topic t "
+                        + "ON na.TopicID = t.ID) as na "
+                        + "where ID = ?";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, search);
+                stm.setInt(1, id);
                 rs = stm.executeQuery();
-                while(rs.next()) {
-                    int formID = rs.getInt("ID");  
+                while (rs.next()) {
+                    int formID = rs.getInt("ID");
+                    int lecID = rs.getInt("LecID");
+                    String lecturerName = rs.getString("LecturerName");
                     String type = rs.getString("Type");
-                    String subjectID = rs.getString("SubjectID");
-                    String courseID = rs.getString("CourseID");
-                    int groupID = rs.getInt("GroupID");
-                    String studentID = rs.getString("StudentID");
-                    String reason = rs.getString("Reason");
+                    int studentID = rs.getInt("StudentID");
+                    String StudentCode = rs.getString("StudentCode");
+                    String Reason = rs.getString("Reason");
                     String createDate = rs.getString("CreateDate");
+                    String ProcessDate = rs.getString("ProcessDate");
+                    String Status = rs.getString("Status");
+                    int CourseID = rs.getInt("CourseID");
+                    String CourseName = rs.getString("CourseName");
                     String note = rs.getString("Note");
-                    int room = rs.getInt("Room");
-                    String presentDate = rs.getString("PresentDate");
-                    String time = rs.getString("Time");
-                    list.add(new ApplicationMNG(formID, type, subjectID, courseID, groupID, studentID, reason, createDate, note, room, presentDate, time));
+                    int SubjectID = rs.getInt("SubjectID");
+                    String SubjectCode = rs.getString("SubjectCode");
+                    int GroupID = rs.getInt("GroupID");
+                    String GroupName = rs.getString("GroupName");
+                    int TopicID = rs.getInt("TopicID");
+                    String TopicCode = rs.getString("TopicCode");
+                    list.add(new Application(type, formID, lecID, lecturerName,
+                            studentID, StudentCode, Reason, note, createDate,
+                            ProcessDate, Status, CourseID, CourseName, SubjectID,
+                            SubjectCode, GroupID, GroupName, TopicID, TopicCode));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null) rs.close();
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return list;
     }
-    
-    public boolean approveReportApplication(ApplicationMNG application) throws SQLException {
+
+    public boolean approveApplication(Application application) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = Util.getConnection();
-            if(conn != null) {
+            if (conn != null) {
                 String sql = "Update Form"
-                        + " set Note= ?, Status='Processed'  "
+                        + " set Note= ?, Status=?  "
                         + " where ID= ?";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, application.getNote());
-                stm.setInt(2, application.getID());
-                check = stm.executeUpdate()>0;
+                stm.setString(1, application.getLecNote());
+                stm.setString(2, application.getStatus());
+                stm.setInt(3, application.getID());
+                check = stm.executeUpdate() > 0;
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }
-    
-    public boolean approvePresentApplication(ApplicationMNG application) throws SQLException {
-        boolean check = false;
+
+    public List<Application> getListPresentationMNG(String search) throws SQLException {
+        List<Application> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
+        ResultSet rs = null;
+
         try {
             conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "Update Form"
-                        + " set Note= ?, Room= ?, PresentDate= ?, Time= ?, Status='Processed'  "
-                        + " where ID= ?";
+            if (conn != null) {
+                String sql = "select ID, LecID, LecturerName, LecturerEmail, Type, StudentID, StudentCode, Reason, "
+                        + "CreateDate, ProcessDate, Status, CourseID, CourseName, Note, SubjectID, "
+                        + "SubjectCode, GroupID, GroupName, Room, PresentDate, Time, Publish, TopicID, TopicCode "
+                        + "from (select na.*, t.Code as TopicCode "
+                        + "from (select na.*, p.TopicID as TopicID "
+                        + "from (select na.*, g.Name as GroupName "
+                        + "from (select na.*, s.Code as SubjectCode "
+                        + "from (select na.*, c.Name as CourseName "
+                        + "from (select na.*, s.Code as StudentCode "
+                        + "from (select f.*, l.Name as LecturerName, l.Email as LecturerEmail "
+                        + "from Form f LEFT JOIN Lecturer l "
+                        + "ON f.LecID = l.ID) as na LEFT JOIN Student s "
+                        + "ON na.StudentID = s.ID) as na LEFT JOIN Course c "
+                        + "ON na.CourseID = c.ID) as na LEFT JOIN Subject s "
+                        + "ON na.SubjectID = s.ID) as na LEFT JOIN Groupp g "
+                        + "ON na.GroupID = g.ID) as na LEFT JOIN Project p "
+                        + "ON na.GroupID = p.GroupID) as na LEFT JOIN Topic t "
+                        + "ON na.TopicID = t.ID) as na "
+                        + "where LecturerEmail = ? and Publish = 'published'";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, application.getNote());
-                stm.setInt(2, application.getRoom());
-                stm.setString(3, application.getPresentDate());
-                stm.setString(4, application.getTime());
-                stm.setInt(5, application.getID());  
-                check = stm.executeUpdate()>0;
+                stm.setString(1, search);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int formID = rs.getInt("ID");
+                    int lecID = rs.getInt("LecID");
+                    String lecturerName = rs.getString("LecturerName");
+                    String type = rs.getString("Type");
+                    int studentID = rs.getInt("StudentID");
+                    String StudentCode = rs.getString("StudentCode");
+                    String Reason = rs.getString("Reason");
+                    String createDate = rs.getString("CreateDate");
+                    String ProcessDate = rs.getString("ProcessDate");
+                    String Status = rs.getString("Status");
+                    int CourseID = rs.getInt("CourseID");
+                    String CourseName = rs.getString("CourseName");
+                    String note = rs.getString("Note");
+                    int SubjectID = rs.getInt("SubjectID");
+                    String SubjectCode = rs.getString("SubjectCode");
+                    int GroupID = rs.getInt("GroupID");
+                    String GroupName = rs.getString("GroupName");
+                    String Room = rs.getString("Room");
+                    String PresentDate = rs.getString("PresentDate");
+                    String Time = rs.getString("Time");
+                    String Publish = rs.getString("Publish");
+                    int TopicID = rs.getInt("TopicID");
+                    String TopicCode = rs.getString("TopicCode");
+
+                    list.add(new Application(type, formID, lecID, lecturerName,
+                            studentID, StudentCode, Reason, note, createDate,
+                            ProcessDate, Status, CourseID, CourseName, SubjectID,
+                            SubjectCode, GroupID, GroupName, Room, PresentDate,
+                            Time, Publish, TopicID, TopicCode));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
-        }
-        return check;
-    }
-    
-    public boolean refuseReportApplication(ApplicationMNG application) throws SQLException {
-        boolean check = false;
-        Connection conn = null;
-        PreparedStatement stm = null;
-        try {
-            conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "Update Form"
-                        + " set Note= ?, Status='Not Processed'  "
-                        + " where ID= ?";
-                stm = conn.prepareStatement(sql);
-                stm.setString(1, application.getNote());
-                stm.setInt(2, application.getID());
-                check = stm.executeUpdate()>0;
+            if (rs != null) {
+                rs.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
-        }
-        return check;
-    }
-    
-    public boolean refusePresentApplication(ApplicationMNG application) throws SQLException {
-        boolean check = false;
-        Connection conn = null;
-        PreparedStatement stm = null;
-        try {
-            conn = Util.getConnection();
-            if(conn != null) {
-                String sql = "Update Form"
-                        + " set Note= ?, Room= ?, PresentDate= ?, Time= ?, Status='Not Processed'  "
-                        + " where ID= ?";
-                stm = conn.prepareStatement(sql);
-                stm.setString(1, application.getNote());
-                stm.setInt(2, application.getRoom());
-                stm.setString(3, application.getPresentDate());
-                stm.setString(4, application.getTime());
-                stm.setInt(5, application.getID());  
-                check = stm.executeUpdate()>0;
+            if (stm != null) {
+                stm.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(stm != null) stm.close();
-            if(conn != null) conn.close();
+            if (conn != null) {
+                conn.close();
+            }
         }
-        return check;
+        return list;
     }
-    
 }

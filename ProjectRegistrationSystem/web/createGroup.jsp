@@ -38,6 +38,10 @@
             Group Name: <input type="text" name="group" value="" placeholder="Team 1"/><br>
             Topic: <input type="text" name="topic" value="" placeholder="HRM-501"/><br>
             Student No Roll: <input type="text" name="student" value="" placeholder="SE16-123"/><br>
+            Context: <textarea name="context" rows="5" cols="35"></textarea><br>
+            Actors: <input type="text" name="actor" value="" /><br>
+            Function-Requirement:<textarea  name="func-requirement" rows="5" cols="35"></textarea><br>
+            Note: <textarea id="id" name="noteProject" rows="5" cols="35"></textarea><br>
             <input type="submit" value="Create" />
             <input type="hidden" name="action" value="CreateGroup" />
         </form>

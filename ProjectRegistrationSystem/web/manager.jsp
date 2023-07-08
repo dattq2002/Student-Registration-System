@@ -13,55 +13,41 @@
                 response.sendRedirect("login.jsp");
                 return;
             }
-
-            String search = loginUser.getEmail();
-            if (search == null) {
-                search = "";
-            }
         %>
 
         <div>
             <ul>
+
                 <li><a href="manager.jsp">Home Page</a></li>
-                </li>
-                <li>
-                    <form action="ManagerController" method="POST">
-                        <input type="submit" name="action" value="Lecturer's Profile"/>
-                        <input type="hidden" name="searchE" value="<%=search%>"/>
-                    </form>
+
+                <li>                    
+                    <a href="ManagerController?action=LecturerProfile">Profile</a>
                 </li>
                 <li> Lecturer Management
                     <ul>
                         <li> 
-                            <form action="ManagerController" method="POST">
-                                <input type="submit" name="action" value="Lecturer's Class"/>
-                                <input type="hidden" name="searchE" value="<%=search%>"/>
-                            </form>
+                            <a href="ManagerController?action=LecturerClass">Class</a>
+                        </li>
+                        <li> 
+                            <a href="ManagerController?action=LecturerGroup">Group</a>
                         </li>
                         <li>
-                            <form action="ManagerController" method="POST">
-                                <input type="submit" name="action" value="Lecturer's topic"/>
-                            </form>
+                            <a href="ManagerController?action=LecturerTopic">Topic</a>
                         </li>
                         <li>
-                            <form action="ManagerController" method="POST">
-                                <input type="submit" name="action" value="Lecturer's Application"/>
-                                <input type="hidden" name="searchE" value="<%=search%>"/>
-                            </form>
+                            <a href="ManagerController?action=LecturerApplication">Application</a>
                         </li>
                         <li>
-                            <form action="ManagerController" method="POST">
-                                <input type="submit" name="action" value="Lecturer's Presentation"/>
-                                <input type="hidden" name="searchE" value="<%=search%>"/>
-                            </form>
+                            <a href="ManagerController?action=LecturerPresentation">Presentation</a>
                         </li>
                     </ul>                   
                 </li>
                 <li>
-                    <form action="MainController">
+                    <form action="ManagerController">
                         <input type="submit" value="Logout" name="action" />
                     </form>
                 </li>
+
             </ul>
         </div>
     </body>

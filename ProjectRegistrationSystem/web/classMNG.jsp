@@ -1,6 +1,6 @@
-<%@page import="DTO.UserAccountDTO"%>
+<%@page import="DTO.ClassInformation"%>
 <%@page import="java.util.List"%>
-<%@page import="DTO.ClassMNG"%>
+<%@page import="DTO.UserAccountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,61 +18,23 @@
         %>
 
         <a href="manager.jsp">Home Page</a>
+        <a href="ManagerController?action=LecturerClass">Class</a>
+        <br>
 
         <%
-            List<ClassMNG> listClass = (List<ClassMNG>) request.getAttribute("LIST_CLASS");
+            List<ClassInformation> listClass = (List<ClassInformation>) request.getAttribute("LIST_CLASS");
             if (listClass != null) {
                 if (!listClass.isEmpty()) {
+                    for (ClassInformation dto : listClass) {
         %>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Class</th>
-                    <th>Semester</th>
-                    <th>Subject</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Join Class</th>
-                </tr>
-            </thead>
-            <tbody>
-                <%
-                    int count = 1;
-                    for (ClassMNG dto : listClass) {
-                %>
-            <form action="ManagerController" method="POST">
-                <tr>
-                    <td> <%= count++%> </td>
-                    <td> <%= dto.getClassID()%> </td>
-                    <td> <%= dto.getSemester()%> </td>
-                    <td> <%= dto.getSubject()%> </td>
-                    <td> <%= dto.getStartDate()%> </td>
-                    <td> <%= dto.getEndDate()%> </td>
-                    <td>
-                        <form action="MainController">
-                            <input type="hidden" name="join" value="<%= dto.getID()%>"/>
-                            <input type="submit" name="action" value="Join Class"/>
-                        </form>
-                    </td>
-                </tr>
-            </form>
-            <%
+        <a href="ListStudentMNGController?courseID=<%=dto.getCourseID()%>&subjectID=<%=dto.getSubjectID()%>&courseName=<%=dto.getCourseName()%>&courseCode=<%=dto.getCourseCode()%>"><%=dto.getSubjectCode() + dto.getSubjectID() + "-" + dto.getCourseName() + dto.getCourseCode() %></a>
+        <%
                 }
-            %>
-        </tbody>
-    </table>
-    <%
             }
-        }
-    %> 
-    <%
-        String error_message = (String) request.getAttribute("ERROR_MESSAGE");
-        if (error_message != null) {
-    %>
-    <p><%=error_message%></p>
-    <%
-        }
-    %>
-</body>
+        %>
+
+        <%
+            }
+        %> 
+    </body>
 </html>
