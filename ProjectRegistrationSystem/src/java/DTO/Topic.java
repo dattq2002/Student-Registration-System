@@ -83,4 +83,9 @@ public class Topic {
     public int getSemesterID() {
         return SemesterID;
     }
+
+    public void setSemesterID(int SemesterID) {
+        this.SemesterID = SemesterID;
+    }
+    
 }

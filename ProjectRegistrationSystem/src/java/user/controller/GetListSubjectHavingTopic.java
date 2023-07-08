@@ -1,33 +1,35 @@
-package admin.controller;
+package user.controller;
 
-import DTO.Application;
+import DTO.TopicAssign;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import userDAO.ApplicationDAO;
+import userDAO.TopicDAO;
 
-public class SearchFormController extends HttpServlet {
-   
+public class GetListSubjectHavingTopic extends HttpServlet {
+    private static final String ERROR = "user.jsp";
+    private static final String SUCCESS = "topicInSubject.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String url = ERROR;
         try {
-            String search = request.getParameter("searchform").trim();
-            ApplicationDAO dao = new ApplicationDAO();
-            List<Application> list = dao.getListApplication(search);
+            TopicDAO topic = new TopicDAO();
+            List<TopicAssign> list = topic.getListTopinInSubject();
             if(list != null){
                 if(!list.isEmpty()){
-                    request.setAttribute("LIST_FORM", list);
+                    request.setAttribute("LIST_SUBJECT_TOPIC", list);
+                    url = SUCCESS;
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }finally{
-            request.getRequestDispatcher("processForm.jsp").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     } 
 

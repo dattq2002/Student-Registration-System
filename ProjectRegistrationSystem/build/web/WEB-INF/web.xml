@@ -288,6 +288,10 @@
         <servlet-name>ViewDetailGroupToJoin</servlet-name>
         <servlet-class>user.controller.ViewDetailGroupToJoin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetListSubjectHavingTopic</servlet-name>
+        <servlet-class>user.controller.GetListSubjectHavingTopic</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -575,6 +579,10 @@
     <servlet-mapping>
         <servlet-name>ViewDetailGroupToJoin</servlet-name>
         <url-pattern>/ViewDetailGroupToJoin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListSubjectHavingTopic</servlet-name>
+        <url-pattern>/GetListSubjectHavingTopic</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

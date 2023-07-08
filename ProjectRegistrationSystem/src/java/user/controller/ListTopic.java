@@ -15,8 +15,9 @@ public class ListTopic extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            int subID = Integer.parseInt(request.getParameter("subID"));
             TopicDAO dao = new TopicDAO();
-            List<Topic> list = dao.getListTopic();
+            List<Topic> list = dao.getListTopic(subID);
             if(!list.isEmpty()){
                 request.setAttribute("SHOWLIST_TOPIC", list);
             }

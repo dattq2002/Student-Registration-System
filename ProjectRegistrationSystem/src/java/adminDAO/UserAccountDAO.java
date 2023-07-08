@@ -169,9 +169,10 @@ public class UserAccountDAO {
             conn = Util.getConnection();
             if (conn != null) {
                 String sql = "SELECT * FROM Account "
-                        + "WHERE FullName LIKE ?";
+                        + "WHERE FullName LIKE ? OR Email LIKE ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "%" + search + "%");
+                stm.setString(2, "%" + search + "%");
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("AccountID");

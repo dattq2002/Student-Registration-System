@@ -15,14 +15,14 @@
             }           
         %>
         
-        <a href="ListTopic">Topic</a></br>
+        <a href="GetListSubjectHavingTopic">Topic</a></br>
         <a href="sendApplication.jsp">Send Application</a><br>
         <a href="ListForm">View Application</a><br>
         <a href="ProfileStudentController">View Profile</a><br>
         <a href="ListPresentationCapstone">View Presentation</a><br>
         <a href="GetListClassStudentController">View Class</a><br>
-        <a href="GetListGroupController">Create Group</a>
-        <a href="GetListClassGroupController">View Detail Group</a>
+        <a href="GetListGroupController">Create Group</a><br>
+        <a href="GetListClassGroupController">View Detail Group</a><br>
         <a href="GetListGroupEnRolled">Out Group Enrollment</a>
     </body>
 </html>

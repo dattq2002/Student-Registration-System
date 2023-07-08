@@ -21,6 +21,8 @@ public class OutGroupEnrollmentController extends HttpServlet {
             HttpSession session = request.getSession();
             UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
             int subID = Integer.parseInt(request.getParameter("subID"));
+            int grID = Integer.parseInt(request.getParameter("grID"));
+            int courseID = Integer.parseInt(request.getParameter("courseID"));
             ProfileStudentDAO dao = new ProfileStudentDAO();
             boolean check = dao.OutGroupMember(subID, loginUser.getEmail());
             if(check){

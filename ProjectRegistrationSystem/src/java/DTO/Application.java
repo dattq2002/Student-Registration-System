@@ -25,7 +25,8 @@ public class Application {
     private String time;
     private String Email;
     private String publish;
-
+    private int topicID;
+    private String topicCode;
     //constructor
     public Application() {
     }

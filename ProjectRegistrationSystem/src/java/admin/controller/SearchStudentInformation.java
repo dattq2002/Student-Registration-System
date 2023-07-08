@@ -16,7 +16,7 @@ public class SearchStudentInformation extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String name = request.getParameter("searchStudent");
+            String name = request.getParameter("searchStudent").trim();
             ProfileDAO dao = new ProfileDAO();
             List<StudentProfile> list = dao.SearchStudent(name);
             if(!list.isEmpty()){

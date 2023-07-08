@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CreateCourseController extends HttpServlet {
-
+    
     private static final String ERROR = "createCourse.jsp";
     private static final String SUCCESS = "ClassController";
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -54,10 +54,11 @@ public class CreateCourseController extends HttpServlet {
                             startDate, endDate);
                     if (check1) {
                         check = true;
-                    }else{
+                    } else {
+                        request.setAttribute("MESSAGE", "Cannot create !!!");
                         return;
                     }
-                }else{
+                } else {
                     check = true;
                 }
             }
@@ -76,7 +77,14 @@ public class CreateCourseController extends HttpServlet {
                 boolean result = dao.checkSubject(subID, subCode, subName, credit);
                 if (result == false) {
                     boolean result1 = dao.createNewSubject(subID, subCode, subName, credit);
-                    if(result1) check = true;
+                    if (result1) {
+                        check = true;
+                    } else {
+                        request.setAttribute("MESSAGE", "Cannot create Subject !!!");
+                        return;
+                    }
+                }else{
+                    check = true;
                 }
             }
             //create
@@ -90,7 +98,7 @@ public class CreateCourseController extends HttpServlet {
                 request.setAttribute("MESSAGE", "Create Fail !!");
                 url = ERROR;
             }
-
+            
         } catch (NumberFormatException | SQLException e) {
             e.printStackTrace();
         } finally {

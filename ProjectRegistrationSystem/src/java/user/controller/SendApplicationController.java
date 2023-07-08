@@ -2,6 +2,7 @@ package user.controller;
 
 import DTO.Application;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +44,10 @@ public class SendApplicationController extends HttpServlet {
                 String tmp3[] = sub.split("-");
                 int subID = Integer.parseInt(tmp3[1]);
                 int grID = dao.getGroupID(team, courseID);
+                if(grID == 0){
+                    request.setAttribute("MESSAGE", "Group is not exsit!!!");
+                    return;
+                }
                 Application form = new Application(select, lecID, stID, reason, 
                         courseID, subID, grID);
                 boolean check = dao.processApplication(form);
@@ -52,7 +57,7 @@ public class SendApplicationController extends HttpServlet {
                     request.setAttribute("MESSAGE", "Fail!!");
                 }
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException | SQLException e) {
             log("Err at SendApplicationController: " + e.toString());
         } finally {
             request.getRequestDispatcher("sendApplication.jsp").forward(request, response);

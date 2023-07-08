@@ -36,7 +36,8 @@
             </select><br>
             Class: <input type="text" name="course" value="" placeholder="NJS-1701"/><br>
             Group Name: <input type="text" name="group" value="" placeholder="Team 1"/><br>
-            Topic: <input type="text" name="topic" value="" placeholder="HRM -501"/><br>
+            Topic: <input type="text" name="topic" value="" placeholder="HRM-501"/><br>
+            Student No Roll: <input type="text" name="student" value="" placeholder="SE16-123"/><br>
             <input type="submit" value="Create" />
             <input type="hidden" name="action" value="CreateGroup" />
         </form>

@@ -16,7 +16,7 @@ public class SearchClassController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String search = request.getParameter("searchClass");
+            String search = request.getParameter("searchClass").trim();
             ClassDAO dao = new ClassDAO();
             List<ClassInformation> list = dao.getListClass(search);
             if(list != null){

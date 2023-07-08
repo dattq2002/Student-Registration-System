@@ -21,7 +21,7 @@ public class SearchAccountController extends HttpServlet {
         String url = ERROR;
         try {
             //get Parameter
-            String search = request.getParameter("SearchAccount");
+            String search = request.getParameter("SearchAccount").trim();
 
             //proccess
             UserAccountDAO dao = new UserAccountDAO();

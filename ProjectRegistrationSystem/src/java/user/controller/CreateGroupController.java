@@ -20,6 +20,7 @@ public class CreateGroupController extends HttpServlet {
             String couse = request.getParameter("course");
             String group = request.getParameter("group");
             String topic = request.getParameter("topic");
+            String student = request.getParameter("student");
             //------------------------------
             //check form
             String regexCourse = "^(NJS|SE)-\\d+$";
@@ -36,23 +37,32 @@ public class CreateGroupController extends HttpServlet {
             }else if(!group.matches(regexGroup)){
                 request.setAttribute("WRONG_FORM", "Group is wrong form!!!");
                 return;
+            }else if(!student.matches("^[A-Z]{2}\\d{2}-\\d{3,4}$")){
+                request.setAttribute("WRONG_FORM", "Student is wrong form!!!");
+                return;
             }else{
                 String tmpTopic[] = topic.split("-");
                 int TopicID = Integer.parseInt(tmpTopic[1]);
                 String tmpCourse[] = couse.split("-");
                 int CourseCode = Integer.parseInt(tmpCourse[1]);
                 int CourseID = dao.checkCourse(CourseCode);
+                String tmpStudent[] = student.split("-");
+                int StuID = Integer.parseInt(tmpStudent[1]);
                 if(CourseID == 0){
                     request.setAttribute("WRONG_FORM", "Your course is not exsit !!!");
                 }else{
-                    boolean check = dao.checkGroup(group);
+                    boolean check = dao.checkGroup(group, StuID, Integer.parseInt(sub));
                     if(check){
-                        boolean result = dao.CreateGroup(CourseID, group);
+                        boolean result = dao.CreateGroup(CourseID, group, StuID, Integer.parseInt(sub));
                         if(result){
                             request.setAttribute("SUCCESS", "Create successfully !!");
+                        }else{
+                            request.setAttribute("WRONG_FORM", "Your group is exsit !!!");
+                            return;
                         }
                     }else{
-                        request.setAttribute("WRONG_FORM", "Your group is exsit !!!");
+                        request.setAttribute("WRONG_FORM", "Your group is exsit or You have a group already !!!");
+                        return;
                     }
                 }  
             }

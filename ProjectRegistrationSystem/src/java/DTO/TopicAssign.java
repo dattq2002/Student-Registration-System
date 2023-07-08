@@ -24,7 +24,17 @@ public class TopicAssign extends Topic{
         this.Semester = Semester;
         this.Status = Status;
     }
+
+    //list Subject
+
+    public TopicAssign(String SubjectCode, int SubjectID,
+            int TopicID, String TopicCode) {
+        super(TopicID, TopicCode);
+        this.SubjectCode = SubjectCode;
+        this.SubjectID = SubjectID;
+    }
     
+
     //getter,setter
 
     public int getTopicAssignID() {
@@ -54,4 +64,34 @@ public class TopicAssign extends Topic{
     public boolean isStatus() {
         return Status;
     }   
+
+    public void setTopicAssignID(int TopicAssignID) {
+        this.TopicAssignID = TopicAssignID;
+    }
+
+    public void setSubjectCode(String SubjectCode) {
+        this.SubjectCode = SubjectCode;
+    }
+
+    public void setSubjectID(int SubjectID) {
+        this.SubjectID = SubjectID;
+    }
+
+    public void setStartDate(String StartDate) {
+        this.StartDate = StartDate;
+    }
+
+    public void setModifyDate(String ModifyDate) {
+        this.ModifyDate = ModifyDate;
+    }
+
+    public void setSemester(String Semester) {
+        this.Semester = Semester;
+    }
+
+    public void setStatus(boolean Status) {
+        this.Status = Status;
+    }
+    
+    
 }

@@ -53,6 +53,8 @@
                     <td>
                         <input type="submit" value="OutGroup" name="action" />
                         <input type="hidden" name="subID" value="<%=item.getSubjectID()%>" />
+                        <input type="hidden" name="grID" value="<%=item.getGroupID()%>" />
+                        <input type="hidden" name="courseID" value="<%=item.getCourseID()%>" />
                     </td>
                 </tr>
             </form>

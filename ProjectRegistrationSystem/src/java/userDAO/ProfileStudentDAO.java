@@ -208,7 +208,7 @@ public class ProfileStudentDAO {
         return list;
     }
 
-    public boolean checkGroup(String groupName) throws SQLException {
+    public boolean checkGroup(String groupName, int stuID, int subID) throws SQLException {
         boolean check = true;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -216,14 +216,27 @@ public class ProfileStudentDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT * FROM (SELECT g.* "
-                        + "FROM Groupp g LEFT JOIN Course c ON g.CourseID = c.ID "
-                        + "WHERE c.SemesterID = 11114 AND g.Status = 'True' ) AS ld "
-                        + "WHERE Name = ?";
-                stm = conn.prepareStatement(sql);
-                stm.setString(1, groupName);
+                String sql1 = "SELECT A.* FROM (SELECT m.*,g.CourseID FROM "
+                        + "Member m LEFT JOIN Groupp g ON m.GroupID = g.ID) AS "
+                        + "A LEFT JOIN Course C ON A.CourseID = C.ID WHERE "
+                        + "C.SemesterID = 11114 AND A.StudentID = ? AND "
+                        + "A.SubjectID = ?";
+                stm = conn.prepareStatement(sql1);
+                stm.setInt(1, stuID);
+                stm.setInt(2, subID);
                 rs = stm.executeQuery();
-                if (rs.next()) {
+                if (!rs.next()) {
+                    String sql = "SELECT * FROM (SELECT g.* "
+                            + "FROM Groupp g LEFT JOIN Course c ON g.CourseID = c.ID "
+                            + "WHERE c.SemesterID = 11114 AND g.Status IN ('True','False') ) AS ld "
+                            + "WHERE Name = ?";
+                    stm = conn.prepareStatement(sql);
+                    stm.setString(1, groupName);
+                    rs = stm.executeQuery();
+                    if (rs.next()) {
+                        check = false;
+                    }
+                } else {
                     check = false;
                 }
             }
@@ -243,27 +256,52 @@ public class ProfileStudentDAO {
         return check;
     }
 
-    public boolean CreateGroup(int courseID, String Group) throws SQLException {
+    public boolean CreateGroup(int courseID, String GroupName, int stuID, int sub) throws SQLException {
         boolean check = false;
+        boolean check1 = false;
         Connection conn = null;
         PreparedStatement stm = null;
+        ResultSet rs = null;
         try {
             conn = Util.getConnection();
             if (conn != null) {
                 String sql = "INSERT INTO Groupp "
                         + "VALUES('GR',?,?,'False')";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, Group);
+                stm.setString(1, GroupName);
                 stm.setInt(2, courseID);
-                check = stm.executeUpdate() > 0;
+                check1 = stm.executeUpdate() > 0;
+                if (check1) {
+                    String sql1 = "SELECT * FROM (SELECT g.* "
+                            + "FROM Groupp g LEFT JOIN Course c ON g.CourseID = c.ID "
+                            + "WHERE c.SemesterID = 11114 AND g.Status IN ('False') ) AS ld "
+                            + "WHERE Name = ? AND CourseID = ?";
+                    stm = conn.prepareStatement(sql1);
+                    stm.setString(1, GroupName);
+                    stm.setInt(2, courseID);
+                    rs = stm.executeQuery();
+                    if (rs.next()) {
+                        int grID = rs.getInt("ID");
+                        String sql2 = "INSERT INTO Member "
+                                + "VALUES (?,?,GETDATE(),'SE','LD',?)";
+                        stm = conn.prepareStatement(sql2);
+                        stm.setInt(1, stuID);
+                        stm.setInt(2, grID);
+                        stm.setInt(3, sub);
+                        check = stm.executeUpdate() > 0;
+                    }
+                }
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
         } finally {
             if (stm != null) {
                 stm.close();
             }
             if (conn != null) {
                 conn.close();
+            }
+            if (rs != null) {
+                rs.close();
             }
         }
         return check;
@@ -404,27 +442,27 @@ public class ProfileStudentDAO {
                         + "LEFT JOIN Subject S ON QW.SubjectID = S.ID";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, courseID);
-                    stm.setInt(2, grID);
-                    stm.setInt(3, subjectID);
-                    rs = stm.executeQuery();
-                    while (rs.next()) {
-                        int StuID = rs.getInt("StudentID");
-                        int GroupID = rs.getInt("GroupID");
-                        String StartDate = rs.getString("StartDate");
-                        String Major = rs.getString("Major");
-                        String isLeader = rs.getString("isLeader");
-                        String StudentCode = rs.getString("StudentCode");
-                        String StudentName = rs.getString("Name");
-                        String grName = rs.getString("GroupName");
-                        int CourseID = rs.getInt("CourseID");
-                        int SubID = rs.getInt("SubjectID");
-                        String subCode = rs.getString("Code");
-                        list.add(new Group(StudentName, GroupID, grName, StartDate,
-                                Major, isLeader, StudentCode, StuID, CourseID, SubID, subCode));
-                    }
+                stm.setInt(2, grID);
+                stm.setInt(3, subjectID);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int StuID = rs.getInt("StudentID");
+                    int GroupID = rs.getInt("GroupID");
+                    String StartDate = rs.getString("StartDate");
+                    String Major = rs.getString("Major");
+                    String isLeader = rs.getString("isLeader");
+                    String StudentCode = rs.getString("StudentCode");
+                    String StudentName = rs.getString("Name");
+                    String grName = rs.getString("GroupName");
+                    int CourseID = rs.getInt("CourseID");
+                    int SubID = rs.getInt("SubjectID");
+                    String subCode = rs.getString("Code");
+                    list.add(new Group(StudentName, GroupID, grName, StartDate,
+                            Major, isLeader, StudentCode, StuID, CourseID, SubID, subCode));
+                }
             }
         } catch (ClassNotFoundException | SQLException e) {
-        }finally {
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -453,7 +491,7 @@ public class ProfileStudentDAO {
                         + "ON g.ID = m.GroupID WHERE g.CourseID IN (SELECT ID FROM Course "
                         + "WHERE SemesterID = 11114 AND CourseID = ?) "
                         + "AND m.SubjectID IN (?) AND g.Status = 'True') AS a "
-                        + "LEFT JOIN Student s ON a.StudentID = s.ID WHERE a.isLeader = 'LD') AS WQ "
+                        + "LEFT JOIN Student s ON a.StudentID = s.ID WHERE a.isLeader IN ('LD',NULL)) AS WQ "
                         + "LEFT JOIN Subject S ON WQ.SubjectID = S.ID";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, courseID);

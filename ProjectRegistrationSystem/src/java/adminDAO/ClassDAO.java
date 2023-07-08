@@ -275,10 +275,10 @@ public class ClassDAO {
                         + "ON s.SubjectID = su.ID) AS a LEFT JOIN Lecturer lec "
                         + "ON a.LecturerID = lec.ID) AS b "
                         + "LEFT JOIN Course c ON b.CourseID = c.ID WHERE "
-                        + "b.SubjectCode LIKE ? AND c.SemesterID = 11114";
+                        + "(b.SubjectCode LIKE ? OR b.SubjectID LIKE ?) AND c.SemesterID = 11114";
                 stm = conn.prepareStatement(sql);
-                String tmp = search.substring(0, 3);
-                stm.setString(1, "%" + tmp + "%");
+                stm.setString(1, "%" + search + "%");
+                stm.setString(2, "%" + search + "%");
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int ID = rs.getInt("ID");

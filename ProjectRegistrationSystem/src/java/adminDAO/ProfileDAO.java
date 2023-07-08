@@ -25,9 +25,10 @@ public class ProfileDAO {
             if (conn != null) {
                 String sql = "SELECT * "
                         + "FROM Student "
-                        + "WHERE Name LIKE ?";
+                        + "WHERE Name LIKE ? OR Email LIKE ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "%" + name + "%");
+                stm.setString(2, "%" + name + "%");
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("ID");
@@ -255,9 +256,10 @@ public class ProfileDAO {
             if (conn != null) {
                 String sql = "SELECT * "
                         + "FROM Lecturer "
-                        + "WHERE Name LIKE ?";
+                        + "WHERE Name LIKE ? OR Email LIKE ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "%" + name + "%");
+                stm.setString(2, "%" + name + "%");
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("ID");
