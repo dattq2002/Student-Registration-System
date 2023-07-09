@@ -27,10 +27,8 @@ public class UpdateClassController extends HttpServlet {
             //-------------------
             if(!subint.matches(regex2)){
                 request.setAttribute("MESSAGE", "Wrong form Subject!!");
-                return;
             }else if(!Courseid.matches(regex)){
                 request.setAttribute("MESSAGE", "Wrong form Course!!");
-                return;
             }else{
                 ClassDAO dao = new ClassDAO();
                 int lecID = dao.checkLectureName(lecName);
@@ -42,6 +40,10 @@ public class UpdateClassController extends HttpServlet {
                 int subID = Integer.parseInt(tmp[1]);
                 String tmp1[] = Courseid.split("-");
                 int CourseID = Integer.parseInt(tmp1[1]);
+                if(subID == dao.checkDuplicateSubject(subID, CourseID)){
+                    request.setAttribute("MESSAGE", "The subject in Course is exsit !!!");
+                    return;
+                }
                 boolean check = dao.UpdateSubjectInClass(id, subID, CourseID, lecID, status);
                 if(check){
                     boolean result = dao.UpdateCourse(CourseID, stdate, enddate);

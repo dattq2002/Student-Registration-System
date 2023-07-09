@@ -5,8 +5,6 @@ import DTO.ClassInformation;
 import DTO.Semester;
 import DTO.StudentProfile;
 import DTO.Subject;
-import DTO.Topic;
-import DTO.TopicAssign;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -374,7 +372,7 @@ public class ClassDAO {
                 stm.setInt(2, courseID);
                 stm.setInt(3, ID);
                 check1 = stm.executeUpdate() > 0;
-                if(check1){
+                if (check1) {
                     String sql1 = "DELETE Course "
                             + "WHERE ID = ? AND SemesterID = 11114";
                     stm = conn.prepareStatement(sql1);
@@ -756,7 +754,7 @@ public class ClassDAO {
         }
         return list;
     }
-    
+
     public boolean AddLectureToClass(int lecID, int subID, int CourseID, boolean status) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -781,6 +779,39 @@ public class ClassDAO {
             }
             if (stm != null) {
                 stm.close();
+            }
+        }
+        return check;
+    }
+
+    public int checkDuplicateSubject(int subID, int courseID) throws SQLException {
+        int check = 0;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT SubjectID FROM SubjectInClass "
+                        + "WHERE SubjectID = ? AND CourseID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, subID);
+                stm.setInt(2, courseID);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    check = rs.getInt("SubjectID");
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
             }
         }
         return check;
