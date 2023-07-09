@@ -1,7 +1,6 @@
 package user.controller.classs;
 
 import DTO.StudentProfile;
-import admin.DAO.ClassDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -9,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import user.DAO.ClassStudentDAO;
 
 public class GetListClassStudentEnrollment extends HttpServlet {
    
@@ -17,7 +17,7 @@ public class GetListClassStudentEnrollment extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             int id = Integer.parseInt(request.getParameter("CourseID"));
-            ClassDAO dao = new ClassDAO();
+            ClassStudentDAO dao = new ClassStudentDAO();
             List<StudentProfile> list = dao.getDetailEnrollment(id);
             if(list != null){
                 if(!list.isEmpty()){

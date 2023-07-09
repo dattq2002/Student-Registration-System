@@ -30,7 +30,9 @@
         <h2>Input your file to add Student</h2>
         <a>Note in file .xlsx: + column(ID, code, name, birthday,
             phoneNumber,gender,Address,city,major,Email)</a><br>
+            <a>column: (int, String, String, String, String,String,String, String, String,String )</a>
             <a>+ birthday in .xlsx: text("","yyyy-mm-dd")</a><br>
+            <a>+ PhoneNumber in .xlsx: text("","0-000-000-0000")</a><br>
             <a>ex: text("4/10/2020","yyyy-mm-dd")</a><br><br>
             <form action="UploadFileStudentController" method="POST" enctype="multipart/form-data">
                 <input type="file" name="fileStu" accept=".xlsx"><br>

@@ -1,6 +1,5 @@
 package user.controller.group;
 
-import DTO.Group;
 import DTO.UserAccountDTO;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import user.DAO.ProfileStudentDAO;
+import user.DAO.GroupStudentDAO;
 
 public class GroupEnrollmentController extends HttpServlet {
     private static final String ERROR = "joinGroup.jsp";
@@ -23,7 +22,7 @@ public class GroupEnrollmentController extends HttpServlet {
             int subID = Integer.parseInt(request.getParameter("subID"));
             int grID = Integer.parseInt(request.getParameter("groupID"));
             UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
-            ProfileStudentDAO dao = new ProfileStudentDAO();
+            GroupStudentDAO dao = new GroupStudentDAO();
             int StudentID = dao.findStudentID(loginUser.getEmail());
             boolean check = dao.GroupEnrollment(subID, grID, StudentID);
             if(check){

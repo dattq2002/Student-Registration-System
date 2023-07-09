@@ -1,7 +1,6 @@
 package admin.DAO;
 
 import DBUtil.Util;
-import DTO.Group;
 import DTO.LectureProfile;
 import DTO.StudentProfile;
 import java.sql.Connection;
@@ -41,7 +40,8 @@ public class ProfileDAO {
                     String City = rs.getString("City");
                     String Major = rs.getString("Major");
                     String Email = rs.getString("Email");
-                    list.add(new StudentProfile(id, code, Name, Birthday, PhoneNum, Gender, Address, City, Major, Email));
+                    list.add(new StudentProfile(id, code, Name, Birthday, 
+                            PhoneNum, Gender, Address, City, Major, Email));
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -618,35 +618,6 @@ public class ProfileDAO {
         return check;
     }
 
-    public boolean AddLectureToClass(int lecID, int subID, int CourseID, boolean status) throws SQLException {
-        boolean check = false;
-        Connection conn = null;
-        PreparedStatement stm = null;
-        try {
-            conn = Util.getConnection();
-            if (conn != null) {
-                String sql = "INSERT INTO SubjectInClass "
-                        + "VALUES(?,?,?,?) ";
-                stm = conn.prepareStatement(sql);
-                stm.setInt(1, lecID);
-                stm.setInt(2, subID);
-                stm.setInt(3, CourseID);
-                stm.setBoolean(4, status);
-                check = stm.executeUpdate() > 0;
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                conn.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-        }
-        return check;
-    }
-
     //check Email
     public boolean checkEmailExistInAccount(String email) throws SQLException {
         Connection conn = null;
@@ -728,6 +699,72 @@ public class ProfileDAO {
                         + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, id);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    check = false;
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return check;
+    }
+    
+    public boolean checkLectureEmail(String email) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean check = true;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * FROM Lecturer "
+                        + "WHERE Email = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    check = false;
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return check;
+    }
+    
+    public boolean checkStudentEmail(String email) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean check = true;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * FROM Student "
+                        + "WHERE Email = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     check = false;

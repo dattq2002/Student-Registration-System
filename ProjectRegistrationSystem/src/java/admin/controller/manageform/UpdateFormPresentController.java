@@ -1,17 +1,16 @@
 package admin.controller.manageform;
 
 import DTO.Application;
+import admin.DAO.ApplicationAdminDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.DAO.ApplicationDAO;
 
 public class UpdateFormPresentController extends HttpServlet {
-    private static final String SUCCESS = "ListFormController";
-    private static final String SUCCESS1 = "SearchFormController";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -21,7 +20,7 @@ public class UpdateFormPresentController extends HttpServlet {
             String preDate = request.getParameter("preDate");
             String creDate = request.getParameter("creDate");
             String publish = request.getParameter("publish");
-            ApplicationDAO dao = new ApplicationDAO();
+            ApplicationAdminDAO dao = new ApplicationAdminDAO();
             Application app = new Application(creDate, room, preDate, time, publish);
             boolean check = dao.updateForm(app);
             if(check){

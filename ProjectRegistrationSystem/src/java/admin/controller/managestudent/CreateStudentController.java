@@ -31,7 +31,8 @@ public class CreateStudentController extends HttpServlet {
             String regex = "SE-\\d+$";
             if (!id.matches(regex)) {
                 request.setAttribute("MESSAGE_UPLOAD", "ID is wrong form !!!");
-                return;
+            }else if(!email.matches("^\\w+@fpt\\.edu\\.vn$")){
+                request.setAttribute("MESSAGE_UPLOAD", "Email is wrong form !!!");
             } else {
                 String tmp[] = id.split("-");
                 String code = tmp[0];
@@ -46,6 +47,11 @@ public class CreateStudentController extends HttpServlet {
                 boolean check1 = dao.checkEmailExistInAccount(email);
                 if (check1 == false) {
                     request.setAttribute("MESSAGE_UPLOAD", "Email is not exsited!!");
+                    return;
+                }
+                boolean check2 = dao.checkStudentEmail(email);
+                if(check2 == false){
+                    request.setAttribute("MESSAGE_UPLOAD", "Email is exsited!!");
                     return;
                 }
                 StudentProfile stu = new StudentProfile(StudentID, code, name,

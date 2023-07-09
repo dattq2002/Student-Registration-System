@@ -1,6 +1,6 @@
 package admin.controller.managetopic;
 
-import admin.DAO.ClassDAO;
+import admin.DAO.TopicAdminDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ public class DeclineTopicAssign extends HttpServlet {
             boolean status = Boolean.parseBoolean(request.getParameter("status"));
             int topicID = Integer.parseInt(request.getParameter("topicid"));
             int subID = Integer.parseInt(request.getParameter("subid"));
-            ClassDAO dao = new ClassDAO();
+            TopicAdminDAO dao = new TopicAdminDAO();
             boolean check = dao.declineTopic(topicID, subID, status);
             if(check){
                 request.setAttribute("MESSAGE", "Decline !!");

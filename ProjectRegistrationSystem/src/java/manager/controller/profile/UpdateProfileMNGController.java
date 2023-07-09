@@ -25,7 +25,10 @@ public class UpdateProfileMNGController extends HttpServlet {
             String city = request.getParameter("city");
             String phoneNumber = request.getParameter("phoneNumber");
             String email = request.getParameter("email");
-
+            if(!phoneNumber.matches("^\\d{10,11}$")){
+                request.setAttribute("MESSAGE", "Phone Number is wrong form !!");
+                return;
+            }
             ProfileMNGDAO dao = new ProfileMNGDAO();
             boolean check = dao.updateProfile(name, gender, birthday, address, city, phoneNumber, email);
             if (check) {

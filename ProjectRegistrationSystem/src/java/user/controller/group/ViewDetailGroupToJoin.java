@@ -2,14 +2,13 @@ package user.controller.group;
 
 import DTO.Group;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.DAO.ProfileStudentDAO;
+import user.DAO.GroupStudentDAO;
 
 public class ViewDetailGroupToJoin extends HttpServlet {
     private static final String ERROR = "JoinGroupController";
@@ -22,7 +21,7 @@ public class ViewDetailGroupToJoin extends HttpServlet {
             int courseID = Integer.parseInt(request.getParameter("courseID"));
             int subID = Integer.parseInt(request.getParameter("subID"));
             int grID = Integer.parseInt(request.getParameter("grID"));
-            ProfileStudentDAO dao = new ProfileStudentDAO();
+            GroupStudentDAO dao = new GroupStudentDAO();
             List<Group> list = dao.getListMember(courseID, subID, grID);
             if(list != null){
                 if(!list.isEmpty()){

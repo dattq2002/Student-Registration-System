@@ -45,6 +45,21 @@ public class UploadFileStudentController extends HttpServlet {
                     String city = row.getCell(j + 7).getStringCellValue();
                     String major = row.getCell(j + 8).getStringCellValue();
                     String Email = row.getCell(j + 9).getStringCellValue();
+                    if (!Email.matches("^\\w+@fpt\\.edu\\.vn$")) {
+                        request.setAttribute("MESSAGE_UPLOAD", "Upload Email fail !!!"
+                                + "ID: " + ID + "Code: " + code + "Name: " + name
+                                + "Birthday: " + birthday + "PhoneNumber: " + phoneNumber
+                                + "Gender: " + gender + "Address: " + Address
+                                + "City: " + city + "Major: " + major + "Email: " + Email);
+                        return;
+                    } else if (!phoneNumber.matches("^\\d{10,11}$")) {
+                        request.setAttribute("MESSAGE_UPLOAD", "Upload Email fail !!!"
+                                + "ID: " + ID + "Code: " + code + "Name: " + name
+                                + "Birthday: " + birthday + "PhoneNumber: " + phoneNumber
+                                + "Gender: " + gender + "Address: " + Address
+                                + "City: " + city + "Major: " + major + "Email: " + Email);
+                        return;
+                    }
                     StudentProfile stu = new StudentProfile(ID, code, name,
                             birthday, phoneNumber, gender, Address, city, major, Email);
                     if (cell != null) {

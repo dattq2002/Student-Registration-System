@@ -29,7 +29,6 @@ public class DeleteClassController extends HttpServlet {
         }finally{
             request.getRequestDispatcher("ClassController").forward(request, response);
         }
-//    chỉnh status bên course sang SubjectInClass
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

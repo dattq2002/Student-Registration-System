@@ -30,7 +30,7 @@ public class UploadFileAddStudentToClassController extends HttpServlet {
             // Xử lý dữ liệu từ tệp Excel theo ý muốn của bạn
             ClassDAO dao = new ClassDAO();
             int rowCount = sheet.getPhysicalNumberOfRows();
-            int colCount = sheet.getRow(0).getPhysicalNumberOfCells();
+            int colCount = 6;
             for (int i = 1; i < rowCount; i++) {
                 Row row = sheet.getRow(i);
                 for (int j = 0; j < colCount; j++) {
@@ -45,13 +45,24 @@ public class UploadFileAddStudentToClassController extends HttpServlet {
                     String Note = row.getCell(j + 4).getStringCellValue();
                     if (cell != null) {
                         if (!course.equals("null")) {
-                            boolean check = dao.getDataFromFile(StuID, Double.parseDouble(course), StartDate, subjectID, Note);
+                            boolean check = dao.getDataFromFile(StuID,
+                                    Double.parseDouble(course), StartDate,
+                                    subjectID, Note);
                             if (check == false) {
+                                request.setAttribute("FAIL", "Add data fail !! "
+                                        + "Student ID: " + StuID + "CourseID: "
+                                        + courseID + "StartDate: " + StartDate + 
+                                        "SubjectID: " + subjectID + "Note: " + Note);
                                 return;
                             }
                         } else {
-                            boolean result = dao.getDataFromFile(StuID, courseID, StartDate, subjectID, Note);
+                            boolean result = dao.getDataFromFile(StuID, courseID,
+                                    StartDate, subjectID, Note);
                             if (result == false) {
+                                request.setAttribute("FAIL", "Add data fail !! "
+                                        + "Student ID: " + StuID + "CourseID: "
+                                        + courseID + "StartDate: " + StartDate + 
+                                        "SubjectID: " + subjectID + "Note: " + Note);
                                 return;
                             }
                         }

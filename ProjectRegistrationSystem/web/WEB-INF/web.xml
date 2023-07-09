@@ -320,6 +320,10 @@
         <servlet-name>UpdateTopicController</servlet-name>
         <servlet-class>manager.controller.managetopic.UpdateTopicController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateProjectGroupController</servlet-name>
+        <servlet-class>user.controller.group.UpdateProjectGroupController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -639,6 +643,10 @@
     <servlet-mapping>
         <servlet-name>UpdateTopicController</servlet-name>
         <url-pattern>/UpdateTopicController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProjectGroupController</servlet-name>
+        <url-pattern>/UpdateProjectGroupController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

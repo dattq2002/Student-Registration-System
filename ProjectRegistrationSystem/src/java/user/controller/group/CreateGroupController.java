@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.DAO.ProfileStudentDAO;
+import user.DAO.GroupStudentDAO;
 
 public class CreateGroupController extends HttpServlet {
 
@@ -30,7 +30,7 @@ public class CreateGroupController extends HttpServlet {
             String regexCourse = "^(NJS|SE)-\\d+$";
             String regex = "^[A-Za-z]+-\\d+$";
             String regexGroup = "^Team [1-9][0-9]*$";
-            ProfileStudentDAO dao = new ProfileStudentDAO();
+            GroupStudentDAO dao = new GroupStudentDAO();
             //-------------------------------
             if (!couse.matches(regexCourse)) {
                 request.setAttribute("WRONG_FORM", "Course is wrong form!!!");

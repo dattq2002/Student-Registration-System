@@ -29,8 +29,9 @@ public class CreateLectureController extends HttpServlet {
             ProfileDAO dao = new ProfileDAO();
             String regex = "LT-\\d+$";
             if (!id.matches(regex)) {
-                request.setAttribute("MESSAGE_UPLOAD", "ID is wrong form !!!");
-                return;
+                request.setAttribute("MESSAGE_UPLOAD", "LectureID is wrong form !!!");
+            }else if(!email.matches("^\\w+@fe\\.edu\\.vn$")){
+                request.setAttribute("MESSAGE_UPLOAD", "Email is wrong form !!!");
             } else {
                 String tmp[] = id.split("-");
                 String code = tmp[0];
@@ -45,6 +46,11 @@ public class CreateLectureController extends HttpServlet {
                 boolean check1 = dao.checkEmailExistInAccount(email);
                 if (check1 == false) {
                     request.setAttribute("MESSAGE_UPLOAD", "Email is not exsited!!");
+                    return;
+                }
+                boolean check2 = dao.checkLectureEmail(email);
+                if(check2 == false){
+                    request.setAttribute("MESSAGE_UPLOAD", "Email is exsited!!");
                     return;
                 }
                 LectureProfile lec = new LectureProfile(LectureID, code, name, email);

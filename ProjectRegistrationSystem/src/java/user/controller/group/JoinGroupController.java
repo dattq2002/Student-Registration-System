@@ -8,7 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.DAO.ProfileStudentDAO;
+import user.DAO.GroupStudentDAO;
 
 public class JoinGroupController extends HttpServlet {
     
@@ -20,7 +20,7 @@ public class JoinGroupController extends HttpServlet {
             int subID = Integer.parseInt(request.getParameter("subID"));
             request.setAttribute("CourseID", courseID);
             request.setAttribute("subID", subID);
-            ProfileStudentDAO dao = new ProfileStudentDAO();
+            GroupStudentDAO dao = new GroupStudentDAO();
             List<Group> list = dao.joinGroup(subID, courseID);
             if(list != null){
                 if(!list.isEmpty()){

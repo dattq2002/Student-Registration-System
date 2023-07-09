@@ -16,7 +16,6 @@
         <h1>Send Application</h1>
         <form action="MainController" method="POST">
             Type: <select name="selectOption">
-                <option>Choose Type</option>
                 <option value="Report">Report</option>
                 <option value="Presentation">Presentation Capstone</option>
             </select><br>

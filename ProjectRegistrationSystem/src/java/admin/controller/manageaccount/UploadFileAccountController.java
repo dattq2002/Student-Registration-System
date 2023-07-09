@@ -18,9 +18,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 @MultipartConfig
 public class UploadFileAccountController extends HttpServlet {
-   
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         Part filePart = request.getPart("fileAcc"); // Lấy phần tệp từ yêu cầu
         InputStream fileInputStream = filePart.getInputStream(); // Lấy luồng đầu vào từ tệp
@@ -38,34 +38,49 @@ public class UploadFileAccountController extends HttpServlet {
                     String Email = row.getCell(j).getStringCellValue();
                     String password = row.getCell(j + 1).getStringCellValue();
                     String FullName = row.getCell(j + 2).getStringCellValue();
-                    String Role = row.getCell(j + 3).getStringCellValue();
-                    String Code = row.getCell(j + 4).getStringCellValue();
+                    String Role = row.getCell(j + 3).getStringCellValue().toUpperCase();
+                    String Code = row.getCell(j + 4).getStringCellValue().toUpperCase();
                     String Status = row.getCell(j + 5).getStringCellValue();
-                    UserAccountDTO acc = new UserAccountDTO(Code, Email, 
+                    UserAccountDTO acc = new UserAccountDTO(Code, Email,
                             password, Role, FullName, Status);
-                    if(cell != null){
-                        boolean result = dao.addAccountFromFile(acc);
-                        if(result == false){
-                            request.setAttribute("MESSAGE_UPLOAD", "Upload fail !!!");
-                            return;
+                    if (!Email.matches("^\\w+@fpt\\.edu\\.vn$") && !Email.matches("^\\w+@fe\\.edu\\.vn$")) {
+                        request.setAttribute("MESSAGE_UPLOAD", "Email: " + Email + " Wrong form !!");
+                        return;
+                    } else if (!(Role.equals("ADMIN") || Role.equals("MNG") || Role.equals("USER"))) {
+                        request.setAttribute("MESSAGE_UPLOAD", "Your role is wrong form !!");
+                        return;
+                    }else if(!(Code.equals("AD")||Code.equals("MN")||Code.equals("US"))){
+                        request.setAttribute("MESSAGE_UPLOAD", "Your Code is wrong form !!");
+                        return;
+                    }else if(!(Status.equalsIgnoreCase("Active")||Status.equals("Deactive"))){
+                        request.setAttribute("MESSAGE_UPLOAD", "Your Status is wrong form !!");
+                        return;
+                    } else {
+                        if (cell != null) {
+                            boolean result = dao.addAccountFromFile(acc);
+                            if (result == false) {
+                                request.setAttribute("MESSAGE_UPLOAD", "Upload fail !!!");
+                                return;
+                            }
                         }
+                        break;
                     }
-                    break;
                 }
             }
             request.setAttribute("SUCCESS", "Add data successfully !!!");
             workbook.close(); // Đóng Workbook
             fileInputStream.close(); // Đóng luồng đầu vào
         } catch (Exception e) {
-            request.setAttribute("FAIL", "Add data fail !!");
+            request.setAttribute("MESSAGE_UPLOAD", "Add data fail !!");
         } finally {
             request.getRequestDispatcher("addAccount.jsp").forward(request, response);
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -73,12 +88,13 @@ public class UploadFileAccountController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -86,12 +102,13 @@ public class UploadFileAccountController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

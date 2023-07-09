@@ -1,6 +1,6 @@
 package admin.controller.manageclass;
 
-import admin.DAO.ProfileDAO;
+import admin.DAO.ClassDAO;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.servlet.ServletException;
@@ -26,10 +26,10 @@ public class UploadFileLectureToClassController extends HttpServlet {
         try ( Workbook workbook = new XSSFWorkbook(fileInputStream)) { // Tạo đối tượng Workbook từ tệp Excel
             Sheet sheet = workbook.getSheetAt(0); // Lấy sheet đầu tiên
             // Xử lý dữ liệu từ tệp Excel theo ý muốn của bạn
-            ProfileDAO dao = new ProfileDAO();
+            ClassDAO dao = new ClassDAO();
             int count = 0;
             int rowCount = sheet.getPhysicalNumberOfRows();
-            int colCount = 3;
+            int colCount = 4;
             for (int i = 1; i < rowCount; i++) {
                 Row row = sheet.getRow(i);
                 for (int j = 0; j < colCount; j++) {
@@ -42,18 +42,21 @@ public class UploadFileLectureToClassController extends HttpServlet {
                     if (cell != null) {
                         boolean result = dao.AddLectureToClass(lecID, subID, courseID, status);
                         if (result == false) {
-                            request.setAttribute("MESSAGE_FAIL", "Upload fail !!!");
+                            request.setAttribute("MESSAGE_FAIL", "Upload fail !!!"
+                                    + "lecID: " + lecID + "SubID: " + subID 
+                                    + "CourseID: " + courseID);
                             return;
                         } else {
-                            request.setAttribute("MESSAGE", "Add data successfully !!!");
                             count++;
                         }
                     }
                     break;
                 }
             }
-            if(count == 0){
+            if (count == 0) {
                 request.setAttribute("MESSAGE_FAIL", "Upload fail !!!");
+            }else{
+                request.setAttribute("MESSAGE", "Add data successfully !!!");
             }
             workbook.close(); // Đóng Workbook
             fileInputStream.close(); // Đóng luồng đầu vào

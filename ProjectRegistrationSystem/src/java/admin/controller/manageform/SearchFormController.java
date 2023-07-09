@@ -1,6 +1,7 @@
 package admin.controller.manageform;
 
 import DTO.Application;
+import admin.DAO.ApplicationAdminDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -8,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.DAO.ApplicationDAO;
 
 public class SearchFormController extends HttpServlet {
    
@@ -17,7 +17,7 @@ public class SearchFormController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String search = request.getParameter("searchform").trim();
-            ApplicationDAO dao = new ApplicationDAO();
+            ApplicationAdminDAO dao = new ApplicationAdminDAO();
             List<Application> list = dao.getListApplication(search);
             if(list != null){
                 if(!list.isEmpty()){

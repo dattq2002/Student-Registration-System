@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class UpdateAccountController extends HttpServlet {
 
@@ -19,20 +20,26 @@ public class UpdateAccountController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            HttpSession session = request.getSession();
             int id = Integer.parseInt(request.getParameter("id"));
             String Name = request.getParameter("name");
             String role = request.getParameter("role");
             String Status = request.getParameter("status");
-            UserAccountDAO dao = new UserAccountDAO();
-            UserAccountDTO acc = new UserAccountDTO(role, Name, Status);
-            boolean check = dao.updateAccount(id, Name, acc);
-            if (check) {
-                request.setAttribute("MESSAGE", "Updating Successfully!");
-                url = SUCCESS;
+            String email = request.getParameter("email");
+            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
+            if (email.equals(loginUser.getEmail()) || "ADMIN".equals(role)) {
+                request.setAttribute("MESSAGE", "Account is login cannot update !!!");
             } else {
-                request.setAttribute("MESSAGE", "Updating fail !!!");
+                UserAccountDAO dao = new UserAccountDAO();
+                UserAccountDTO acc = new UserAccountDTO(role, Name, Status);
+                boolean check = dao.updateAccount(id, Name, acc);
+                if (check) {
+                    request.setAttribute("MESSAGE", "Updating Successfully!");
+                    url = SUCCESS;
+                } else {
+                    request.setAttribute("MESSAGE", "Updating fail !!!");
+                }
             }
-
         } catch (SQLException e) {
             log("Error at UpdateController: " + e.toString());
         } finally {

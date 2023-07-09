@@ -1,32 +1,45 @@
-package admin.controller.managetopic;
+package user.controller.group;
 
-import DTO.TopicAssign;
-import admin.DAO.TopicAdminDAO;
+import DTO.GroupProject;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import user.DAO.GroupStudentDAO;
 
-public class ListTopicAssign extends HttpServlet {
-   
+public class UpdateProjectGroupController extends HttpServlet {
+    private static final String ERROR = "GetListGroupStudentEnrollment";
+    private static final String SUCCESS = "GetListGroupStudentEnrollment";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String url = ERROR;
         try {
-            TopicAdminDAO dao = new TopicAdminDAO();
-            List<TopicAssign> list = dao.getListTopicAssign();
-            if(list != null){
-                if(!list.isEmpty()){
-                    request.setAttribute("LIST_TOPICASS", list);
-                }
+            int CourseID = Integer.parseInt(request.getParameter("CourseID"));
+            int SubID = Integer.parseInt(request.getParameter("SubID"));
+            request.setAttribute("COURSEID", CourseID);
+            request.setAttribute("SUBID", SubID);
+            int topicID = Integer.parseInt(request.getParameter("topicID"));
+            String context = request.getParameter("context");
+            String actor = request.getParameter("actor");
+            String func = request.getParameter("func");
+            String noteproject = request.getParameter("noteproject");
+            int prjID = Integer.parseInt(request.getParameter("prjID"));
+            GroupStudentDAO dao = new GroupStudentDAO();
+            GroupProject gp = new GroupProject(context, actor, func, 
+                    noteproject, prjID, topicID);
+            boolean check = dao.UpdateProject(gp);
+            if(check){
+                request.setAttribute("MESSAGE_PRJ", 
+                        "Update Project Information successfully !!");
+                url = SUCCESS;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }finally{
-            request.getRequestDispatcher("viewTopicAssign.jsp").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     } 
 

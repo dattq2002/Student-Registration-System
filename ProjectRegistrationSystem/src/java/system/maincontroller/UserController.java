@@ -12,6 +12,7 @@ public class UserController extends HttpServlet {
     private static final String CREATE_GROUP = "CreateGroupController";
     private static final String JOIN_GROUP = "GroupEnrollmentController";
     private static final String OUT_GROUP = "OutGroupEnrollmentController";
+    private static final String UPDATE_INFO_PROJECT = "UpdateProjectGroupController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -24,6 +25,8 @@ public class UserController extends HttpServlet {
                 url = JOIN_GROUP;
             }else if("OutGroup".equals(action)){
                 url = OUT_GROUP;
+            }else if("UpdateTopicProject".equals(action)){
+                url = UPDATE_INFO_PROJECT;
             }
         } catch (Exception e) {
             log("Error at UserController: " + e.toString());

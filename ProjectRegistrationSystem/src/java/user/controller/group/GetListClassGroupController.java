@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import user.DAO.ProfileStudentDAO;
+import user.DAO.GroupStudentDAO;
 
 public class GetListClassGroupController extends HttpServlet {
    
@@ -20,7 +20,7 @@ public class GetListClassGroupController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserAccountDTO loginUser =(UserAccountDTO) session.getAttribute("LOGIN_USER");
-            ProfileStudentDAO dao = new ProfileStudentDAO();
+            GroupStudentDAO dao = new GroupStudentDAO();
             List<ClassInformation> list = dao.getListClassEnrollment(loginUser.getEmail());
             if(list != null){
                 if(!list.isEmpty()){

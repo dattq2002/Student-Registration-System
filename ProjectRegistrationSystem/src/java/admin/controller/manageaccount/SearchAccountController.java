@@ -25,7 +25,7 @@ public class SearchAccountController extends HttpServlet {
 
             //proccess
             UserAccountDAO dao = new UserAccountDAO();
-            List<UserAccountDTO> list = dao.searchAccountByEmail(search);
+            List<UserAccountDTO> list = dao.searchAccountByEmailOrByFullName(search);
             if (!search.isEmpty()) {
                 request.setAttribute("LIST_ACCOUNT", list);
                 url = SUCCESS;

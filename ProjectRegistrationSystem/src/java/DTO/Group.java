@@ -35,6 +35,25 @@ public class Group {
         this.SubjectID = SubjectID;
         this.SubjectCode = subCode;
     }
+    
+    public Group(String StudentName, int GroupID, String GroupName, 
+            String StartDate, String Major, String isLeader, String StudentCode, 
+            int StudentID, int CourseID, int SubjectID, String subCode, 
+            int TopicID, String topicName) {
+        this.StudentName = StudentName;
+        this.GroupID = GroupID;
+        this.StartDate = StartDate;
+        this.Major = Major;
+        this.isLeader = isLeader;
+        this.StudentCode = StudentCode;
+        this.StudentID = StudentID;
+        this.CourseID = CourseID;
+        this.GroupName = GroupName;
+        this.SubjectID = SubjectID;
+        this.SubjectCode = subCode;
+        this.TopicID = TopicID;
+        this.TopicName = topicName;
+    }
 
     public Group(String GroupName, int CourseID, int TopicID) {
         this.GroupName = GroupName;
@@ -82,6 +101,12 @@ public class Group {
         this.TopicID = TopicID;
         this.TopicName = TopicName;
     }
+
+    public Group(int TopicID) {
+        this.TopicID = TopicID;
+    }
+    
+    
     //--------------------------------------------------------------------------
     //getter
 

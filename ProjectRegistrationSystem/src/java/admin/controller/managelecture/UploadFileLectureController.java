@@ -44,11 +44,26 @@ public class UploadFileLectureController extends HttpServlet {
                     String Address = row.getCell(j + 6).getStringCellValue();
                     String city = row.getCell(j + 7).getStringCellValue();
                     String Email = row.getCell(j + 8).getStringCellValue();
-                    LectureProfile lec = new LectureProfile(ID, code, name, 
+                    if (!Email.matches("^\\w+@fe\\.edu\\.vn$")) {
+                        request.setAttribute("MESSAGE_UPLOAD", "Upload Email fail !!!"
+                                + "ID: " + ID + "Code: " + code + "Name: " + name 
+                                + "Birthday: " + birthday + "PhoneNumber: " + phoneNumber
+                                + "Gender: " + gender + "Address: " + Address 
+                                + "City: " + city + "Email: " + Email);
+                        return;
+                    }else if(!phoneNumber.matches("^\\d{10,11}$")){
+                        request.setAttribute("MESSAGE_UPLOAD", "Upload Phone Number fail !!!"
+                                + "ID: " + ID + "Code: " + code + "Name: " + name 
+                                + "Birthday: " + birthday + "PhoneNumber: " + phoneNumber
+                                + "Gender: " + gender + "Address: " + Address 
+                                + "City: " + city + "Email: " + Email);
+                        return;
+                    }
+                    LectureProfile lec = new LectureProfile(ID, code, name,
                             birthday, phoneNumber, gender, Address, city, Email);
-                    if(cell != null){
+                    if (cell != null) {
                         boolean result = dao.AddLectureProfile(lec);
-                        if(result == false){
+                        if (result == false) {
                             request.setAttribute("MESSAGE_UPLOAD", "Upload fail !!!");
                             return;
                         }

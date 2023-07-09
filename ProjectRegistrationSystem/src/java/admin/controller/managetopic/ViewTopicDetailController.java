@@ -1,7 +1,7 @@
 package admin.controller.managetopic;
 
 import DTO.Topic;
-import admin.DAO.ClassDAO;
+import admin.DAO.TopicAdminDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ public class ViewTopicDetailController extends HttpServlet {
         try {
             int topID = Integer.parseInt(request.getParameter("topicID"));
             int subID = Integer.parseInt(request.getParameter("subID"));
-            ClassDAO dao = new ClassDAO();
+            TopicAdminDAO dao = new TopicAdminDAO();
             Topic top = dao.getTopicDetail(topID, subID);
             if(top != null){
                 request.setAttribute("TOPIC_DETAIL", top);

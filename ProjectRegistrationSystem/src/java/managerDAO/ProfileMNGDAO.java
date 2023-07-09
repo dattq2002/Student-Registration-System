@@ -36,8 +36,9 @@ public class ProfileMNGDAO {
                     String phoneNumber = rs.getString("PhoneNumber");
                     String email = rs.getString("Email");
                     String image = rs.getString("Image");
-                    list.add(new LectureProfile(lecturerID, lecturerCode, name, gender,
-                            birthday, address, city, phoneNumber, email, image));
+                    list.add(new LectureProfile(lecturerID, lecturerCode, name, 
+                            birthday, phoneNumber, gender, address, city, email, 
+                            image));
                 }
             }
         } catch (Exception e) {
@@ -81,7 +82,7 @@ public class ProfileMNGDAO {
                     check = stm.executeUpdate()>0;
                 }
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             if(stm != null) stm.close();

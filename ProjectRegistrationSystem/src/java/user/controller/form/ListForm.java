@@ -1,7 +1,6 @@
 package user.controller.form;
 
 import DTO.Application;
-import DTO.UserAccountDTO;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;

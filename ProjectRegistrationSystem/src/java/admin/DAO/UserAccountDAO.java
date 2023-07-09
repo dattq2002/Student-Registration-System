@@ -159,7 +159,7 @@ public class UserAccountDAO {
     }
 
     //searchAccountByEmail
-    public List<UserAccountDTO> searchAccountByEmail(String search) throws SQLException {
+    public List<UserAccountDTO> searchAccountByEmailOrByFullName(String search) throws SQLException {
         List<UserAccountDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;

@@ -3,7 +3,6 @@ package user.controller.group;
 import DTO.ClassInformation;
 import DTO.UserAccountDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import user.DAO.ProfileStudentDAO;
+import user.DAO.GroupStudentDAO;
 
 public class GetListGroupController extends HttpServlet {
    
@@ -21,7 +20,7 @@ public class GetListGroupController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserAccountDTO loginUser =(UserAccountDTO) session.getAttribute("LOGIN_USER");
-            ProfileStudentDAO dao = new ProfileStudentDAO();
+            GroupStudentDAO dao = new GroupStudentDAO();
             List<ClassInformation> list = dao.getListClassEnrollment(loginUser.getEmail());
             if(list != null){
                 if(!list.isEmpty()){

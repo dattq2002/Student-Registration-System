@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import user.DAO.ProfileStudentDAO;
+import user.DAO.GroupStudentDAO;
 
 public class OutGroupEnrollmentController extends HttpServlet {
     private static final String ERROR = "GetListGroupEnRolled";
@@ -21,9 +21,7 @@ public class OutGroupEnrollmentController extends HttpServlet {
             HttpSession session = request.getSession();
             UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
             int subID = Integer.parseInt(request.getParameter("subID"));
-            int grID = Integer.parseInt(request.getParameter("grID"));
-            int courseID = Integer.parseInt(request.getParameter("courseID"));
-            ProfileStudentDAO dao = new ProfileStudentDAO();
+            GroupStudentDAO dao = new GroupStudentDAO();
             boolean check = dao.OutGroupMember(subID, loginUser.getEmail());
             if(check){
                 request.setAttribute("SUCCESS", "Out Group successfully!!");

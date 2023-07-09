@@ -27,6 +27,17 @@ public class GroupProject extends Group{
         this.Note = Note;
         this.ProjectID = ProjectID;
     }
+
+    public GroupProject(String Context, String Actors, String Function, 
+            String Note, int ProjectID, int TopicID) {
+        super(TopicID);
+        this.Context = Context;
+        this.Actors = Actors;
+        this.Function = Function;
+        this.Note = Note;
+        this.ProjectID = ProjectID;
+    }
+
     //getter
 
     public String getContext() {

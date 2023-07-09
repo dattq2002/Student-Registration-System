@@ -1,6 +1,7 @@
 package user.controller.group;
 
 import DTO.Group;
+import DTO.GroupProject;
 import DTO.UserAccountDTO;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,41 +11,48 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import user.DAO.ProfileStudentDAO;
+import user.DAO.GroupStudentDAO;
 
 public class GetListGroupStudentEnrollment extends HttpServlet {
+
     private static final String SUCCESS = "memberInGroup.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = SUCCESS;
         try {
             int CourseID = Integer.parseInt(request.getParameter("CourseID"));
             int subID = Integer.parseInt(request.getParameter("SubID"));
-            request.setAttribute("CourseID", CourseID);
-            request.setAttribute("subID", subID);
+            request.setAttribute("COURSEID", CourseID);
+            request.setAttribute("SUBID", subID);
             HttpSession session = request.getSession();
             UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
-            ProfileStudentDAO dao = new ProfileStudentDAO();
+            GroupStudentDAO dao = new GroupStudentDAO();
+            List<GroupProject> list1 = dao.listProjectGroup(loginUser.getEmail(), CourseID, subID);
+            if (list1 != null) {
+                if (!list1.isEmpty()) {
+                    request.setAttribute("LIST_PROJECT", list1);
+                }
+            }
             List<Group> list = dao.getListMember(loginUser.getEmail(), CourseID, subID);
             int count = list.size();
-            if(list != null){
-                if(!list.isEmpty()){
-                    request.setAttribute("LIST_MEMBER", list);
-                    request.setAttribute("AMOUNT", count);
-                    url = SUCCESS;
-                }
+            if (!list.isEmpty()) {
+                request.setAttribute("LIST_MEMBER", list);
+                request.setAttribute("AMOUNT", count);
+                url = SUCCESS;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -52,12 +60,13 @@ public class GetListGroupStudentEnrollment extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -65,12 +74,13 @@ public class GetListGroupStudentEnrollment extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

@@ -32,6 +32,7 @@
                     <th>Major</th>
                     <th>Subject</th>
                     <th>isLeader</th>
+                    <th>Topic Code</th>
                     <th>View Detail</th>
                     <th>Join Group</th>
                 </tr>
@@ -49,6 +50,8 @@
                     <td><%=item.getMajor()%></td>
                     <td><%=item.getSubjectName() + "-" + item.getSubjectID()%></td>
                     <td><%=item.getIsLeader()%></td>
+                    <td><%=((item.getTopicName() == null)? "" : item.getTopicName()) 
+                            + ((item.getTopicID() == 0)? "" : item.getTopicID())%></td>
                     <td>
                         <a href="ViewDetailGroupToJoin?courseID=<%=item.getCourseID()%>&subID=<%=item.getSubjectID()%>&grID=<%=item.getGroupID()%>">
                             View_Detail_Group
