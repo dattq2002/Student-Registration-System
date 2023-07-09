@@ -122,7 +122,7 @@
     </servlet>
     <servlet>
         <servlet-name>CreateCourseController</servlet-name>
-        <servlet-class>admin.controller.manageaccount.CreateCourseController</servlet-class>
+        <servlet-class>admin.controller.manageclass.CreateCourseController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteClassController</servlet-name>

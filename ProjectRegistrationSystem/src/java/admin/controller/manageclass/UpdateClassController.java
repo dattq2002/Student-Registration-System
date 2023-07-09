@@ -52,7 +52,6 @@ public class UpdateClassController extends HttpServlet {
                     }
                 }else{
                     request.setAttribute("MESSAGE", "Update Table fail !!");
-                    return;
                 }
             }
         } catch (NumberFormatException | SQLException e) {

@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CreateCourseController extends HttpServlet {
-    
+
     private static final String ERROR = "createCourse.jsp";
     private static final String SUCCESS = "ClassController";
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -32,7 +32,6 @@ public class CreateCourseController extends HttpServlet {
             //----------------------------------------
             String regex = "^(NJS|SE)-\\d+$";
             String regex2 = "^[A-Za-z]+-\\d+$";
-            boolean check = false;
             int courseID = 0;
             int subID = 0;
             //----------------------------------------
@@ -52,14 +51,13 @@ public class CreateCourseController extends HttpServlet {
                 if (result == false) {
                     boolean check1 = dao.CreateNewCourse(courseID, CourseName, courseCode, semesterNumber,
                             startDate, endDate);
-                    if (check1) {
-                        check = true;
-                    } else {
+                    if (check1 == false) {
                         request.setAttribute("MESSAGE", "Cannot create !!!");
                         return;
                     }
                 } else {
-                    check = true;
+                    request.setAttribute("MESSAGE", "Course is duplicate !!!");
+                    return;
                 }
             }
             int lecID = dao.checkLectureName(lecName);
@@ -78,27 +76,23 @@ public class CreateCourseController extends HttpServlet {
                 if (result == false) {
                     boolean result1 = dao.createNewSubject(subID, subCode, subName, credit);
                     if (result1) {
-                        check = true;
-                    } else {
                         request.setAttribute("MESSAGE", "Cannot create Subject !!!");
                         return;
                     }
-                }else{
-                    check = true;
+                } else {
+                    request.setAttribute("MESSAGE", "Subject is duplicate !!!");
+                    return;
                 }
             }
             //create
-            if (check) {
-                boolean result = dao.CreateCourse(lecID, subID, courseID);
-                if (result) {
-                    request.setAttribute("MESSAGE", "Create Successfully !!");
-                    url = SUCCESS;
-                }
+            boolean result = dao.CreateCourse(lecID, subID, courseID);
+            if (result) {
+                request.setAttribute("MESSAGE", "Create Successfully !!");
+                url = SUCCESS;
             } else {
                 request.setAttribute("MESSAGE", "Create Fail !!");
                 url = ERROR;
             }
-            
         } catch (NumberFormatException | SQLException e) {
             e.printStackTrace();
         } finally {
