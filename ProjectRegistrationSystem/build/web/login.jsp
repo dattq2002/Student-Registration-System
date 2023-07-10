@@ -49,6 +49,8 @@
                             <div class="input-boxes">
                                 <div class="inputBox">
                                     <input type="text" name="email" value="" required="required"/>
+                                    <input type="hidden" name="email" 
+                                           value="<%=session.getAttribute("EXSITED_EMAIL") %>" required="required"/>
                                     <small>Enter your email</small>
                                     <i></i>
                                     

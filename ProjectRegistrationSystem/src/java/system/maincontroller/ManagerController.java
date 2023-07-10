@@ -24,6 +24,7 @@ public class ManagerController extends HttpServlet {
     private static final String UPDATE_MEMBER_MNG = "UpdateMemberMNGController";
     private static final String DELETE_MEMBER_MNG = "DeleteMemberMNGController";
     private static final String UPDATE_TOPIC_GROUP_MNG = "UpdateTopicGroupMNGController";
+    private static final String DELETE_GROUP_MNG = "DeleteGroupMNGController";
 
     private static final String LIST_TOPIC_MNG = "ListTopicMNGController";
     private static final String SEARCH_TOPIC_MNG = "SearchTopicMNGController";
@@ -93,6 +94,8 @@ public class ManagerController extends HttpServlet {
                 url = PROFILE_MNG;
             } else if ("Update Profile".equals(action)) {
                 url = UPDATE_PROFILE_MNG;
+            }else if("DeleteGroup".equals(action)){
+                url = DELETE_GROUP_MNG;
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

@@ -352,4 +352,35 @@ public class GroupMNGDAO {
         }
         return check;
     }
+    
+    public boolean deleteGroup(int groupID) throws SQLException {
+        boolean result = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "Delete Member" + " where GroupID=? "
+                        + "Delete Project" + " where GroupID=? " 
+                        + "Delete Groupp" + " where ID=?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, groupID);
+                stm.setInt(2, groupID);
+                stm.setInt(3, groupID);
+                int value = stm.executeUpdate();
+                result = value > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
+    }
 }

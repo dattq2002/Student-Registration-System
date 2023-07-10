@@ -22,12 +22,12 @@ public class ForgotController extends HttpServlet {
             String email = request.getParameter("email");
             UserAccountDAO dao = new UserAccountDAO();
             String check = dao.checkEmail(email);
-            HttpSession sesion = request.getSession();
+            HttpSession session = request.getSession();
             if(check != null){
                 url = SUCCESS;
                 Thread.sleep(2000);
-                request.setAttribute("EXSITED_EMAIL", "Email verification complete!!");
-                sesion.setAttribute("EXSITED_EMAIL", email);
+                session.setAttribute("EXSITED_EMAIL1", "Email verification complete!!");
+                session.setAttribute("EXSITED_EMAIL", email);
             }else{
                 request.setAttribute("ERROR_EMAIL", "Email is not exit !!");
             }

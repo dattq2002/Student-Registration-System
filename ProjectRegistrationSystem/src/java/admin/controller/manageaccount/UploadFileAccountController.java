@@ -55,6 +55,10 @@ public class UploadFileAccountController extends HttpServlet {
                     }else if(!(Status.equalsIgnoreCase("Active")||Status.equals("Deactive"))){
                         request.setAttribute("MESSAGE_UPLOAD", "Your Status is wrong form !!");
                         return;
+                    }else if(!password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{1,}$")){
+                        request.setAttribute("MESSAGE_UPLOAD", "Your password at "
+                                + "least one character and one number !!! " + password);
+                        return;
                     } else {
                         if (cell != null) {
                             boolean result = dao.addAccountFromFile(acc);

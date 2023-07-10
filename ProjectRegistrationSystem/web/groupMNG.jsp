@@ -35,6 +35,7 @@
                     <th>Course Code</th>
                     <th>Subject Code</th>
                     <th>Detail</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,16 +46,21 @@
             <form action="ManagerController">
                 <tr>
                     <td> <%= count++%> </td>
-                    <td> <%= dto.getGroupName() %> </td>
-                    <td> <%= dto.getCourseName() + "-" + dto.getCourseCode() %> </td>
-                    <td> <%= dto.getSubjectCode() + "-" + dto.getSubjectID() %> </td> 
+                    <td> <%= dto.getGroupName()%> </td>
+                    <td> <%= dto.getCourseName() + "-" + dto.getCourseCode()%> </td>
+                    <td> <%= dto.getSubjectCode() + "-" + dto.getSubjectID()%> </td> 
                     <td>
-                        <input type="hidden" name="courseID" value="<%= dto.getCourseCode() %>"/>
-                        <input type="hidden" name="subjectID" value="<%= dto.getSubjectID() %>"/>
-                        <input type="hidden" name="groupName" value="<%= dto.getGroupName() %>"/>
-                        <input type="hidden" name="groupID" value="<%= dto.getGroupID() %>"/>
+                        <input type="hidden" name="courseID" value="<%= dto.getCourseCode()%>"/>
+                        <input type="hidden" name="subjectID" value="<%= dto.getSubjectID()%>"/>
+                        <input type="hidden" name="groupName" value="<%= dto.getGroupName()%>"/>
+                        <input type="hidden" name="groupID" value="<%= dto.getGroupID()%>"/>
                         <input type="submit" value="Detail" />
                         <input type="hidden" name="action" value="DetailGroup"/>
+                    </td>
+                    <td>
+                        <button>
+                            <a href="ManagerController?action=DeleteGroup&groupID=<%= dto.getGroupID()%>">Delete</a>
+                        </button>
                     </td>
                 </tr>
             </form>
@@ -63,10 +69,17 @@
             %>
         </tbody>
     </table>
-        <%
-                }
+    <%
             }
-        %>
-
-    </body>
+        }
+    %>
+    <%
+        String message = (String) request.getAttribute("MESSAGE");
+        if (message != null) {
+    %>
+    <a style="color: green"><%=message%></a>
+    <%
+        }
+    %>
+</body>
 </html>

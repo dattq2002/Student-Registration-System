@@ -8,20 +8,28 @@
     <body>
         <h1>Reset Password !!</h1>
         <%
-            String message = (String) request.getAttribute("EXSITED_EMAIL");
-            if(message != null){
-                %>
-                <h4><%=message%></h4>
+            String message = (String) session.getAttribute("EXSITED_EMAIL1");
+            if (message != null) {
+        %>
+        <h4><%=message%></h4>
         <%
             }
             String emailExsit = (String) session.getAttribute("EXSITED_EMAIL");
-            if(emailExsit != null){
+            if (emailExsit != null) {
         %>
         <form action="MainController" method="POST">
-            <input type="hidden" name="emailExsit" value="<%= emailExsit %>" />
+            <input type="hidden" name="email" value="<%= session.getAttribute("EXSITED_EMAIL")%>" />
             Reset Password: <input type="password" name="rsPassword" value="" /><br>
             <input type="submit" value="Reset" name="action" />
         </form>
+        <%
+            }
+        %>
+        <%
+            String message1 = (String) request.getAttribute("MESSAGE");
+            if (message1 != null) {
+        %>
+        <a style="color: red"><%=message1%></a>
         <%
             }
         %>
