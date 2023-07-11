@@ -13,6 +13,12 @@ public class Topic {
     
     //constructor
 
+    public Topic(int TopicID, String TopicCode, String lecName) {
+        this.TopicID = TopicID;
+        this.TopicCode = TopicCode;
+        this.lecName = lecName;
+    }
+
     public Topic(int TopicID, String TopicCode) {
         this.TopicID = TopicID;
         this.TopicCode = TopicCode;
@@ -57,6 +63,19 @@ public class Topic {
         this.lecturerID = lecturerID;
         this.ShortDescription = shortDescription;
         this.FullDescription = fullDescription;
+    }
+
+    public Topic(int TopicID, String TopicCode, String name, String lecName, 
+            String ShortDescription, String FullDescription, 
+            int SemesterID, int lecturerID) {
+        this.TopicID = TopicID;
+        this.TopicCode = TopicCode;
+        this.name = name;
+        this.lecName = lecName;
+        this.ShortDescription = ShortDescription;
+        this.FullDescription = FullDescription;
+        this.SemesterID = SemesterID;
+        this.lecturerID = lecturerID;
     }
     
     //getter,setter

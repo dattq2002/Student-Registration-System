@@ -23,8 +23,6 @@
             
             Subject ID: <input type="text" name="subject" values="" required="" placeholder="FER-201"/> <br>
             
-            Semester ID: <input type="text" name="semester" values="" required="" placeholder="Spring-2022"/> <br>
-            
             <input type="submit" value="Assign" />
             <input type="hidden" value="AssignTopic" name="action" />
             <input type="reset" value="Reset" />

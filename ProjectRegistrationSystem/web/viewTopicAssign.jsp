@@ -31,6 +31,7 @@
                     <th>Create Date</th>
                     <th>Modify Date</th>
                     <th>Semester</th>
+                    <th>Lecture Name</th>
                     <th>Status</th>
                     <th>Detail</th>
                     <th>Approve</th>
@@ -43,7 +44,9 @@
                 %>
             <form action="MainController" method="POST">
                 <tr>
-                    <td><%=item.getTopicAssignID()%></td>
+                    <td><%=item.getTopicAssignID()%>
+                        <input type="hidden" name="topicAssID" value="<%=item.getTopicAssignID()%>" />
+                    </td>
                     <td>
                         <%=item.getTopicCode() + "-" + item.getTopicID()%>
                         <input type="hidden" name="topicid" value="<%=item.getTopicID()%>" />
@@ -55,12 +58,13 @@
                     <td><%=item.getStartDate()%></td>
                     <td><%=(item.getModifyDate() == null) ? "" : item.getModifyDate()%></td>
                     <td><%=item.getSemester()%></td>
+                    <td><%=item.getLecName()%></td>
                     <td>
-                        <%=item.isStatus()%>
-                        <input type="hidden" name="status" value="<%=item.isStatus()%>" />
+                        <%=item.getStatus()%>
+                        <input type="hidden" name="status" value="<%=item.getStatus()%>" />
                     </td>
                     <%
-                        if (item.isStatus()) {
+                        if (item.getStatus().equalsIgnoreCase("Processed")) {
                     %>
                     <td>
                         <a href="MainController?action=ViewTopicDetail&topicID=<%=item.getTopicID()%>&subID=<%=item.getSubjectID()%>">
@@ -82,7 +86,7 @@
                     </td>
                     <td>                       
                         <button>
-                            <a href="MainController?action=DeclineTopic&status=<%=item.isStatus()%>&topicid=<%=item.getTopicID()%>&subid=<%=item.getSubjectID()%>">
+                            <a href="MainController?action=DeclineTopic&status=<%=item.getStatus()%>&topicAssID=<%=item.getTopicAssignID()%>&subid=<%=item.getSubjectID()%>">
                                 Decline
                             </a>
                         </button>

@@ -328,6 +328,22 @@
         <servlet-name>DeleteGroupMNGController</servlet-name>
         <servlet-class>manager.controller.managegroup.DeleteGroupMNGController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClassGroupMNGController</servlet-name>
+        <servlet-class>manager.controller.managegroup.ClassGroupMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListSubjectTopicMNGController</servlet-name>
+        <servlet-class>manager.controller.managetopic.ListSubjectTopicMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TopicInSubjectMNGController</servlet-name>
+        <servlet-class>manager.controller.managetopic.TopicInSubjectMNGController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteTopicInSubjectController</servlet-name>
+        <servlet-class>manager.controller.managetopic.DeleteTopicInSubjectController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -655,6 +671,22 @@
     <servlet-mapping>
         <servlet-name>DeleteGroupMNGController</servlet-name>
         <url-pattern>/DeleteGroupMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassGroupMNGController</servlet-name>
+        <url-pattern>/ClassGroupMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListSubjectTopicMNGController</servlet-name>
+        <url-pattern>/ListSubjectTopicMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TopicInSubjectMNGController</servlet-name>
+        <url-pattern>/TopicInSubjectMNGController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteTopicInSubjectController</servlet-name>
+        <url-pattern>/DeleteTopicInSubjectController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

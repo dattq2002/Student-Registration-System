@@ -14,11 +14,10 @@ public class ApproveTopicAssign extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            boolean status = Boolean.parseBoolean(request.getParameter("status"));
-            int topicID = Integer.parseInt(request.getParameter("topicid"));
-            int subID = Integer.parseInt(request.getParameter("subid"));
+            String status = request.getParameter("status");
+            int topicID = Integer.parseInt(request.getParameter("topicAssID"));
             TopicAdminDAO dao = new TopicAdminDAO();
-            boolean check = dao.approveTopic(topicID, subID, status);
+            boolean check = dao.approveTopic(topicID, status);
             if(check){
                 request.setAttribute("MESSAGE", "Approved !!");
             }else{

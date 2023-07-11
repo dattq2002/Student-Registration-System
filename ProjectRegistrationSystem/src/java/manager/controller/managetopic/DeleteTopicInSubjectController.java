@@ -1,39 +1,42 @@
-package manager.controller.manageform;
+package manager.controller.managetopic;
 
-import DTO.Application;
+import DTO.UserAccountDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import managerDAO.ApplicationMNGDAO;
+import javax.servlet.http.HttpSession;
+import managerDAO.TopicMNGDAO;
 
-public class ApproveApplicationController extends HttpServlet {
-    private static final String ERROR = "DetailApplicationMNGController";
-    private static final String SUCCESS = "DetailApplicationMNGController";
+public class DeleteTopicInSubjectController extends HttpServlet {
+   
+    private static final String ERROR = "TopicInSubjectMNGController";
+    private static final String SUCCESS = "TopicInSubjectMNGController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            int formID = Integer.parseInt(request.getParameter("formID"));
-            String note = request.getParameter("note");
-            String status = request.getParameter("status");
-            if (status == null) {
-                request.setAttribute("MESSAGE", "Please choose Approve or Refuse status!!!");
+            int topicID = Integer.parseInt(request.getParameter("topicID"));
+            int subjectID = Integer.parseInt(request.getParameter("subjectID"));;
+            int lecturerID = Integer.parseInt(request.getParameter("lecturerID"));
+            HttpSession session = request.getSession();
+            UserAccountDTO loginUser = (UserAccountDTO)session.getAttribute("LOGIN_USER");
+            TopicMNGDAO dao = new TopicMNGDAO();
+            if (!(lecturerID == dao.getLecturerID(loginUser.getEmail()))) {
+                request.setAttribute("MESSAGE", "Do not delete Topics of other Lecturer!!!");
                 return;
             }
-            ApplicationMNGDAO dao = new ApplicationMNGDAO();
-            Application application = new Application(formID, note, status);
-            boolean check = dao.approveApplication(application);
-            if (check) {
+            boolean check = dao.deleteTopicAssign(topicID, subjectID);
+            if(check) {
                 url = SUCCESS;
-                request.setAttribute("MESSAGE", "Submit Successfully !!");
+                request.setAttribute("MESSAGE", "Delete Successfully !!");
             }
-
         } catch (Exception e) {
-            log("Error at ApproveApplicationController: " + e.toString());
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

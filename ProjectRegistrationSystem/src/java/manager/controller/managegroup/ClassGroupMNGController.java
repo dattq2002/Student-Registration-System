@@ -1,39 +1,38 @@
-package manager.controller.manageform;
+package manager.controller.managegroup;
 
-import DTO.Application;
+import DTO.ClassInformation;
+import DTO.UserAccountDTO;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import managerDAO.ApplicationMNGDAO;
+import javax.servlet.http.HttpSession;
+import managerDAO.GroupMNGDAO;
 
-public class ApproveApplicationController extends HttpServlet {
-    private static final String ERROR = "DetailApplicationMNGController";
-    private static final String SUCCESS = "DetailApplicationMNGController";
+public class ClassGroupMNGController extends HttpServlet {
+   
+    private static final String ERROR = "classGroupMNG.jsp";
+    private static final String SUCCESS = "classGroupMNG.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            int formID = Integer.parseInt(request.getParameter("formID"));
-            String note = request.getParameter("note");
-            String status = request.getParameter("status");
-            if (status == null) {
-                request.setAttribute("MESSAGE", "Please choose Approve or Refuse status!!!");
-                return;
-            }
-            ApplicationMNGDAO dao = new ApplicationMNGDAO();
-            Application application = new Application(formID, note, status);
-            boolean check = dao.approveApplication(application);
-            if (check) {
-                url = SUCCESS;
-                request.setAttribute("MESSAGE", "Submit Successfully !!");
-            }
+            HttpSession session = request.getSession();
+            UserAccountDTO loginUser = (UserAccountDTO)session.getAttribute("LOGIN_USER");            
+            GroupMNGDAO dao = new GroupMNGDAO();
 
-        } catch (Exception e) {
-            log("Error at ApproveApplicationController: " + e.toString());
+            List<ClassInformation> list = dao.getListClassMNG(loginUser.getEmail());
+            if (!list.isEmpty()) {
+                request.setAttribute("LIST_CLASS", list);
+                url = SUCCESS;
+            }
+        } catch (SQLException e) {
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

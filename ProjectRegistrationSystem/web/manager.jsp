@@ -29,10 +29,10 @@
                             <a href="ManagerController?action=LecturerClass">Class</a>
                         </li>
                         <li> 
-                            <a href="ManagerController?action=LecturerGroup">Group</a>
+                            <a href="ManagerController?action=LecturerClassGroup">Group</a>
                         </li>
                         <li>
-                            <a href="ManagerController?action=LecturerTopic">Topic</a>
+                            <a href="ManagerController?action=LecturerListSubjectTopic">Topic</a>
                         </li>
                         <li>
                             <a href="ManagerController?action=LecturerApplication">Application</a>

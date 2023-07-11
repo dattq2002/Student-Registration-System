@@ -7,6 +7,7 @@ public class ClassInformation extends Class{
     private int SubjectID;
     private String lecName;
     private boolean Status;
+    private int lecID;
     //contructor
 
     public ClassInformation(int ID, String SubjectCode, int SubjectID, String lecName, 
@@ -23,6 +24,12 @@ public class ClassInformation extends Class{
         super(CourseID, CourseName, CourseCode);
         this.SubjectCode = SubjectCode;
         this.SubjectID = SubjectID;
+    }
+    
+    public ClassInformation(String SubjectCode, int SubjectID, int lecID) {
+        this.SubjectCode = SubjectCode;
+        this.SubjectID = SubjectID;
+        this.lecID = lecID;
     }
     
     //getter,setter
@@ -61,6 +68,10 @@ public class ClassInformation extends Class{
 
     public boolean isStatus() {
         return Status;
+    }
+
+    public int getLecID() {
+        return lecID;
     }
     
 }

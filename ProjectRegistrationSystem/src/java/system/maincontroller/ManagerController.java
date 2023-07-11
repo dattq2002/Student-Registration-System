@@ -17,6 +17,7 @@ public class ManagerController extends HttpServlet {
 
     private static final String LIST_CLASS_MNG = "ListClassMNGController";
     
+    private static final String CLASS_GROUP_MNG = "ClassGroupMNGController";
     private static final String LIST_GROUP_MNG = "ListGroupMNGController";
     private static final String LIST_FALSE_GROUP_MNG = "ListFalseGroupMNGController";
     private static final String APPROVE_GROUP_MNG = "ApproveGroupMNGController";
@@ -26,6 +27,7 @@ public class ManagerController extends HttpServlet {
     private static final String UPDATE_TOPIC_GROUP_MNG = "UpdateTopicGroupMNGController";
     private static final String DELETE_GROUP_MNG = "DeleteGroupMNGController";
 
+    private static final String LIST_SUBJECT_TOPIC_MNG = "ListSubjectTopicMNGController";
     private static final String LIST_TOPIC_MNG = "ListTopicMNGController";
     private static final String SEARCH_TOPIC_MNG = "SearchTopicMNGController";
     private static final String DETAIL_TOPIC_MNG = "DetailTopicMNGController";
@@ -33,6 +35,7 @@ public class ManagerController extends HttpServlet {
     private static final String UPDATE_TOPIC = "UpdateTopicController";
     private static final String CREATE_TOPIC = "CreateTopicController";
     private static final String ASSIGN_TOPIC = "AssignTopicController";
+    private static final String DELETE_TOPIC_IN_SUBJECT = "DeleteTopicInSubjectController";
 
     private static final String LIST_APPLICATION_MNG = "ListApplicationMNGController";
     private static final String DETAIL_APPLICATION_MNG = "DetailApplicationMNGController";
@@ -96,6 +99,12 @@ public class ManagerController extends HttpServlet {
                 url = UPDATE_PROFILE_MNG;
             }else if("DeleteGroup".equals(action)){
                 url = DELETE_GROUP_MNG;
+            } else if ("LecturerClassGroup".equals(action)) {
+                url = CLASS_GROUP_MNG;  
+            } else if ("LecturerListSubjectTopic".equals(action)) {
+                url = LIST_SUBJECT_TOPIC_MNG; 
+            } else if ("DeleteTopicInSubject".equals(action)) {
+                url = DELETE_TOPIC_IN_SUBJECT;    
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

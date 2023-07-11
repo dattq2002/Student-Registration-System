@@ -22,16 +22,19 @@ public class ListGroupMNGController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            int courseID = Integer.parseInt(request.getParameter("courseID"));
+            int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+            
             HttpSession session = request.getSession();
-            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
+            UserAccountDTO loginUser = (UserAccountDTO)session.getAttribute("LOGIN_USER");            
             GroupMNGDAO dao = new GroupMNGDAO();
-            List<Group> list = dao.getListGroupMNG(loginUser.getEmail());
+            List<Group> list = dao.getListGroupMNG(loginUser.getEmail(), courseID, subjectID);
             if (!list.isEmpty()) {
                 request.setAttribute("LIST_GROUP", list);
                 url = SUCCESS;
             }
-        } catch (SQLException e) {
-            log("Error at ListGroupMNGController: " + e.toString());
+        } catch (Exception e) {
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

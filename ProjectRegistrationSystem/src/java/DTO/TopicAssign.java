@@ -8,14 +8,14 @@ public class TopicAssign extends Topic{
     private String StartDate;
     private String ModifyDate;
     private String Semester;
-    private boolean Status;
+    private String Status;
     
     //Contructor
 
     public TopicAssign(int TopicID, String TopicCode, int TopicAssignID, 
             String SubjectCode,int SubjectID, String StartDate, String ModifyDate, 
-            String Semester, boolean Status){
-        super(TopicID, TopicCode);
+            String Semester, String Status, String lecName){
+        super(TopicID, TopicCode, lecName);
         this.TopicAssignID = TopicAssignID;
         this.SubjectCode = SubjectCode;
         this.SubjectID = SubjectID;
@@ -24,7 +24,7 @@ public class TopicAssign extends Topic{
         this.Semester = Semester;
         this.Status = Status;
     }
-
+  
     //list Subject
 
     public TopicAssign(String SubjectCode, int SubjectID,
@@ -32,6 +32,15 @@ public class TopicAssign extends Topic{
         super(TopicID, TopicCode);
         this.SubjectCode = SubjectCode;
         this.SubjectID = SubjectID;
+    }
+
+    public TopicAssign(int SubjectID, String Status, int TopicID, String TopicCode, 
+            String name, String lecName, String ShortDescription, 
+            String FullDescription, int SemesterID, int lecturerID) {
+        super(TopicID, TopicCode, name, lecName, ShortDescription, 
+                FullDescription, SemesterID, lecturerID);
+        this.SubjectID = SubjectID;
+        this.Status = Status;
     }
     
 
@@ -61,7 +70,7 @@ public class TopicAssign extends Topic{
         return Semester;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return Status;
     }   
 
@@ -89,7 +98,7 @@ public class TopicAssign extends Topic{
         this.Semester = Semester;
     }
 
-    public void setStatus(boolean Status) {
+    public void setStatus(String Status) {
         this.Status = Status;
     }
     

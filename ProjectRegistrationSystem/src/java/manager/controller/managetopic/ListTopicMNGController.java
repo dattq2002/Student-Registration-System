@@ -1,6 +1,7 @@
 package manager.controller.managetopic;
 
 import DTO.Topic;
+import DTO.UserAccountDTO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import managerDAO.TopicMNGDAO;
 
 public class ListTopicMNGController extends HttpServlet {
@@ -20,14 +22,16 @@ public class ListTopicMNGController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            HttpSession session = request.getSession();
+            UserAccountDTO loginUser = (UserAccountDTO)session.getAttribute("LOGIN_USER");
             TopicMNGDAO dao = new TopicMNGDAO();
-            List<Topic> list = dao.getListTopicMNG();
+            List<Topic> list = dao.getListTopicMNG(loginUser.getEmail());
             if (!list.isEmpty()) {
                 request.setAttribute("LIST_TOPIC", list);
                 url = SUCCESS;
             }
-        } catch (SQLException e) {
-            log("Error at ListTopicMNGController: " + e.toString());
+        } catch (Exception e) {
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

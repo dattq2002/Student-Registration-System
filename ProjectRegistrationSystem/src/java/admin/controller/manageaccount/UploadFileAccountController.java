@@ -49,17 +49,21 @@ public class UploadFileAccountController extends HttpServlet {
                     } else if (!(Role.equals("ADMIN") || Role.equals("MNG") || Role.equals("USER"))) {
                         request.setAttribute("MESSAGE_UPLOAD", "Your role is wrong form !!");
                         return;
-                    }else if(!(Code.equals("AD")||Code.equals("MN")||Code.equals("US"))){
+                    } else if (!(Code.equals("AD") || Code.equals("MN") || Code.equals("US"))) {
                         request.setAttribute("MESSAGE_UPLOAD", "Your Code is wrong form !!");
                         return;
-                    }else if(!(Status.equalsIgnoreCase("Active")||Status.equals("Deactive"))){
+                    } else if (!(Status.equalsIgnoreCase("Active") || Status.equals("Deactive"))) {
                         request.setAttribute("MESSAGE_UPLOAD", "Your Status is wrong form !!");
                         return;
-                    }else if(!password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{1,}$")){
-                        request.setAttribute("MESSAGE_UPLOAD", "Your password at "
-                                + "least one character and one number !!! " + password);
+                    } else if (!password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{1,}$")) {
+                        request.setAttribute("MESSAGE_UPLOAD", "Your password: " + "(" + password + ")" + " at "
+                                + "least one character and one number !!! ");
                         return;
                     } else {
+                        if (dao.checkDuplicateEmail(Email)) {
+                            request.setAttribute("MESSAGE_UPLOAD", "Email: " + Email + " is duplicated !!");
+                            return;
+                        }
                         if (cell != null) {
                             boolean result = dao.addAccountFromFile(acc);
                             if (result == false) {

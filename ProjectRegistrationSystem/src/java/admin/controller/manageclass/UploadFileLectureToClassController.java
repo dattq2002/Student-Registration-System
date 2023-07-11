@@ -61,7 +61,7 @@ public class UploadFileLectureToClassController extends HttpServlet {
             workbook.close(); // Đóng Workbook
             fileInputStream.close(); // Đóng luồng đầu vào
         } catch (Exception e) {
-            request.setAttribute("FAIL", "Add data fail !!");
+            request.setAttribute("MESSAGE_FAIL", "Add data fail !!");
         } finally {
             request.getRequestDispatcher("createCourse.jsp").forward(request, response);
         }

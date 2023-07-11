@@ -1,6 +1,7 @@
 package managerDAO;
 
 import DBUtil.Util;
+import DTO.ClassInformation;
 import DTO.Group;
 import DTO.GroupProject;
 import java.sql.Connection;
@@ -10,10 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Nam An
- */
 public class GroupMNGDAO {
 
     public List<Group> getListGroupMNG(String email) throws SQLException {
@@ -382,5 +379,102 @@ public class GroupMNGDAO {
             }
         }
         return result;
+    }
+    
+    public List<ClassInformation> getListClassMNG(String email) throws SQLException {
+        List<ClassInformation> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "select s.Code as SubjectCode, s.ID as SubjectID, "
+                        + "na.CourseName, na.CourseCode, na.CourseID "
+                        + "from (select sic.*, c.Code as CourseCode, c.Name as CourseName "
+                        + "from SubjectInClass sic LEFT JOIN Course c "
+                        + "ON sic.CourseID = c.ID "
+                        + "where c.SemesterID = 11114 and sic.LecturerID = "
+                        + "(select ID from Lecturer where Email = ?) and sic.Status = 1) "
+                        + "as na LEFT JOIN Subject s "
+                        + "ON na.SubjectID = s.ID";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String SubjectCode = rs.getString("SubjectCode");
+                    int SubjectID = rs.getInt("SubjectID");
+                    String CourseName = rs.getString("CourseName");
+                    int CourseCode = rs.getInt("CourseCode");
+                    int CourseID = rs.getInt("CourseID");
+                    list.add(new ClassInformation(SubjectCode, SubjectID, CourseCode, CourseName, CourseID));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    
+    public List<Group> getListGroupMNG(String email, int cID, int sID) throws SQLException {
+        List<Group> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "select na.*, s.Code as SubjectCode "
+                        + "from (select na.*, sic.LecturerID, sic.SubjectID "
+                        + "from (select g.ID as GroupID, g.Name as GroupName, "
+                        + "g.CourseID, g.Status, c.Name as CourseName, c.Code as CourseCode "
+                        + "from Groupp g LEFT JOIN Course c "
+                        + "ON g.CourseID = c.ID "
+                        + "where c.SemesterID = 11114 ) as na LEFT JOIN SubjectInClass sic "
+                        + "ON na.CourseID = sic.CourseID) as na LEFT JOIN Subject s "
+                        + "ON na.SubjectID = s.ID "
+                        + "where na.LecturerID = (select ID from Lecturer where Email = ?) "
+                        + "and na.Status = 'True' and na.CourseCode = ? and s.ID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                stm.setInt(2, cID);
+                stm.setInt(3, sID);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String groupName = rs.getString("GroupName");
+                    String CourseName = rs.getString("CourseName");
+                    int CourseCode = rs.getInt("CourseCode");
+                    String SubjectCode = rs.getString("SubjectCode");
+                    int SubjectID = rs.getInt("SubjectID");
+                    int GroupID = rs.getInt("GroupID");
+                    list.add(new Group(groupName, SubjectID, SubjectCode, CourseName, CourseCode, GroupID));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
     }
 }

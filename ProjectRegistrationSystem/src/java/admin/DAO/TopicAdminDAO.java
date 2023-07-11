@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TopicAdminDAO {
+
     //approveTopic
-    public boolean approveTopic(int topicID, int SubjectID, boolean status) throws SQLException {
+    public boolean approveTopic(int topicID, String status) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -20,11 +21,10 @@ public class TopicAdminDAO {
             conn = Util.getConnection();
             if (conn != null) {
                 String sql = "UPDATE TopicAssign SET Status = ? "
-                        + "WHERE TopicID = ? AND SubjectID = ?";
+                        + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
-                stm.setBoolean(1, true);
+                stm.setString(1, "Processed");
                 stm.setInt(2, topicID);
-                stm.setInt(3, SubjectID);
                 check = stm.executeUpdate() > 0;
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -39,9 +39,9 @@ public class TopicAdminDAO {
         }
         return check;
     }
-    
+
     //declineTopic
-    public boolean declineTopic(int topicID, int SubjectID, boolean status) throws SQLException {
+    public boolean declineTopic(int topicID, String status) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -49,11 +49,10 @@ public class TopicAdminDAO {
             conn = Util.getConnection();
             if (conn != null) {
                 String sql = "UPDATE TopicAssign SET Status = ? "
-                        + "WHERE TopicID = ? AND SubjectID = ?";
+                        + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
-                stm.setBoolean(1, false);
+                stm.setString(1, "Not Processed");
                 stm.setInt(2, topicID);
-                stm.setInt(3, SubjectID);
                 check = stm.executeUpdate() > 0;
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -68,7 +67,7 @@ public class TopicAdminDAO {
         }
         return check;
     }
-    
+
     //getListTopicAssign
     public List<TopicAssign> getListTopicAssign() throws SQLException {
         List<TopicAssign> list = new ArrayList<>();
@@ -78,20 +77,22 @@ public class TopicAdminDAO {
         try {
             conn = Util.getConnection();
             if (conn != null) {
-                String sql = "SELECT a.TopicAssignID, a.TopicCode, a.TopicID, "
+                String sql = "SELECT B.*, L.Name FROM (SELECT DISTINCT A.*, "
+                        + "t.LecturerID FROM (SELECT a.TopicAssignID, a.TopicCode, a.TopicID, "
                         + "a.SubjectCode, a.SubjectID, a.StartDate, a.ModifyDate, "
-                        + "s.Name, s.Year, a.Status "
+                        + "s.Name as [SemesterName], s.Year, a.Status "
                         + "FROM (SELECT  a.TopicAssignID, a.TopicCode, a.TopicID, "
                         + "s.Code as [SubjectCode], a.SubjectID, a.StartDate, a.ModifyDate, "
                         + "a.SemesterID, a.Status "
                         + "FROM (SELECT t.ID as [TopicAssignID], a.Code as [TopicCode], "
-                        + "t.TopicID, t.SubjectID,t.StartDate,t.ModifyDate,"
+                        + "t.TopicID, t.SubjectID,t.StartDate,t.ModifyDate, "
                         + "t.SemesterID, t.Status "
                         + "FROM TopicAssign t LEFT JOIN Topic a "
                         + "ON t.TopicID = a.ID) as a "
                         + "LEFT JOIN Subject s ON a.SubjectID = s.ID) as a "
-                        + "LEFT JOIN Semester s ON a.SemesterID = s.ID ";
-
+                        + "LEFT JOIN Semester s ON a.SemesterID = s.ID) AS A "
+                        + "LEFT JOIN Topic t ON A.TopicID = t.ID) AS B LEFT JOIN Lecturer L "
+                        + "ON B.LecturerID = L.ID";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -102,12 +103,13 @@ public class TopicAdminDAO {
                     int SubjectID = rs.getInt("SubjectID");
                     String stDate = rs.getString("StartDate");
                     String mdDate = rs.getString("ModifyDate");
-                    String SName = rs.getString("Name");
+                    String SName = rs.getString("SemesterName");
                     int year = rs.getInt("Year");
                     String Semester = SName + year;
-                    boolean Status = rs.getBoolean("Status");
+                    String Status = rs.getString("Status");
+                    String lecName = rs.getString("Name");
                     list.add(new TopicAssign(TopicID, TopicCode, TopicAss,
-                            SubjectCode, SubjectID, stDate, mdDate, Semester, Status));
+                            SubjectCode, SubjectID, stDate, mdDate, Semester, Status , lecName));
                 }
             }
         } catch (Exception e) {
@@ -124,7 +126,7 @@ public class TopicAdminDAO {
         }
         return list;
     }
-    
+
     public Topic getTopicDetail(int topID, int subID) throws SQLException {
         Topic top = null;
         Connection conn = null;

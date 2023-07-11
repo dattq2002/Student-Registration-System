@@ -1,11 +1,13 @@
 package manager.controller.managetopic;
 
+import DTO.UserAccountDTO;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import managerDAO.TopicMNGDAO;
 
 public class AssignTopicController extends HttpServlet {
@@ -21,7 +23,9 @@ public class AssignTopicController extends HttpServlet {
             //getParameter
             int topicID = Integer.parseInt(request.getParameter("topicID"));
             String subject = request.getParameter("subject");
-            String semester = request.getParameter("semester");
+            
+            HttpSession session = request.getSession();
+            UserAccountDTO loginUser = (UserAccountDTO)session.getAttribute("LOGIN_USER");
             //----------------------------------------
             String regex = "^[A-Za-z]+-\\d+$";
             String regex2 = "^(Spring|Fall|Summer)-\\d+$";
@@ -47,32 +51,21 @@ public class AssignTopicController extends HttpServlet {
                     request.setAttribute("MESSAGE", "Subject ID could not be found!!!");
                     return;
                 }
-            }
-            int semesterID = 0;
-            if (!semester.matches(regex2)) {
-                request.setAttribute("MESSAGE", "Semester ID is not match!!");
+            }            
+            if (!dao.findTopicID(loginUser.getEmail())) {
+                request.setAttribute("MESSAGE", "Cannot be assigned with another Lecturer's Topic.!!!");
                 return;
-            } else {
-                String tmp[] = semester.split("-");
-                String semesterName = tmp[0];
-                int semesterYear = Integer.parseInt(tmp[1]);
-                boolean result = dao.checkDuplicateSemesterID(semesterYear, semesterName);
-                if (!result) {
-                    request.setAttribute("MESSAGE", "Semester ID could not be found!!!");
-                    return;
-                }
-                semesterID = dao.getSemesterID(semesterYear, semesterName);
             }
             
-            if (dao.findSubjectID(subjectID)) {
-                request.setAttribute("MESSAGE", "This Subject is already assigned.!!!");
+            if (dao.findSubjectID(subjectID, topicID)) {
+                request.setAttribute("MESSAGE", "This Topic is already assigned in Subject.!!!");
                 return;
             }
 
             check = true;
             //create
             if (check) {
-                boolean result = dao.assignTopic(topicID, subjectID, semesterID);
+                boolean result = dao.assignTopic(topicID, subjectID);
                 if (result) {
                     url = SUCCESS;
                     request.setAttribute("MESSAGE", "Assign Successfully !!");

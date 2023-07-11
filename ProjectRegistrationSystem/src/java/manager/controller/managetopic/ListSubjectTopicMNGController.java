@@ -1,39 +1,38 @@
-package manager.controller.manageform;
+package manager.controller.managetopic;
 
-import DTO.Application;
+import DTO.ClassInformation;
+import DTO.UserAccountDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import managerDAO.ApplicationMNGDAO;
+import javax.servlet.http.HttpSession;
+import managerDAO.TopicMNGDAO;
 
-public class ApproveApplicationController extends HttpServlet {
-    private static final String ERROR = "DetailApplicationMNGController";
-    private static final String SUCCESS = "DetailApplicationMNGController";
+public class ListSubjectTopicMNGController extends HttpServlet {
+   
+    private static final String ERROR = "listSubjectTopicMNG.jsp";
+    private static final String SUCCESS = "listSubjectTopicMNG.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            int formID = Integer.parseInt(request.getParameter("formID"));
-            String note = request.getParameter("note");
-            String status = request.getParameter("status");
-            if (status == null) {
-                request.setAttribute("MESSAGE", "Please choose Approve or Refuse status!!!");
-                return;
-            }
-            ApplicationMNGDAO dao = new ApplicationMNGDAO();
-            Application application = new Application(formID, note, status);
-            boolean check = dao.approveApplication(application);
-            if (check) {
-                url = SUCCESS;
-                request.setAttribute("MESSAGE", "Submit Successfully !!");
-            }
+            HttpSession session = request.getSession();
+            UserAccountDTO loginUser = (UserAccountDTO)session.getAttribute("LOGIN_USER");            
+            TopicMNGDAO dao = new TopicMNGDAO();
 
+            List<ClassInformation> list = dao.getListSubjectMNG(loginUser.getEmail());
+            if (!list.isEmpty()) {
+                request.setAttribute("LIST_SUBJECT", list);
+                url = SUCCESS;
+            }
         } catch (Exception e) {
-            log("Error at ApproveApplicationController: " + e.toString());
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
