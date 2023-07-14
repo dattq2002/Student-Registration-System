@@ -56,7 +56,7 @@ public class ClassUserDAO {
         }
         return list;
     }
-    
+
     public List<Class> getInformationClass(int courseID) throws SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -93,7 +93,7 @@ public class ClassUserDAO {
         }
         return list;
     }
-    
+
     public Semester getNameSemester(int sesID) throws SQLException {
         Semester ses = null;
         Connection conn = null;
@@ -127,7 +127,7 @@ public class ClassUserDAO {
         }
         return ses;
     }
-    
+
     public ClassInformation getInforClass(int courseID, int subID) throws SQLException {
         ClassInformation course = null;
         Connection conn = null;
@@ -169,7 +169,7 @@ public class ClassUserDAO {
         }
         return course;
     }
-    
+
     public String getLecName(int courseID, int subID) throws SQLException {
         String lecName = null;
         Connection conn = null;
@@ -203,5 +203,37 @@ public class ClassUserDAO {
             }
         }
         return lecName;
+    }
+
+    public int getIDStudent(String email) throws SQLException {
+        int ID = 0;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT ID FROM Student WHERE Email = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    ID = rs.getInt("ID");
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return ID;
     }
 }

@@ -28,6 +28,7 @@ public class AdminController extends HttpServlet {
     private static final String UPDATE_PROFILE = "UpdateInformationProfile";
     private static final String SEARCH_LECTURE = "SearchLectureInformation";
     private static final String SEARCH_STUDENT = "SearchStudentInformation";
+    private static final String CREATE_SUBJECT = "CreateSubjectController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -72,7 +73,9 @@ public class AdminController extends HttpServlet {
             }else if("SearchLecture".equals(action)){
                 url = SEARCH_LECTURE; 
             }else if("SearchStudent".equals(action)){
-                url = SEARCH_STUDENT;     
+                url = SEARCH_STUDENT;   
+            }else if("Create New Subject".equals(action)){
+                url = CREATE_SUBJECT;       
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

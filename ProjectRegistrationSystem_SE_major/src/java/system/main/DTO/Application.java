@@ -15,6 +15,7 @@ public class Application {
     private String processDate;
     private String Status;
     private int CourseID;
+    private int CourseCode;
     private String CourseName;
     private int subID;
     private String subCode;
@@ -129,6 +130,17 @@ public class Application {
         this.subID = subID;
         this.subCode = subCode;
         this.grID = grID;
+        this.grName = grName;
+        this.room = room;
+        this.presentDate = presentDate;
+        this.time = time;
+    }
+    
+    public Application(int CourseCode, String CourseName, int subID, String subCode, String grName, String room, String presentDate, String time) {
+        this.CourseCode = CourseCode;
+        this.CourseName = CourseName;
+        this.subID = subID;
+        this.subCode = subCode;
         this.grName = grName;
         this.room = room;
         this.presentDate = presentDate;
@@ -392,6 +404,10 @@ public class Application {
 
     public void setTopicCode(String topicCode) {
         this.topicCode = topicCode;
+    }
+
+    public int getCourseCode() {
+        return CourseCode;
     }
 
 }

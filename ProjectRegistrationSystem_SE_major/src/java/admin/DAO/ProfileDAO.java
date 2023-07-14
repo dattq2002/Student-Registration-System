@@ -103,144 +103,6 @@ public class ProfileDAO {
         return list;
     }
 
-    //getListStudentSpring2022
-//    public List<StudentProfile> getListStudentSpring2022() throws SQLException {
-//        List<StudentProfile> list = new ArrayList<>();
-//        Connection conn = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            conn = Util.getConnection();
-//            if (conn != null) {
-//                String sql = "SELECT * FROM Student WHERE ID in (SELECT StudentID FROM Enrollment "
-//                        + "WHERE CourseID IN (SELECT ID FROM Course "
-//                        + "WHERE SemesterID = 11111))";
-//                stm = conn.prepareStatement(sql);
-//                rs = stm.executeQuery();
-//                while (rs.next()) {
-//                    int id = rs.getInt("ID");
-//                    String code = rs.getString("Code");
-//                    String Name = rs.getString("Name");
-//                    String Birthday = rs.getString("Birthday");
-//                    String PhoneNum = rs.getString("PhoneNumber");
-//                    String Gender = rs.getString("Gender");
-//                    String Address = rs.getString("Address");
-//                    String City = rs.getString("City");
-//                    String Major = rs.getString("Major");
-//                    String Email = rs.getString("Email");
-//                    list.add(new StudentProfile(id, code, Name, Birthday,
-//                            PhoneNum, Gender, Address, City, Major, Email));
-//                }
-//            }
-//        } catch (ClassNotFoundException | SQLException e) {
-//            System.err.println("Err at showListStudent!");
-//        } finally {
-//            if (rs != null) {
-//                rs.close();
-//            }
-//            if (stm != null) {
-//                stm.close();
-//            }
-//            if (conn != null) {
-//                conn.close();
-//            }
-//        }
-//        return list;
-//    }
-//
-//    //getListStudentFall2022
-//    public List<StudentProfile> getListStudentFall2022() throws SQLException {
-//        List<StudentProfile> list = new ArrayList<>();
-//        Connection conn = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            conn = Util.getConnection();
-//            if (conn != null) {
-//                String sql = "SELECT * FROM Student WHERE ID in (SELECT StudentID FROM Enrollment "
-//                        + "WHERE CourseID IN (SELECT ID FROM Course "
-//                        + "WHERE SemesterID = 11112))";
-//                stm = conn.prepareStatement(sql);
-//                rs = stm.executeQuery();
-//                while (rs.next()) {
-//                    int id = rs.getInt("ID");
-//                    String code = rs.getString("Code");
-//                    String Name = rs.getString("Name");
-//                    String Birthday = rs.getString("Birthday");
-//                    String PhoneNum = rs.getString("PhoneNumber");
-//                    String Gender = rs.getString("Gender");
-//                    String Address = rs.getString("Address");
-//                    String City = rs.getString("City");
-//                    String Major = rs.getString("Major");
-//                    String Email = rs.getString("Email");
-//                    list.add(new StudentProfile(id, code, Name, Birthday,
-//                            PhoneNum, Gender, Address, City, Major, Email));
-//                }
-//            }
-//        } catch (ClassNotFoundException | SQLException e) {
-//            System.err.println("Err at showListStudent!");
-//        } finally {
-//            if (rs != null) {
-//                rs.close();
-//            }
-//            if (stm != null) {
-//                stm.close();
-//            }
-//            if (conn != null) {
-//                conn.close();
-//            }
-//        }
-//        return list;
-//    }
-//
-//    //getListStudentSpring2023
-//    public List<StudentProfile> getListStudentSpring2023() throws SQLException {
-//        List<StudentProfile> list = new ArrayList<>();
-//        Connection conn = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            conn = Util.getConnection();
-//            if (conn != null) {
-//                String sql = "SELECT * FROM Student WHERE ID in (SELECT StudentID FROM Enrollment "
-//                        + "WHERE CourseID IN (SELECT ID FROM Course "
-//                        + "WHERE SemesterID = 11113))";
-//                stm = conn.prepareStatement(sql);
-//                rs = stm.executeQuery();
-//                while (rs.next()) {
-//                    int id = rs.getInt("ID");
-//                    String code = rs.getString("Code");
-//                    String Name = rs.getString("Name");
-//                    String Birthday = rs.getString("Birthday");
-//                    String PhoneNum = rs.getString("PhoneNumber");
-//                    String Gender = rs.getString("Gender");
-//                    String Address = rs.getString("Address");
-//                    String City = rs.getString("City");
-//                    String Major = rs.getString("Major");
-//                    String Email = rs.getString("Email");
-//                    list.add(new StudentProfile(id, code, Name, Birthday,
-//                            PhoneNum, Gender, Address, City, Major, Email));
-//                }
-//            }
-//        } catch (ClassNotFoundException | SQLException e) {
-//            System.err.println("Err at showListStudent!");
-//        } finally {
-//            if (rs != null) {
-//                rs.close();
-//            }
-//            if (stm != null) {
-//                stm.close();
-//            }
-//            if (conn != null) {
-//                conn.close();
-//            }
-//        }
-//        return list;
-//    }
-//
     //search Lecture profile
     public List<LectureProfile> getListLecture(String name) throws SQLException {
         List<LectureProfile> list = new ArrayList<>();
@@ -330,145 +192,6 @@ public class ProfileDAO {
         }
         return list;
     }
-//
-//    //getListLectureSP2022
-//    public List<LectureProfile> getListLectureSP2022() throws SQLException {
-//        List<LectureProfile> list = new ArrayList<>();
-//        Connection conn = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            conn = Util.getConnection();
-//            if (conn != null) {
-//                String sql = "SELECT * FROM Lecturer WHERE ID in "
-//                        + "(SELECT DISTINCT LecturerID FROM SubjectInClass "
-//                        + "WHERE CourseID IN (SELECT ID FROM Course "
-//                        + "WHERE SemesterID = 11111)) ";
-//                stm = conn.prepareStatement(sql);
-//                rs = stm.executeQuery();
-//                while (rs.next()) {
-//                    int id = rs.getInt("ID");
-//                    String code = rs.getString("Code");
-//                    String Name = rs.getString("Name");
-//                    String Birthday = rs.getString("Birthday");
-//                    String PhoneNum = rs.getString("PhoneNumber");
-//                    String Gender = rs.getString("Gender");
-//                    String Address = rs.getString("Address");
-//                    String City = rs.getString("City");
-//                    String Email = rs.getString("Email");
-//                    list.add(new LectureProfile(id, code, Name, Birthday,
-//                            PhoneNum, Gender, Address, City, Email));
-//                }
-//            }
-//        } catch (ClassNotFoundException | SQLException e) {
-//            System.err.println("Err at showListLecture!");
-//        } finally {
-//            if (rs != null) {
-//                rs.close();
-//            }
-//            if (stm != null) {
-//                stm.close();
-//            }
-//            if (conn != null) {
-//                conn.close();
-//            }
-//        }
-//        return list;
-//    }
-//
-//    //getListLectureSP2022
-//    public List<LectureProfile> getListLectureFA2022() throws SQLException {
-//        List<LectureProfile> list = new ArrayList<>();
-//        Connection conn = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            conn = Util.getConnection();
-//            if (conn != null) {
-//                String sql = "SELECT * FROM Lecturer WHERE ID in "
-//                        + "(SELECT DISTINCT LecturerID FROM SubjectInClass "
-//                        + "WHERE CourseID IN (SELECT ID FROM Course "
-//                        + "WHERE SemesterID = 11112)) ";
-//                stm = conn.prepareStatement(sql);
-//                rs = stm.executeQuery();
-//                while (rs.next()) {
-//                    int id = rs.getInt("ID");
-//                    String code = rs.getString("Code");
-//                    String Name = rs.getString("Name");
-//                    String Birthday = rs.getString("Birthday");
-//                    String PhoneNum = rs.getString("PhoneNumber");
-//                    String Gender = rs.getString("Gender");
-//                    String Address = rs.getString("Address");
-//                    String City = rs.getString("City");
-//                    String Email = rs.getString("Email");
-//                    list.add(new LectureProfile(id, code, Name, Birthday,
-//                            PhoneNum, Gender, Address, City, Email));
-//                }
-//            }
-//        } catch (ClassNotFoundException | SQLException e) {
-//            System.err.println("Err at showListLecture!");
-//        } finally {
-//            if (rs != null) {
-//                rs.close();
-//            }
-//            if (stm != null) {
-//                stm.close();
-//            }
-//            if (conn != null) {
-//                conn.close();
-//            }
-//        }
-//        return list;
-//    }
-//
-//    //getListLectureSP2023
-//    public List<LectureProfile> getListLectureSP2023() throws SQLException {
-//        List<LectureProfile> list = new ArrayList<>();
-//        Connection conn = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            conn = Util.getConnection();
-//            if (conn != null) {
-//                String sql = "SELECT * FROM Lecturer WHERE ID in "
-//                        + "(SELECT DISTINCT LecturerID FROM SubjectInClass "
-//                        + "WHERE CourseID IN (SELECT ID FROM Course "
-//                        + "WHERE SemesterID = 11113)) ";
-//                stm = conn.prepareStatement(sql);
-//                rs = stm.executeQuery();
-//                while (rs.next()) {
-//                    int id = rs.getInt("ID");
-//                    String code = rs.getString("Code");
-//                    String Name = rs.getString("Name");
-//                    String Birthday = rs.getString("Birthday");
-//                    String PhoneNum = rs.getString("PhoneNumber");
-//                    String Gender = rs.getString("Gender");
-//                    String Address = rs.getString("Address");
-//                    String City = rs.getString("City");
-//                    String Email = rs.getString("Email");
-//                    list.add(new LectureProfile(id, code, Name, Birthday,
-//                            PhoneNum, Gender, Address, City, Email));
-//                }
-//            }
-//        } catch (ClassNotFoundException | SQLException e) {
-//            System.err.println("Err at showListLecture!");
-//        } finally {
-//            if (rs != null) {
-//                rs.close();
-//            }
-//            if (stm != null) {
-//                stm.close();
-//            }
-//            if (conn != null) {
-//                conn.close();
-//            }
-//        }
-//        return list;
-//    }
-//
 //    //-------------------------------------------------------
     //update Profile
     public boolean UpdateProfile(int id, String code, String name) throws SQLException {
@@ -786,4 +509,87 @@ public class ProfileDAO {
         }
         return check;
     }
+    
+    public List<LectureProfile> searchProfileByEmail(String search) throws SQLException {
+        List<LectureProfile> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = Util.getConnection();
+            if(conn != null) {
+                String sql = "SELECT * "
+                        + "FROM Lecturer "
+                        + "WHERE Email =?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, search);
+                rs = stm.executeQuery();
+                while(rs.next()) {
+                    int lecturerID = rs.getInt("ID");
+                    String lecturerCode = rs.getString("Code");
+                    String name = rs.getString("Name");
+                    String gender = rs.getString("Gender");
+                    String birthday = rs.getString("Birthday");
+                    String address = rs.getString("Address");
+                    String city = rs.getString("City");
+                    String phoneNumber = rs.getString("PhoneNumber");
+                    String email = rs.getString("Email");
+                    String image = rs.getString("Image");
+                    list.add(new LectureProfile(lecturerID, lecturerCode, name, 
+                            birthday, phoneNumber, gender, address, city, 
+                            email, image));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(stm != null) stm.close();
+            if(conn != null) conn.close();
+        }
+        return list;
+    }
+    
+    
+    public boolean updateProfile(String name, String gender, String birthday, 
+            String address, String city, String phoneNumber, String email) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if(conn != null) {
+                String sql = "Update Lecturer"
+                        + " set Name= ?, Gender= ?, Birthday= ?, Address= ?, City= ?, PhoneNumber= ?"
+                        + " where Email= ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setString(2, gender);
+                stm.setString(3, birthday);
+                stm.setString(4, address);
+                stm.setString(5, city);
+                stm.setString(6, phoneNumber);
+                stm.setString(7, email);
+                check = stm.executeUpdate()>0;
+                
+                if(check) {
+                    String sql2 = "Update Account"
+                        + " set FullName= ?"
+                        + " where Email= ?";
+                    stm = conn.prepareStatement(sql2);
+                    stm.setString(1, name);
+                    stm.setString(2, email);
+                    check = stm.executeUpdate()>0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(stm != null) stm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
+    }
+    
 }

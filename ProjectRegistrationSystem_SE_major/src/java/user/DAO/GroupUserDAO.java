@@ -10,9 +10,9 @@ import java.util.List;
 import system.main.DTO.Group;
 import system.main.DTO.GroupProject;
 
-
 public class GroupUserDAO {
-    public List<GroupProject> listProjectGroup(String email, int courseID, int subjectID) throws SQLException{
+
+    public List<GroupProject> listProjectGroup(String email, int courseID, int subjectID) throws SQLException {
         List<GroupProject> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
@@ -62,7 +62,7 @@ public class GroupUserDAO {
 
             }
         } catch (Exception e) {
-        }finally {
+        } finally {
             if (rs != null) {
                 rs.close();
             }
@@ -75,7 +75,7 @@ public class GroupUserDAO {
         }
         return list;
     }
-    
+
     public List<Group> getListMember(String email, int courseID, int subjectID) throws SQLException {
         List<Group> list = new ArrayList<>();
         Connection conn = null;
@@ -157,7 +157,7 @@ public class GroupUserDAO {
         }
         return list;
     }
-    
+
     public List<GroupProject> joinGroup(int subID, int courseID) throws SQLException {
         List<GroupProject> list = new ArrayList<>();
         Connection conn = null;
@@ -196,7 +196,7 @@ public class GroupUserDAO {
                     int topicID = rs.getInt("TopicID");
                     String topicCode = rs.getString("Code");
                     list.add(new GroupProject(StudentName, GroupID, grName, StartDate,
-                            Major, isLeader, StudentCode, StuID, CourseID, 
+                            Major, isLeader, StudentCode, StuID, CourseID,
                             SubID, subCode, topicID, topicCode));
                 }
             }
@@ -215,7 +215,7 @@ public class GroupUserDAO {
         }
         return list;
     }
-    
+
     public int findStudentID(String email) throws SQLException {
         int ID = 0;
         Connection conn = null;
@@ -248,7 +248,7 @@ public class GroupUserDAO {
         }
         return ID;
     }
-    
+
     public boolean GroupEnrollment(int subID, int grID, int StudentID) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -275,8 +275,45 @@ public class GroupUserDAO {
         }
         return check;
     }
-    
-    public boolean checkGrCode(String gCode, int sCode) throws SQLException{
+
+    public boolean GroupEnrollment(int subID, int grID, int StudentID, int presentGr) throws SQLException {
+        boolean check = false;
+        boolean check1 = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "DELETE Member WHERE StudentID = ? AND GroupID = ? "
+                        + "AND SubjectID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, StudentID);
+                stm.setInt(2, presentGr);
+                stm.setInt(3, subID);
+                check1 = stm.executeUpdate() > 0;
+                if (check1) {
+                    String sql1 = "INSERT INTO Member "
+                            + "VALUES(?,?,GETDATE(),'SE','MB',?)";
+                    stm = conn.prepareStatement(sql1);
+                    stm.setInt(1, StudentID);
+                    stm.setInt(2, grID);
+                    stm.setInt(3, subID);
+                    check = stm.executeUpdate() > 0;
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean checkGrCode(String gCode, int sCode) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -290,12 +327,12 @@ public class GroupUserDAO {
                 stm.setInt(1, sCode);
                 stm.setString(2, gCode);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     check = true;
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
-        }finally {
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -307,5 +344,38 @@ public class GroupUserDAO {
             }
         }
         return check;
+    }
+
+    public int getGrID(String grName, int courseID) throws SQLException {
+        int grID = 0;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT ID FROM Groupp WHERE CourseID = ? "
+                        + "AND Name = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, courseID);
+                stm.setString(2, grName);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    grID = rs.getInt("ID");
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return grID;
     }
 }

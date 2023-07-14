@@ -39,6 +39,21 @@ public abstract class Person {
         this.Email = Email;
         this.image = image;
     }
+
+    public Person(int ID, String Code, String name, String birthday, String 
+            PhoneNumber, String Gender, String Address, String City, String Email, 
+            String image) {
+        this.ID = ID;
+        this.Code = Code;
+        this.name = name;
+        this.birthday = birthday;
+        this.PhoneNumber = PhoneNumber;
+        this.Gender = Gender;
+        this.Address = Address;
+        this.City = City;
+        this.Email = Email;
+        this.image = image;
+    }
     
     
     //getter, setter

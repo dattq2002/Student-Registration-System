@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391-SE-major/ProjectRegistrationSystem_SE_major/src/java/manager/controller/manage/subject/getListSubjectControllerMNG.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391-SE-major/ProjectRegistrationSystem_SE_major/src/java/manager/controller/manage/group/GetListGroupDetailMNG.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391-SE-major/ProjectRegistrationSystem_SE_major/src/java/manager/controller/manage/group/ListGroupMNG.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391-SE-major/ProjectRegistrationSystem_SE_major/web/groupMNG.jsp</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391-SE-major/ProjectRegistrationSystem_SE_major/src/java/admin/DAO/GroupDAO.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391-SE-major/ProjectRegistrationSystem_SE_major/web/manager.jsp</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391-SE-major/ProjectRegistrationSystem_SE_major/src/java/manager/controller/manage/subject/GetListSubjectDetailMNG.java</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391-SE-major/ProjectRegistrationSystem_SE_major/web/subjectDetailMNG.jsp</file>
+            <file>file:/D:/LEARNING/codeForMe/Java/Project-SWP391-SE-major/ProjectRegistrationSystem_SE_major/src/java/system/main/controller/LecturerController.java</file>
+        </group>
     </open-files>
 </project-private>

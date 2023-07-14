@@ -113,4 +113,32 @@ public class SubjectUserDAO {
         }
         return lecID;
     }
+
+    public boolean InsertSubject(Subject s) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "INSERT INTO Subject VALUES(?,?,?,?,?)";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, s.getSubjectID());
+                stm.setString(2, s.getSubjectCode());
+                stm.setString(3, s.getSubjectName());
+                stm.setString(4, s.getDescription());
+                stm.setInt(5, s.getCredit());
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+        }
+        return check;
+    }
 }

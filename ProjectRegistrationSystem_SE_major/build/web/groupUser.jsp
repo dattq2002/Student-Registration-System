@@ -81,7 +81,7 @@
                 }
             }
         %>
-        
+
         <%
             List<Group> list1 = (List<Group>) request.getAttribute("LIST_MEMBER");
             if (list1 != null) {
@@ -105,7 +105,10 @@
                 <tr>
                     <td><%=item.getStudentCode() + "-" + item.getStudentID()%></td>
                     <td><%=item.getStudentName()%></td>
-                    <td><%=item.getGroupName()%></td>
+                    <td>
+                        <%=item.getGroupName()%>
+                        <%session.setAttribute("GROUP_NAME", item.getGroupName()); %>
+                    </td>
                     <td><%=item.getStartDate()%></td>
                     <td><%=item.getMajor()%></td>
                     <td><%=item.getIsLeader()%></td>
@@ -114,7 +117,14 @@
                     }
                 %>
             </tbody>
-        </table>        
+        </table>
+        <form action="UserController">
+            <input type="submit" value="Switch Group" name="action" />
+            <input type="hidden" name="stuID" value="<%=session.getAttribute("STUDENT_ID")%>" />
+            <input type="hidden" name="courseID" value="<%=session.getAttribute("COURSE_ID")%>" />
+            <input type="hidden" name="subID" value="<%=session.getAttribute("SUBJECT_ID")%>" />
+            <input type="hidden" name="grName" value="<%=session.getAttribute("GROUP_NAME")%>" />
+        </form>
         <%
             }
         } else {
@@ -124,6 +134,14 @@
             <a href="JoinGroupController?courseID=<%=session.getAttribute("COURSE_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>">
                 Join Group</a>
         </button>
+        <%
+            }
+        %>
+        <%
+            String message = (String) request.getAttribute("MESSAGE");
+            if(message != null){
+                %>
+                <a><%=message %></a>
         <%
             }
         %>

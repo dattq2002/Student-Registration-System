@@ -51,7 +51,7 @@
                         <input type="text" name="CODE" value="" />
                     </td>
                     <td>
-                        <a href="ViewDetailGroupToJoin?courseID=<%=item.getCourseID()%>&subID=<%=item.getSubjectID()%>&grID=<%=item.getGroupID()%>">
+                        <a href="GetListGroupDetailUser?courseID=<%=item.getCourseID()%>&subID=<%=item.getSubjectID()%>&grID=<%=item.getGroupID()%>&groupName=<%=item.getGroupName()%>">
                             View_Detail_Group
                         </a>
                     </td>

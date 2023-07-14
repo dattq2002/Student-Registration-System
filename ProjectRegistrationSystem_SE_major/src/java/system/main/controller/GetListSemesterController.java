@@ -20,6 +20,7 @@ public class GetListSemesterController extends HttpServlet {
     private static final String ERROR = "error.jsp";
     private static final String SUCCESS = "course.jsp";
     private static final String SUCCESS1 = "courseUser.jsp";
+    private static final String SUCCESS2 = "courseMNG.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,6 +58,21 @@ public class GetListSemesterController extends HttpServlet {
                             if (!listCl.isEmpty()) {
                                 request.setAttribute("CLASS", listCl);
                                 url = SUCCESS1;
+                            }
+                        }
+                    }
+                }
+            }else{
+                List<Semester> listSes = sesDao.getListSemester(SesID);
+                if (listSes != null) {
+                    if (!listSes.isEmpty()) {
+                        request.setAttribute("SEMESTER", listSes);
+                        ClassDAO clDao1 = new ClassDAO();
+                        List<Class> listCl = clDao1.getListClass(SesID, loginUser.getEmail());
+                        if (listCl != null) {
+                            if (!listCl.isEmpty()) {
+                                request.setAttribute("CLASS", listCl);
+                                url = SUCCESS2;
                             }
                         }
                     }

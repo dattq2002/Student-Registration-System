@@ -21,6 +21,7 @@
         <a style="color: green" href="MainController?action=Summer2023&sesID=11114">Summer 2023</a>
         <a href="createClass.jsp">Create Class</a>
         <a href="createSemester.jsp">Create Semester</a>
+        <a href="createSubject.jsp">Create Subject</a>
         <a href="AdminController?action=viewStudent">View Student</a>
         <a href="AdminController?action=viewLecture">View Lecture</a>
         <a href="ListAccountController">View Account</a>

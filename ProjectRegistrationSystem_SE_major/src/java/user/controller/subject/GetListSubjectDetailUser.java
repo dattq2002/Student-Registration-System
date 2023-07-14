@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import system.main.DTO.ClassInformation;
+import system.main.DTO.UserAccountDTO;
 import user.DAO.ClassUserDAO;
 
 public class GetListSubjectDetailUser extends HttpServlet {
@@ -21,6 +22,7 @@ public class GetListSubjectDetailUser extends HttpServlet {
         String url = ERROR;
         try {
             HttpSession session = request.getSession();
+            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
             int courseID = Integer.parseInt(request.getParameter("courseID"));
             int subjectID = Integer.parseInt(request.getParameter("subID"));
             int sesID = Integer.parseInt(request.getParameter("sesID"));
@@ -28,6 +30,8 @@ public class GetListSubjectDetailUser extends HttpServlet {
 //            request.setAttribute("COURSE_ID", courseID);
             session.setAttribute("SUBJECT_ID", subjectID);
             ClassUserDAO clDao = new ClassUserDAO();
+            int StudentID = clDao.getIDStudent(loginUser.getEmail());
+            session.setAttribute("STUDENT_ID", StudentID);
             ClassInformation clInfo = clDao.getInforClass(courseID, subjectID);
             if(clInfo != null){
                 request.setAttribute("INFOR_CLASS", clInfo);

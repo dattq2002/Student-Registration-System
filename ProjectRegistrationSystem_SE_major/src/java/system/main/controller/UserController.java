@@ -14,6 +14,8 @@ public class UserController extends HttpServlet {
     private static final String LIST_SUBJECT_DETAIL = "GetListSubjectDetailUser";
     private static final String JOIN_GROUP = "GroupEnrollmentController";
     private static final String SEND_APPLICATION = "SendApplicationController";
+    private static final String SWITCH_GROUP = "SwitchGroupLink";
+    private static final String SWITCH_GROUP_USER = "SwitchGroupController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,7 +30,11 @@ public class UserController extends HttpServlet {
             } else if ("JoinGroup".equals(action)) {
                 url = JOIN_GROUP;
             } else if ("Send".equals(action)) {
-                url = SEND_APPLICATION;    
+                url = SEND_APPLICATION;
+            } else if ("Switch Group".equals(action)) {
+                url = SWITCH_GROUP; 
+            } else if ("Switch".equals(action)) {
+                url = SWITCH_GROUP_USER;     
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");
