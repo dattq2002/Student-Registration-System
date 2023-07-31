@@ -13,16 +13,15 @@ public class TopicAssign extends Topic{
     private int lecID;
     //Contructor
 
-    public TopicAssign(String lecName, int lecID, int TopicID, String TopicCode, String TopicName, String ShortDescription, String FullDescription) {
-        super(TopicID, TopicCode, TopicName, ShortDescription, FullDescription);
+    public TopicAssign(String lecName, int lecID, int TopicID, String TopicCode, 
+            String TopicName, String Context, String Actor, String Function) {
+        super(TopicID, TopicCode, TopicName, Context, Actor, Function);
         this.lecName = lecName;
         this.lecID = lecID;
-    }    
-    
-    public TopicAssign(int TopicAssignID,String StartDate, String ModifyDate, 
-            int SemesterID, String Status, int TopicID, String TopicCode, 
-            String TopicName, String lecName, String ShortDescription, String FullDescription, int lecID) {
-        super(TopicID, TopicCode, TopicName, ShortDescription, FullDescription);
+    }
+
+    public TopicAssign(int TopicAssignID, String StartDate, String ModifyDate, int SemesterID, String Status, String lecName, int lecID, int TopicID, String TopicCode, String TopicName, String Context, String Actor, String Function) {
+        super(TopicID, TopicCode, TopicName, Context, Actor, Function);
         this.TopicAssignID = TopicAssignID;
         this.StartDate = StartDate;
         this.ModifyDate = ModifyDate;
@@ -30,8 +29,7 @@ public class TopicAssign extends Topic{
         this.Status = Status;
         this.lecName = lecName;
         this.lecID = lecID;
-    }
-    
+    }   
 
     //getter,setter
 

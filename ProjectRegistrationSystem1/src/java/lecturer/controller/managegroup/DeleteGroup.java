@@ -30,6 +30,7 @@ public class DeleteGroup extends HttpServlet {
             int grID = Integer.parseInt(request.getParameter("grID"));
             int courseID = Integer.parseInt(request.getParameter("courseID"));
             int subID = Integer.parseInt(request.getParameter("subID"));
+            int sesID = Integer.parseInt(request.getParameter("sesID"));
             GroupDAO grDao = new GroupDAO();
             boolean check = grDao.deleteGroup(grID, subID, courseID);
             if(check) {

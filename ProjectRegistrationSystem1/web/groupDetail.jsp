@@ -1,3 +1,4 @@
+<%@page import="system.main.DTO.TopicAssign"%>
 <%@page import="system.main.DTO.GroupProject"%>
 <%@page import="system.main.DTO.Group"%>
 <%@page import="java.util.List"%>
@@ -30,14 +31,19 @@
         %>
         <form action="LecturerController">
             <div>
-                Topic Code: <input type="text" name="topic" value="<%= dto.getTopicCode() + "-" + dto.getTopicID()%>" />   
-                <input type="submit" value="Update" />
-                <input type="hidden" name="action" value="UpdateProjectTopic"/>     
-                <input type="hidden" name="projectID" value="<%= dto.getProjectID()%>"/>
-                <input type="hidden" name="grID" value="<%= session.getAttribute("GROUP_ID")%>"/>
-                <input type="hidden" name="grName" value="<%= session.getAttribute("GROUP_NAME")%>"/>
-                <input type="hidden" name="subID" value="<%= session.getAttribute("SUBJECT_ID")%>"/>
-                <input type="hidden" name="sesID" value="<%=session.getAttribute("SEMESTER_ID")%>"/>
+                Topic Code: 
+                <select name="topic">
+                    <%
+                        List<TopicAssign> listTopic = (List<TopicAssign>) session.getAttribute("LIST_TOPIC");
+                        if (listTopic != null) {
+                            for (TopicAssign item : listTopic) {
+                    %>
+                    <option <%= (item.getTopicID() == dto.getTopicID()) ? "selected" : ""%>> <%= item.getTopicCode() + "-" + item.getTopicID()%> </option>
+                    <%
+                            }
+                        }
+                    %>
+                </select>                 
             </div>
 
             <div>
@@ -53,11 +59,22 @@
             </div>
 
             <div>
-                Function Requirements: <%= dto.getFunction()%>
+                Function: <%= dto.getFunction()%>
             </div>
 
             <div>
-                Note: <%= dto.getNote()%> 
+                Note:  <textarea cols="60" rows="4" name="note" ><%= dto.getNote()%></textarea>
+            </div>
+            
+            <div>
+                <input type="submit" value="Update" />
+                <input type="hidden" name="action" value="UpdateProjectTopic"/>     
+                <input type="hidden" name="projectID" value="<%= dto.getProjectID()%>"/>
+                <input type="hidden" name="grID" value="<%= session.getAttribute("GROUP_ID")%>"/>
+                <input type="hidden" name="grName" value="<%= session.getAttribute("GROUP_NAME")%>"/>
+                <input type="hidden" name="subID" value="<%= session.getAttribute("SUBJECT_ID")%>"/>
+                <input type="hidden" name="sesID" value="<%=session.getAttribute("SEMESTER_ID")%>"/>
+                <input type="hidden" name="courseID" value="<%=session.getAttribute("COURSE_ID")%>"/>
             </div>
         </form>
 
@@ -118,7 +135,7 @@
                     </td>
                     <td>
                         <button>
-                            <a href="LecturerController?action=DeleteGroupMember&memID=<%=item.getMemberID()%>&grID=<%= session.getAttribute("GROUP_ID")%>&grName=<%= session.getAttribute("GROUP_NAME")%>&subID=<%= session.getAttribute("SUBJECT_ID")%>">Delete</a>
+                            <a href="LecturerController?action=DeleteGroupMember&memID=<%=item.getMemberID()%>&grID=<%= session.getAttribute("GROUP_ID")%>&grName=<%= session.getAttribute("GROUP_NAME")%>">Delete</a>
                         </button>
                     </td>
                 </tr>

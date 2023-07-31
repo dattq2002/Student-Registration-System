@@ -19,9 +19,7 @@ public class ListTopic extends HttpServlet {
         String url = ERROR;
         try {
             int subID = Integer.parseInt(request.getParameter("subID"));
-//            request.setAttribute("SUBJECT_ID", subID);
             int sesID = Integer.parseInt(request.getParameter("sesID"));
-//            request.setAttribute("SEMESTER_ID", sesID);
             TopicDAO topDao = new TopicDAO();
             List<TopicAssign> list = topDao.getListTopicAssign(subID, sesID);
             if(list != null){

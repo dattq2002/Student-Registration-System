@@ -5,8 +5,9 @@ public class Topic {
     protected int TopicID;
     protected String TopicCode;
     protected String TopicName;
-    protected String ShortDescription;
-    protected String FullDescription;
+    protected String Context;
+    protected String Actor;
+    protected String Function;
     
     //constructor
 
@@ -15,12 +16,13 @@ public class Topic {
 
     
     public Topic(int TopicID, String TopicCode, String TopicName, 
-            String ShortDescription, String FullDescription) {
+            String Context, String Actor, String Function) {
         this.TopicID = TopicID;
         this.TopicCode = TopicCode;
         this.TopicName = TopicName;
-        this.ShortDescription = ShortDescription;
-        this.FullDescription = FullDescription;
+        this.Context = Context;
+        this.Actor = Actor;
+        this.Function = Function;
     }
 
     
@@ -45,20 +47,30 @@ public class Topic {
     public String getTopicName() {
         return TopicName;
     }
+
+    public String getContext() {
+        return Context;
+    }
+
+    public void setContext(String Context) {
+        this.Context = Context;
+    }
+
+    public String getActor() {
+        return Actor;
+    }
+
+    public void setActor(String Actor) {
+        this.Actor = Actor;
+    }
+
+    public String getFunction() {
+        return Function;
+    }
+
+    public void setFunction(String Function) {
+        this.Function = Function;
+    }
     
-    public String getShortDescription() {
-        return ShortDescription;
-    }
 
-    public void setShortDescription(String ShortDescription) {
-        this.ShortDescription = ShortDescription;
-    }
-
-    public String getFullDescription() {
-        return FullDescription;
-    }
-
-    public void setFullDescription(String FullDescription) {
-        this.FullDescription = FullDescription;
-    }
 }

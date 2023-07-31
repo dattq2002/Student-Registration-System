@@ -19,8 +19,8 @@ import lecturer.DAO.GroupDAO;
  */
 public class CreateGroup extends HttpServlet {
 
-    private static final String ERROR = "createGroup.jsp";
-    private static final String SUCCESS = "createGroup.jsp";
+    private static final String ERROR = "ListGroup";
+    private static final String SUCCESS = "ListGroup";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,36 +31,12 @@ public class CreateGroup extends HttpServlet {
             int courseID = Integer.parseInt(request.getParameter("courseID"));
             int subID = Integer.parseInt(request.getParameter("subID"));
             String grName = request.getParameter("grName");
-            String student = request.getParameter("student");
             String topic = request.getParameter("topic");
-            String context = request.getParameter("context");
-            String actors = request.getParameter("actors");
-            String funcR = request.getParameter("funcR");
-            String note = request.getParameter("note");
             String regex = "^[A-Za-z]+-\\d+$";
-            String regex1 = "^(SE16)-\\d+$";
 
             GroupDAO grDAO = new GroupDAO();
             if (grDAO.checkGroupName(grName, courseID, subID)) {
                 request.setAttribute("MESSAGE", "Group Name is duplicated!!!");
-                return;
-            }
-            int stuID = 0;
-            if (!student.matches(regex1)) {
-                request.setAttribute("MESSAGE", "Student is not Match !!!");
-                return;
-            } else {
-                String tmp[] = student.split("-");
-                String stuCode = tmp[0];
-                stuID = Integer.parseInt(tmp[1]);
-                boolean result = grDAO.checkStudentID(courseID, subID, stuID);
-                if (!result) {
-                    request.setAttribute("MESSAGE", "Student is not in Course!!!");
-                    return;
-                }
-            }
-            if (grDAO.checkStudentInGroup(stuID, subID)) {
-                request.setAttribute("MESSAGE", "Student has a Group !!");
                 return;
             }
             int topicID = 0;
@@ -80,19 +56,17 @@ public class CreateGroup extends HttpServlet {
             if (grDAO.checkDuplicateTopicID(topicID, courseID, subID)) {
                 request.setAttribute("MESSAGE", "Topic is assign!!!");
                 return;
-            }            
-
-            boolean check = grDAO.insertGroup(grName, courseID, stuID, subID, sesID);
-            if (check) {
-                boolean result = grDAO.insertProject(grName, courseID, sesID, topicID, context, actors, funcR, note);
-                if (result) {
-                    url = SUCCESS;
-                    request.setAttribute("MESSAGE", "Create Successfully !!");
-                } else {
-                    url = ERROR;
-                    request.setAttribute("MESSAGE", "Create Fail !!");
-                }
             }
+
+            boolean check = grDAO.insertGroup(courseID, subID, grName, topicID);
+            if (check) {
+                url = SUCCESS;
+                request.setAttribute("MESSAGE", "Create Successfully !!");
+            } else {
+                url = ERROR;
+                request.setAttribute("MESSAGE", "Create Fail !!");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

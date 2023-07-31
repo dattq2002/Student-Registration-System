@@ -27,8 +27,9 @@
                     <th>No</th>
                     <th>Topic Code</th>
                     <th>Topic Name</th>
-                    <th>Short Description</th>
-                    <th>Full Description</th>
+                    <th>Context</th>
+                    <th>Actor</th>
+                    <th>Function</th>
                     <th>Lecturer Name</th>
                     <th>Start Date</th>
                     <th>Modify Date</th>
@@ -45,8 +46,9 @@
                     </td>
                     <td><%=item.getTopicCode() + item.getTopicID()%></td>
                     <td><%=item.getTopicName()%></td>
-                    <td><%=item.getShortDescription()%></td>
-                    <td><%=item.getFullDescription()%></td>
+                    <td><%=item.getContext() %></td>
+                    <td><%=item.getActor() %></td>
+                    <td><%=item.getFunction() %></td>
                     <td><%=item.getLecName()%></td>
                     <td><%=item.getStartDate()%></td>
                     <td><%=item.getModifyDate()%></td>

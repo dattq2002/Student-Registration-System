@@ -44,12 +44,12 @@
                     <td><%=item.getGroupName()%></td>
                     <td><%=item.getTopicCode() + item.getTopicID()%></td>
                     <td>
-                        <a href="LecturerController?action=ViewGroupDetail&grID=<%=item.getGroupID()%>&grName=<%=item.getGroupName()%>&subID=<%=session.getAttribute("SUBJECT_ID")%>">
+                        <a href="LecturerController?action=ViewGroupDetail&grID=<%=item.getGroupID()%>&grName=<%=item.getGroupName()%>">
                             View Detail
                         </a>
                     </td>
                     <td>
-                        <a href="LecturerController?action=DeleteGroup&grID=<%= item.getGroupID()%>&courseID=<%=session.getAttribute("COURSE_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>">Delete</a>
+                        <a href="LecturerController?action=DeleteGroup&grID=<%= item.getGroupID()%>&courseID=<%=session.getAttribute("COURSE_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>&sesID=<%=session.getAttribute("SEMESTER_ID")%>">Delete</a>
                     </td>
                 </tr>
                 <%

@@ -18,6 +18,7 @@ public class LecturerController extends HttpServlet {
     private static final String DELETE_GROUP_MEMBER = "DeleteGroupMember";
     private static final String DELETE_GROUP = "DeleteGroup";
     private static final String SOURCE_TOPIC = "SourceTopic";
+    private static final String DETAIL_TOPIC = "DetailTopic";
     private static final String UPDATE_TOPIC = "UpdateTopic";
     private static final String CREATE_TOPIC = "CreateTopic";
     private static final String LECTURER_PROFILE = "Profile";
@@ -52,6 +53,8 @@ public class LecturerController extends HttpServlet {
                 url = DELETE_GROUP;
             } else if ("SourceTopic".equals(action)) {
                 url = SOURCE_TOPIC;
+            } else if ("DetailTopic".equals(action)) {
+                url = DETAIL_TOPIC;
             } else if ("UpdateTopic".equals(action)) {
                 url = UPDATE_TOPIC;
             } else if ("CreateTopic".equals(action)) {

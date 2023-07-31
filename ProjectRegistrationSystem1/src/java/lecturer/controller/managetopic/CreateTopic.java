@@ -35,8 +35,9 @@ public class CreateTopic extends HttpServlet {
             String topicName = request.getParameter("topicName");
             HttpSession session = request.getSession();
             UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
-            String shortDescription = request.getParameter("shortDescription");
-            String fullDescription = request.getParameter("fullDescription");
+            String context = request.getParameter("context");
+            String actor = request.getParameter("actor");
+            String function = request.getParameter("function");
             boolean check = false;
             //----------------------------------------
             String regex = "^[A-Za-z]+-\\d+$";
@@ -59,26 +60,30 @@ public class CreateTopic extends HttpServlet {
                 }
             }
 
-            if (topicName.length() < 0 || topicName.length() > 100) {
-                request.setAttribute("MESSAGE", "Topic Name must have a length in [0,100]");
+            if (topicName.length() < 0) {
+                request.setAttribute("MESSAGE", "Topic Name must be longer than 0!!!");
                 return;
             }
 
             int lecturerID = topDao.getLecturerID(loginUser.getEmail());
 
-            if (shortDescription.length() < 0) {
+            if (context.length() < 0) {
                 request.setAttribute("MESSAGE", "Short Description must be longer than 0!!!");
                 return;
             }
-            if (fullDescription.length() < 0) {
+            if (actor.length() < 0) {
                 request.setAttribute("MESSAGE", "Full Description must be longer than 0!!!");
                 return;
             }
-
+            if (function.length() < 0) {
+                request.setAttribute("MESSAGE", "Full Description must be longer than 0!!!");
+                return;
+            }
+            
             check = true;
             //create
             if (check) {
-                boolean result = topDao.createTopic(topicID, topicCode, topicName, lecturerID, shortDescription, fullDescription);
+                boolean result = topDao.createTopic(topicID, topicCode, topicName, lecturerID, context, actor, function);
                 if (result) {
                     url = SUCCESS;
                     request.setAttribute("MESSAGE", "Create Successfully !!");

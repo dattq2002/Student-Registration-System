@@ -27,9 +27,11 @@
             
             Topic Name: <input type="text" name="topicName" values="" required=""/> <br>
             
-            Short Description: <textarea name="shortDescription" style="width: 300px; height: 100px;" required=""></textarea> <br>
+            Context: <textarea name="context" style="width: 300px; height: 100px;" required=""></textarea> <br>
             
-            Full Description: <textarea name="fullDescription" style="width: 300px; height: 100px;" required=""></textarea> <br>
+            Actor: <textarea name="actor" style="width: 300px; height: 100px;" required=""></textarea> <br>
+            
+            Function: <textarea name="function" style="width: 300px; height: 100px;" required=""></textarea> <br>
             
             <input type="submit" value="Create" />
             <input type="hidden" value="CreateTopic" name="action" />

@@ -18,6 +18,6 @@
             List Student
         </a>
         <a href="ListTopic?sesID=<%=session.getAttribute("SEMESTER_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>">List Topic</a>
-        <a href="ListGroup?courseID=<%=session.getAttribute("COURSE_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>">List Group</a>
+        <a href="ListGroup?courseID=<%=session.getAttribute("COURSE_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>&sesID=<%=session.getAttribute("SEMESTER_ID")%>">List Group</a>
     </body>
 </html>

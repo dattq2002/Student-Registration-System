@@ -4,6 +4,7 @@
     Author     : Nam An
 --%>
 
+<%@page import="system.main.DTO.TopicAssign"%>
 <%@page import="system.main.DTO.ClassInformation"%>
 <%@page import="java.util.List"%>
 <%@page import="system.main.DTO.UserAccountDTO"%>
@@ -23,25 +24,30 @@
             }
         %>
 
-        <a href="ListGroup?courseID=<%=session.getAttribute("COURSE_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>">List Group</a>
+        <a href="ListGroup?courseID=<%=session.getAttribute("COURSE_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>&sesID=<%=session.getAttribute("SEMESTER_ID")%>">List Group</a>
         
         <h3>Create Topic</h3>
         <form action="LecturerController">      
 
-            Group Name: <input type="text" name="grName" value="" required=""/> <br>    
+            <div>
+                Group Name: <input type="text" name="grName" value="" required=""/>
+            </div>
             
-            Student Code <input type="text" name="student" value="" required="" placeholder="SE16-123"/> <br>
-            
-            Topic Code <input type="text" name="topic" value="" required="" placeholder="HRM-501"/> <br>
-            
-            Context: <textarea name="context" style="width: 300px; height: 100px;" required=""></textarea> <br>
-            
-            Actors: <textarea name="actors" style="width: 300px; height: 100px;" required=""></textarea> <br>
-            
-            Function Requirements: <textarea name="funcR" style="width: 300px; height: 100px;" required=""></textarea> <br>
-            
-            Note: <textarea name="note" style="width: 300px; height: 100px;" required=""></textarea> <br>
-            
+            <div>
+                Topic Code: <select name="topic">
+                    <%
+                        List<TopicAssign> listTopic = (List<TopicAssign>) session.getAttribute("LIST_TOPIC");
+                        if (listTopic != null) {
+                            for (TopicAssign item : listTopic) {
+                    %>
+                    <option> <%= item.getTopicCode() + "-" + item.getTopicID()%> </option>
+                    <%
+                            }
+                        }
+                    %>
+                </select>
+            </div>
+     
             <input type="submit" value="Create" />
             <input type="hidden" value="CreateGroup" name="action" />  
             <input type="hidden" name="courseID" value="<%=session.getAttribute("COURSE_ID")%>"/>

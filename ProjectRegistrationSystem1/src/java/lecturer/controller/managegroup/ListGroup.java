@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import lecturer.DAO.TopicDAO;
 import system.main.DTO.GroupProject;
+import system.main.DTO.TopicAssign;
 import system.main.DTO.UserAccountDTO;
 
 public class ListGroup extends HttpServlet {
@@ -23,16 +25,17 @@ public class ListGroup extends HttpServlet {
         String url = ERROR;
         try {
             HttpSession session = request.getSession();
-//            UserAccountDTO loginUser = (UserAccountDTO)session.getAttribute("LOGIN_USER"); 
             int courseID = Integer.parseInt(request.getParameter("courseID"));
             int subID = Integer.parseInt(request.getParameter("subID"));
-//            request.setAttribute("COURSE_ID", courseID);
-//            request.setAttribute("SUBJECT_ID", subID);
+            int sesID = Integer.parseInt(request.getParameter("sesID"));
             GroupDAO grDao = new GroupDAO();
             List<GroupProject> list = grDao.getListGroup(courseID, subID);
+            TopicDAO topDao = new TopicDAO();
+            List<TopicAssign> list1 = topDao.getListTopicAssign(subID, sesID);
             if (list != null) {
                 if (!list.isEmpty()) {
                     request.setAttribute("LIST_GROUP", list);
+                    session.setAttribute("LIST_TOPIC", list1);
                     url = SUCCESS;
                 } else {
                     request.setAttribute("MESSAGE", "NO GROUP IN CLASS!!!");

@@ -39,7 +39,8 @@
                     <th>Type</th>
                     <th>Subject ID</th>
                     <th>Course Code</th>
-                    <th>Group Name</th>              
+                    <th>Group Name</th>  
+                    <th>Topic Code</th>
                     <th>Student ID</th>
                     <th>Status</th>         
                     <th>Detail</th>
@@ -58,6 +59,7 @@
                     <td> <%= dto.getSubCode() + "-" + dto.getSubID()%> </td>
                     <td> <%= dto.getCourseName() + "-" + dto.getCourseID()%> </td>
                     <td> <%= dto.getGrName()%> </td>
+                    <td> <%= dto.getTopicCode() + "-" + dto.getTopicID() %></td>
                     <td> <%= dto.getStuCode() + "-" + dto.getStuID()%> </td>                
                     <td> <%= dto.getStatus() %> </td>                
                     <td>

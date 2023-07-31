@@ -23,8 +23,8 @@ import system.main.DTO.UserAccountDTO;
  */
 public class UpdateTopic extends HttpServlet {
 
-    private static final String ERROR = "SourceTopic";
-    private static final String SUCCESS = "SourceTopic";
+    private static final String ERROR = "DetailTopic";
+    private static final String SUCCESS = "DetailTopic";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,8 +34,9 @@ public class UpdateTopic extends HttpServlet {
             int topicID = Integer.parseInt(request.getParameter("topicID"));
             int lecID = Integer.parseInt(request.getParameter("lecID"));
             String topicName = request.getParameter("topicName");
-            String shortDescription = request.getParameter("shortDescription");
-            String fullDescription = request.getParameter("fullDescription");
+            String context = request.getParameter("context");
+            String actor = request.getParameter("actor");
+            String function = request.getParameter("function");
             HttpSession session = request.getSession();
             UserAccountDTO loginUser = (UserAccountDTO)session.getAttribute("LOGIN_USER");
             TopicDAO topDao = new TopicDAO();
@@ -43,8 +44,7 @@ public class UpdateTopic extends HttpServlet {
                 request.setAttribute("MESSAGE", "Do not update Topics of other Lecturer!!!");
                 return;
             }
-            boolean check = topDao.updateTopic(topicID, topicName, 
-                    shortDescription, fullDescription);
+            boolean check = topDao.updateTopic(topicID, topicName, context, actor, function);
             if(check) {
                 url = SUCCESS;
                 request.setAttribute("MESSAGE", "Update Successfully !!");

@@ -27,10 +27,15 @@ public class UpdateGroupMember extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            int grID = Integer.parseInt(request.getParameter("grID"));
             String isLeader = request.getParameter("isLeader");
             int memID = Integer.parseInt(request.getParameter("memID"));
             
             GroupDAO grDao = new GroupDAO();
+            if(grDao.checkLeader(grID)) {
+                request.setAttribute("MESSAGE", "Group has a Leader!!");
+                return;
+            }
             boolean check = grDao.updateGroupMember(isLeader, memID);
             if(check) {
                 url = SUCCESS;

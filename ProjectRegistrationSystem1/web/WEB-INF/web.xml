@@ -108,6 +108,10 @@
         <servlet-name>AddGroupController</servlet-name>
         <servlet-class>lecturer.controller.managegroup.AddGroupController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DetailTopic</servlet-name>
+        <servlet-class>lecturer.controller.managetopic.DetailTopic</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -215,6 +219,10 @@
     <servlet-mapping>
         <servlet-name>AddGroupController</servlet-name>
         <url-pattern>/AddGroupController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailTopic</servlet-name>
+        <url-pattern>/DetailTopic</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

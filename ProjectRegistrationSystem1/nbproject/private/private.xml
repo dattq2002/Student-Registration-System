@@ -3,17 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/src/java/lecturer/controller/managegroup/DeleteGroup.java</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/src/java/lecturer/controller/manage/subject/GetListSubjectDetail.java</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/src/java/lecturer/controller/managegroup/UpdateProjectTopic.java</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/web/groupDetail.jsp</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/web/subjectDetail.jsp</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/src/java/lecturer/controller/managegroup/ListGroup.java</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/src/java/lecturer/controller/managegroup/CreateGroup.java</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/web/group.jsp</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/web/createGroup.jsp</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/src/java/lecturer/controller/managetopic/ListTopic.java</file>
-            <file>file:/D:/Summer-2023/SWP391/ProjectRegistrationSystem1/src/java/lecturer/DAO/GroupDAO.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/controller/managegroup/DeleteGroup.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/web/processingApplication.jsp</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/controller/managetopic/UpdateTopic.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/controller/managetopic/CreateTopic.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/controller/managegroup/DeleteGroupMember.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/controller/managegroup/UpdateGroupMember.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/controller/managegroup/UpdateProjectTopic.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/web/detailApplication.jsp</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/DAO/ApplicationDAO.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/controller/manage/application/ApproveApplication.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/controller/managegroup/CreateGroup.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/DAO/GroupDAO.java</file>
+            <file>file:/D:/Summer-2023/SWP391/LecturerRoll-BackEnd-New/ProjectRegistrationSystem1/src/java/lecturer/controller/manage/application/ProcessingApplication.java</file>
         </group>
     </open-files>
 </project-private>

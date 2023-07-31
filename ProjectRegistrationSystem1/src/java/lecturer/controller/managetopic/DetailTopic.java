@@ -3,68 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lecturer.controller.managegroup;
+package lecturer.controller.managetopic;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lecturer.DAO.GroupDAO;
+import lecturer.DAO.TopicDAO;
+import system.main.DTO.TopicAssign;
 
 /**
  *
  * @author Nam An
  */
-public class UpdateProjectTopic extends HttpServlet {
+public class DetailTopic extends HttpServlet {
 
-    private static final String ERROR = "GetListGroupDetail";
-    private static final String SUCCESS = "GetListGroupDetail";
+    private static final String ERROR = "detailTopic.jsp";
+    private static final String SUCCESS = "detailTopic.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            //getParameter
-            int sesID = Integer.parseInt(request.getParameter("sesID"));
-            int subID = Integer.parseInt(request.getParameter("subID"));
-            int courseID = Integer.parseInt(request.getParameter("courseID"));
-            String topic = request.getParameter("topic");
-            String note = request.getParameter("note");
-            int projectID = Integer.parseInt(request.getParameter("projectID"));
-            //regex
-            String regex = "^[A-Za-z]+-\\d+$";
-            GroupDAO grDao = new GroupDAO();
-
-            int topicID = 0;
-            if (!topic.matches(regex)) {
-                request.setAttribute("MESSAGE", "Topic is not Match !!!");
-                return;
-            } else {
-                String tmp[] = topic.split("-");
-                String topicCode = tmp[0];
-                topicID = Integer.parseInt(tmp[1]);
-                boolean result = grDao.checkTopicID(subID, sesID, topicID, topicCode);
-                if (!result) {
-                    request.setAttribute("MESSAGE", "Topic Code could not be found!!!");
-                    return;
-                }
-            }
-            
-            if (grDao.checkDuplicateTopicID(topicID, courseID, subID)) {
-                request.setAttribute("MESSAGE", "Topic is assign!!!");
-                return;
-            }
-
-            boolean check = grDao.updateProjectTopic(topicID, projectID, note);
-            if (check) {
+            int topicID = Integer.parseInt(request.getParameter("topicID"));
+            TopicDAO topDao = new TopicDAO();
+            List<TopicAssign> list = topDao.detailTopic(topicID);
+            if (!list.isEmpty()) {
+                request.setAttribute("LIST_TOPIC", list);
                 url = SUCCESS;
-                request.setAttribute("MESSAGE", "Update Successfully !!");
             }
         } catch (Exception e) {
-            log("Error at UpdateController: " + e.toString());
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

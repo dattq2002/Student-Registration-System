@@ -36,10 +36,8 @@
                     <th>No.</th>
                     <th>Topic Code</th>
                     <th>Topic Name</th>
-                    <th>Short Description</th>
-                    <th>Full Description</th>
                     <th>Lecturer Name</th>
-                    <th>Update</th>
+                    <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,15 +49,12 @@
                 <tr>
                     <td> <%= count++%> </td>
                     <td> <%= item.getTopicCode() + "-" + item.getTopicID()%> </td>
-                    <td> <textarea cols="20" rows="4" name="topicName"><%= item.getTopicName()%></textarea> </td>
-                    <td> <textarea cols="60" rows="4" name="shortDescription" ><%= item.getShortDescription()%></textarea> </td> 
-                    <td> <textarea cols="60" rows="4" name="fullDescription" ><%= item.getFullDescription()%></textarea> </td>
+                    <td> <%= item.getTopicName() %> </td>                   
                     <td> <%=item.getLecName()%> </td>
                     <td>
-                        <input type="submit" value="Update" />
-                        <input type="hidden" name="action" value="UpdateTopic"/>
+                        <input type="submit" value="Detail" />
+                        <input type="hidden" name="action" value="DetailTopic"/>
                         <input type="hidden" name="topicID" value="<%= item.getTopicID()%>"/>
-                        <input type="hidden" name="lecID" value="<%= item.getLecID()%>"/>
                     </td>
                 </tr>
             </form>
