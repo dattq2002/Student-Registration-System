@@ -42,7 +42,11 @@
                     <td><%=count++%></td>
                     <td><%=item.getGroupCode() + item.getGroupID()%></td>
                     <td><%=item.getGroupName()%></td>
-                    <td><%=item.getTopicCode() + item.getTopicID()%></td>
+                    <td>
+                        <% if (item.getTopicCode() != null) {%>
+                        <%=item.getTopicCode() + item.getTopicID()%>
+                        <% }%>
+                    </td>
                     <td>
                         <a href="LecturerController?action=ViewGroupDetail&grID=<%=item.getGroupID()%>&grName=<%=item.getGroupName()%>">
                             View Detail
@@ -64,7 +68,7 @@
         %>
 
         <a href="LecturerController?action=addGroup&courseID=<%=session.getAttribute("COURSE_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>&sesID=<%=session.getAttribute("SEMESTER_ID")%>">Create Group</a>
-        
+
         <%
             String message = (String) request.getAttribute("MESSAGE");
             if (message != null) {

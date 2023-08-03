@@ -31,22 +31,7 @@
 
             <div>
                 Group Name: <input type="text" name="grName" value="" required=""/>
-            </div>
-            
-            <div>
-                Topic Code: <select name="topic">
-                    <%
-                        List<TopicAssign> listTopic = (List<TopicAssign>) session.getAttribute("LIST_TOPIC");
-                        if (listTopic != null) {
-                            for (TopicAssign item : listTopic) {
-                    %>
-                    <option> <%= item.getTopicCode() + "-" + item.getTopicID()%> </option>
-                    <%
-                            }
-                        }
-                    %>
-                </select>
-            </div>
+            </div>          
      
             <input type="submit" value="Create" />
             <input type="hidden" value="CreateGroup" name="action" />  

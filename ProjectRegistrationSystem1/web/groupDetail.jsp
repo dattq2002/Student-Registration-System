@@ -18,7 +18,45 @@
                 return;
             }
         %>
+
+        <a href="GetListStudentInGroup?courseID=<%=session.getAttribute("COURSE_ID")%>&subID=<%=session.getAttribute("SUBJECT_ID")%>&grID=<%= session.getAttribute("GROUP_ID")%>">
+            List Student
+        </a>
+
         <h4>Group Name: <%=session.getAttribute("GROUP_NAME")%></h4>
+
+        <%
+            String message = (String) request.getAttribute("NO_TOPIC");
+            if (message != null) {
+        %>
+        <a><%=message%></a>
+        <div>
+            <form action="LecturerController">   
+                Topic Code: <select name="topic">
+                    <%
+                        List<TopicAssign> listTopic = (List<TopicAssign>) session.getAttribute("LIST_TOPIC");
+                        if (listTopic != null) {
+                            for (TopicAssign item : listTopic) {
+                    %>
+                    <option> <%= item.getTopicCode() + "-" + item.getTopicID()%> </option>
+                    <%
+                            }
+                        }
+                    %>
+                </select>
+
+                <input type="submit" value="Choose" />
+                <input type="hidden" value="ChooseTopicForGroup" name="action" />  
+                <input type="hidden" name="grID" value="<%= session.getAttribute("GROUP_ID")%>"/>
+                <input type="hidden" name="grName" value="<%= session.getAttribute("GROUP_NAME")%>"/>
+                <input type="hidden" name="courseID" value="<%=session.getAttribute("COURSE_ID")%>"/>
+                <input type="hidden" name="subID" value="<%=session.getAttribute("SUBJECT_ID")%>"/>
+                <input type="hidden" name="sesID" value="<%=session.getAttribute("SEMESTER_ID")%>"/>
+            </form>
+        </div>
+        <%
+            }
+        %>
 
         <%
             List<GroupProject> projectGroup = (List<GroupProject>) request.getAttribute("PROJECT_GROUP");
@@ -65,7 +103,7 @@
             <div>
                 Note:  <textarea cols="60" rows="4" name="note" ><%= dto.getNote()%></textarea>
             </div>
-            
+
             <div>
                 <input type="submit" value="Update" />
                 <input type="hidden" name="action" value="UpdateProjectTopic"/>     
@@ -152,10 +190,10 @@
     %>
 
     <%
-        String message = (String) request.getAttribute("MESSAGE");
-        if (message != null) {
+        String message1 = (String) request.getAttribute("MESSAGE");
+        if (message1 != null) {
     %>
-    <a><%=message%></a>
+    <a><%=message1%></a>
     <%
         }
     %>

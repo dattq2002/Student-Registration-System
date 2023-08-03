@@ -108,6 +108,48 @@ public class ClassDAO {
         return list;
     }
 
+    public List<StudentProfile> getListStudentInGroup(int courseID, int subID) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<StudentProfile> list = new ArrayList<>();
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * "
+                        + "FROM (SELECT S.Code AS StudentCode, E.StudentID, S.Name AS StudentName, "
+                        + "E.CourseID, E.SubjectID "
+                        + "FROM Enrollment E LEFT JOIN Student S "
+                        + "ON E.StudentID = S.ID) AS NA LEFT JOIN Member M "
+                        + "ON NA.StudentID = M.StudentID "
+                        + "WHERE NA.CourseID = ? AND NA.SubjectID = ? AND M.isLeader IS NULL";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, courseID);
+                stm.setInt(2, subID);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int stuID = rs.getInt("StudentID");
+                    String stuCode = rs.getString("StudentCode");
+                    String stuName = rs.getString("StudentName");
+                    list.add(new StudentProfile(stuID, stuCode, stuName));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
     public String getLecName(int courseID, int subID) throws SQLException {
         String lecName = null;
         Connection conn = null;

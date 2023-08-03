@@ -44,6 +44,22 @@ public class UpdateTopic extends HttpServlet {
                 request.setAttribute("MESSAGE", "Do not update Topics of other Lecturer!!!");
                 return;
             }
+            if (topicName.length() < 0 || topicName.length() >= 100) {
+                request.setAttribute("MESSAGE", "Topic Name has length between 0 - 100!!!");
+                return;
+            }
+            if (context.length() < 0 || context.length() >= 250) {
+                request.setAttribute("MESSAGE", "Context has length between 0 - 250!!!");
+                return;
+            }
+            if (actor.length() < 0 || actor.length() >= 50) {
+                request.setAttribute("MESSAGE", "Actor has length between 0 - 50!!!");
+                return;
+            }
+            if (function.length() < 0 || function.length() >= 250) {
+                request.setAttribute("MESSAGE", "Function has length between 0 - 250!!!");
+                return;
+            }
             boolean check = topDao.updateTopic(topicID, topicName, context, actor, function);
             if(check) {
                 url = SUCCESS;

@@ -11,6 +11,10 @@ public class StudentProfile extends Person{
         super(ID, Code, name, birthday, PhoneNumber, Gender, Address, City, Email);
     }        
 
+    public StudentProfile(int ID, String Code, String name) {
+        super(ID, Code, name);
+    }
+    
     //getter, setter
     public String getMajor() {
         return Major;

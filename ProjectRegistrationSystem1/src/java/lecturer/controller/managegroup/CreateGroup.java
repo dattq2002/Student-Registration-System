@@ -31,34 +31,34 @@ public class CreateGroup extends HttpServlet {
             int courseID = Integer.parseInt(request.getParameter("courseID"));
             int subID = Integer.parseInt(request.getParameter("subID"));
             String grName = request.getParameter("grName");
-            String topic = request.getParameter("topic");
-            String regex = "^[A-Za-z]+-\\d+$";
+//            String topic = request.getParameter("topic");
+//            String regex = "^[A-Za-z]+-\\d+$";
 
             GroupDAO grDAO = new GroupDAO();
             if (grDAO.checkGroupName(grName, courseID, subID)) {
                 request.setAttribute("MESSAGE", "Group Name is duplicated!!!");
                 return;
             }
-            int topicID = 0;
-            if (!topic.matches(regex)) {
-                request.setAttribute("MESSAGE", "Topic is not Match !!!");
-                return;
-            } else {
-                String tmp[] = topic.split("-");
-                String topicCode = tmp[0];
-                topicID = Integer.parseInt(tmp[1]);
-                boolean result = grDAO.checkTopicID(subID, sesID, topicID, topicCode);
-                if (!result) {
-                    request.setAttribute("MESSAGE", "Topic Code could not be found!!!");
-                    return;
-                }
-            }
-            if (grDAO.checkDuplicateTopicID(topicID, courseID, subID)) {
-                request.setAttribute("MESSAGE", "Topic is assign!!!");
-                return;
-            }
+//            int topicID = 0;
+//            if (!topic.matches(regex)) {
+//                request.setAttribute("MESSAGE", "Topic is not Match !!!");
+//                return;
+//            } else {
+//                String tmp[] = topic.split("-");
+//                String topicCode = tmp[0];
+//                topicID = Integer.parseInt(tmp[1]);
+//                boolean result = grDAO.checkTopicID(subID, sesID, topicID, topicCode);
+//                if (!result) {
+//                    request.setAttribute("MESSAGE", "Topic Code could not be found!!!");
+//                    return;
+//                }
+//            }
+//            if (grDAO.checkDuplicateTopicID(topicID, courseID, subID)) {
+//                request.setAttribute("MESSAGE", "Topic is assign!!!");
+//                return;
+//            }
 
-            boolean check = grDAO.insertGroup(courseID, subID, grName, topicID);
+            boolean check = grDAO.insertGroup(courseID, subID, grName);
             if (check) {
                 url = SUCCESS;
                 request.setAttribute("MESSAGE", "Create Successfully !!");

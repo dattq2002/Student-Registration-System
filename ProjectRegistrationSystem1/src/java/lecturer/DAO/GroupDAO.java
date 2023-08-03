@@ -363,10 +363,8 @@ public class GroupDAO {
         return check;
     }
 
-    public boolean insertGroup(int courseID, int subjectID, String grName,
-            int topicID) throws SQLException {
+    public boolean insertGroup(int courseID, int subjectID, String grName) throws SQLException {
         boolean check = false;
-        boolean check1 = false;
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -390,25 +388,25 @@ public class GroupDAO {
                 stm.setString(2, grName);
                 stm.setInt(3, courseID);
                 stm.setInt(4, subjectID);
-                check1 = stm.executeUpdate() > 0;
-                if (check1) {
-                    String sql1 = "SELECT ID FROM Groupp "
-                            + "WHERE Name = ? AND CourseID = ? AND SubjectID = ?";
-                    stm = conn.prepareStatement(sql1);
-                    stm.setString(1, grName);
-                    stm.setInt(2, courseID);
-                    stm.setInt(3, subjectID);
-                    rs = stm.executeQuery();
-                    if (rs.next()) {
-                        int grID = rs.getInt("ID");
-                        String sql2 = "INSERT INTO TopicInGroup "
-                                + "VALUES(?,?,GETDATE(),N'Có thể cập nhật')";
-                        stm = conn.prepareStatement(sql2);
-                        stm.setInt(1, grID);
-                        stm.setInt(2, topicID);
-                        check = stm.executeUpdate() > 0;
-                    }
-                }
+                check = stm.executeUpdate() > 0;
+//                if (check1) {
+//                    String sql1 = "SELECT ID FROM Groupp "
+//                            + "WHERE Name = ? AND CourseID = ? AND SubjectID = ?";
+//                    stm = conn.prepareStatement(sql1);
+//                    stm.setString(1, grName);
+//                    stm.setInt(2, courseID);
+//                    stm.setInt(3, subjectID);
+//                    rs = stm.executeQuery();
+//                    if (rs.next()) {
+//                        int grID = rs.getInt("ID");
+//                        String sql2 = "INSERT INTO TopicInGroup "
+//                                + "VALUES(?,?,GETDATE(),N'Có thể cập nhật')";
+//                        stm = conn.prepareStatement(sql2);
+//                        stm.setInt(1, grID);
+//                        stm.setInt(2, topicID);
+//                        check = stm.executeUpdate() > 0;
+//                    }
+//                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -426,6 +424,37 @@ public class GroupDAO {
         return check;
     }
 
+    public boolean insertTopicInGroup(int grID, int topicID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "INSERT INTO TopicInGroup "
+                        + "VALUES(?,?,GETDATE(),N'Có thể cập nhật')";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, grID);
+                stm.setInt(2, topicID);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
     public boolean checkDuplicateTopicID(int topicID, int courseID, int subjectID) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -463,4 +492,31 @@ public class GroupDAO {
         return check;
     }
 
+    public boolean addStudent(int studentID, int grID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "Insert into Member(StudentID, GroupID, StartDate, isLeader) "
+                        + "values(?,?,GETDATE(),'MB')";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, studentID);
+                stm.setInt(2, grID);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
 }

@@ -1,47 +1,49 @@
-package lecturer.controller.manageclass;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lecturer.controller.managetopic;
 
-import lecturer.DAO.ClassDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import system.main.DTO.StudentProfile;
-import system.main.DTO.UserAccountDTO;
+import lecturer.DAO.TopicDAO;
+import system.main.DTO.TopicAssign;
 
-public class GetListStudentInClass extends HttpServlet {
+/**
+ *
+ * @author Nam An
+ */
+public class DetailTopicAssign extends HttpServlet {
 
-    private static final String ERROR = "listStudentInClass.jsp";
-    private static final String SUCCESS = "listStudentInClass.jsp";
+    private static final String ERROR = "detailTopicAssign.jsp";
+    private static final String SUCCESS = "detailTopicAssign.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            HttpSession session = request.getSession();
-            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
-            int courseID = Integer.parseInt(request.getParameter("courseID"));
             int subID = Integer.parseInt(request.getParameter("subID"));
-            ClassDAO clDao = new ClassDAO();
-            String lecName = clDao.getLecName(courseID, subID);
-
-            List<StudentProfile> list = clDao.getListStudentInClass(courseID, subID, loginUser.getEmail());
-            if (list != null) {
-                if (!list.isEmpty()) {
-                    request.setAttribute("LECTURE_NAME", lecName);
-                    request.setAttribute("LIST_STUDENT_CLASS", list);
+            int sesID = Integer.parseInt(request.getParameter("sesID"));
+            int topicAss = Integer.parseInt(request.getParameter("topicAss"));
+            TopicDAO topDao = new TopicDAO();
+            List<TopicAssign> list = topDao.detailTopicAssign(subID, sesID, topicAss);
+            if(list != null){
+                if(!list.isEmpty()){
+                    request.setAttribute("LIST_TOPIC", list);
                     url = SUCCESS;
-                } else {
-                    request.setAttribute("MESSAGE", "NO STUDENT IN CLASS!!!");
                 }
             }
         } catch (NumberFormatException | SQLException e) {
-            log("Error at GetListStudentInClass: " + e.toString());
-        } finally {
+            e.printStackTrace();
+        }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

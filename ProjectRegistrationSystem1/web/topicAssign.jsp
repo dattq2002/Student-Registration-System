@@ -27,12 +27,8 @@
                     <th>No</th>
                     <th>Topic Code</th>
                     <th>Topic Name</th>
-                    <th>Context</th>
-                    <th>Actor</th>
-                    <th>Function</th>
                     <th>Lecturer Name</th>
-                    <th>Start Date</th>
-                    <th>Modify Date</th>
+                    <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,28 +36,31 @@
                     int count = 1;
                     for (TopicAssign item : list) {
                 %>
+            <form action="LecturerController">
                 <tr>
                     <td><%=count++%>
                         <input type="hidden" name="topicAss" value="<%=item.getTopicAssignID()%>" />
                     </td>
                     <td><%=item.getTopicCode() + item.getTopicID()%></td>
                     <td><%=item.getTopicName()%></td>
-                    <td><%=item.getContext() %></td>
-                    <td><%=item.getActor() %></td>
-                    <td><%=item.getFunction() %></td>
                     <td><%=item.getLecName()%></td>
-                    <td><%=item.getStartDate()%></td>
-                    <td><%=item.getModifyDate()%></td>
+                    <td>
+                        <input type="submit" value="Detail" />
+                        <input type="hidden" name="action" value="DetailTopicAssign"/>
+                        <input type="hidden" name="sesID" value="<%=session.getAttribute("SEMESTER_ID")%>"/>
+                        <input type="hidden" name="subID" value="<%=session.getAttribute("SUBJECT_ID")%>"/>
+                    </td>
                 </tr>
-                <%
-                    }
-                %>  
-            </tbody>
-        </table>
-
-        <%
+            </form>
+            <%
                 }
+            %>  
+        </tbody>
+    </table>
+
+    <%
             }
-        %>
-    </body>
+        }
+    %>
+</body>
 </html>

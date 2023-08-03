@@ -23,6 +23,8 @@
             }
         %>
         
+        <a href="LecturerController?action=SourceTopic">Back</a>
+        
         <%
             List<TopicAssign> list = (List<TopicAssign>) request.getAttribute("LIST_TOPIC");
             if (list != null) {

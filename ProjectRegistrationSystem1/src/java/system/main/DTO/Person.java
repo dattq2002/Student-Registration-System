@@ -15,6 +15,14 @@ public abstract class Person {
     
     //Contructor
 
+    public Person(int ID, String Code, String name) {
+        this.ID = ID;
+        this.Code = Code;
+        this.name = name;
+    }
+
+    
+    
     public Person(int ID, String Code, String name, String birthday, String PhoneNumber, String Gender, String Address, String City, String Email, String image) {
         this.ID = ID;
         this.Code = Code;

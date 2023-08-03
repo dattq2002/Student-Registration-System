@@ -21,6 +21,7 @@ public class LecturerController extends HttpServlet {
     private static final String DETAIL_TOPIC = "DetailTopic";
     private static final String UPDATE_TOPIC = "UpdateTopic";
     private static final String CREATE_TOPIC = "CreateTopic";
+    private static final String DETAIL_TOPIC_ASSIGN = "DetailTopicAssign";
     private static final String LECTURER_PROFILE = "Profile";
     private static final String UPDATE_PROFILE = "UpdateProfile";
     private static final String LECTURER_PRESENTATION = "LecturerPresentation";
@@ -30,6 +31,8 @@ public class LecturerController extends HttpServlet {
     private static final String LECTURER_PROCESSED_APPLICATION = "ProcessedApplication";
     private static final String CREATE_GROUP = "CreateGroup";
     private static final String ADD_GROUP = "AddGroupController";
+    private static final String ADD_STUDENT_IN_GROUP = "AddStudentInGroup";
+    private static final String CHOOSE_TOPIC_FOR_GROUP = "ChooseTopicForGroup";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -59,6 +62,8 @@ public class LecturerController extends HttpServlet {
                 url = UPDATE_TOPIC;
             } else if ("CreateTopic".equals(action)) {
                 url = CREATE_TOPIC;
+            } else if ("DetailTopicAssign".equals(action)) {
+                url = DETAIL_TOPIC_ASSIGN;
             } else if ("LecturerProfile".equals(action)) {
                 url = LECTURER_PROFILE;
             } else if ("UpdateProfile".equals(action)) {
@@ -77,6 +82,10 @@ public class LecturerController extends HttpServlet {
                 url = CREATE_GROUP;
             } else if ("addGroup".equals(action)) {
                 url = ADD_GROUP;
+            } else if ("AddStudentInGroup".equals(action)) {
+                url = ADD_STUDENT_IN_GROUP;
+            } else if ("ChooseTopicForGroup".equals(action)) {
+                url = CHOOSE_TOPIC_FOR_GROUP;
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("ERROR_FUNC", "function is not available");

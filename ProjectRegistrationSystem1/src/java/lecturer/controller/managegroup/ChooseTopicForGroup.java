@@ -1,46 +1,66 @@
-package lecturer.controller.manageclass;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lecturer.controller.managegroup;
 
-import lecturer.DAO.ClassDAO;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import system.main.DTO.StudentProfile;
-import system.main.DTO.UserAccountDTO;
+import lecturer.DAO.GroupDAO;
 
-public class GetListStudentInClass extends HttpServlet {
+/**
+ *
+ * @author Nam An
+ */
+public class ChooseTopicForGroup extends HttpServlet {
 
-    private static final String ERROR = "listStudentInClass.jsp";
-    private static final String SUCCESS = "listStudentInClass.jsp";
+    private static final String ERROR = "GetListGroupDetail";
+    private static final String SUCCESS = "GetListGroupDetail";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            HttpSession session = request.getSession();
-            UserAccountDTO loginUser = (UserAccountDTO) session.getAttribute("LOGIN_USER");
+            int sesID = Integer.parseInt(request.getParameter("sesID"));
             int courseID = Integer.parseInt(request.getParameter("courseID"));
             int subID = Integer.parseInt(request.getParameter("subID"));
-            ClassDAO clDao = new ClassDAO();
-            String lecName = clDao.getLecName(courseID, subID);
+            int grID =  Integer.parseInt(request.getParameter("grID"));
+            String topic = request.getParameter("topic");
+            String regex = "^[A-Za-z]+-\\d+$";
 
-            List<StudentProfile> list = clDao.getListStudentInClass(courseID, subID, loginUser.getEmail());
-            if (list != null) {
-                if (!list.isEmpty()) {
-                    request.setAttribute("LECTURE_NAME", lecName);
-                    request.setAttribute("LIST_STUDENT_CLASS", list);
-                    url = SUCCESS;
-                } else {
-                    request.setAttribute("MESSAGE", "NO STUDENT IN CLASS!!!");
+            GroupDAO grDAO = new GroupDAO();
+            int topicID = 0;
+            if (!topic.matches(regex)) {
+                request.setAttribute("MESSAGE", "Topic is not Match !!!");
+                return;
+            } else {
+                String tmp[] = topic.split("-");
+                String topicCode = tmp[0];
+                topicID = Integer.parseInt(tmp[1]);
+                boolean result = grDAO.checkTopicID(subID, sesID, topicID, topicCode);
+                if (!result) {
+                    request.setAttribute("MESSAGE", "Topic Code could not be found!!!");
+                    return;
                 }
             }
-        } catch (NumberFormatException | SQLException e) {
-            log("Error at GetListStudentInClass: " + e.toString());
+
+            boolean check = grDAO.insertTopicInGroup(grID, topicID);
+            if (check) {
+                url = SUCCESS;
+                request.setAttribute("MESSAGE", "Choose Successfully !!");
+            } else {
+                url = ERROR;
+                request.setAttribute("MESSAGE", "Choose Fail !!");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

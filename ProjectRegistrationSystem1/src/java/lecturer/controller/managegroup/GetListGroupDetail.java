@@ -33,6 +33,8 @@ public class GetListGroupDetail extends HttpServlet {
             if (list != null) {
                 if (!list.isEmpty()) {
                     request.setAttribute("PROJECT_GROUP", list);
+                } else {
+                    request.setAttribute("NO_TOPIC", "No Topic Group!!!");
                 }
             }
             List<Group> list1 = grDao.getListGroupDetail(grID);
@@ -42,13 +44,6 @@ public class GetListGroupDetail extends HttpServlet {
                     url = SUCCESS;
                 }
             }
-//            List<TopicAssign> list2 = grDao.getListTopicAssign(subID, sesID);
-//            if (list2 != null) {
-//                if (!list2.isEmpty()) {
-//                    request.setAttribute("LIST_TOPIC", list2);
-//                    url = SUCCESS;
-//                }
-//            }
         } catch (NumberFormatException | SQLException e) {
             e.printStackTrace();
         } finally {

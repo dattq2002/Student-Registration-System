@@ -63,6 +63,58 @@ public class TopicDAO {
         return list;
     }
 
+    public List<TopicAssign> detailTopicAssign(int subID, int sesID, int topicAID) throws SQLException {
+        List<TopicAssign> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = Util.getConnection();
+            if (conn != null) {
+                String sql = "SELECT B.*, L.Name AS LecName "
+                        + "FROM (SELECT A.ID AS TopicAssign, A.TopicID, A.SubjectID, A.StartDate, "
+                        + "A.ModifyDate, A.SemesterID, A.Status, T.*  "
+                        + "FROM (SELECT * FROM TopicAssign WHERE Status = 'Processed' AND SubjectID = ? AND SemesterID = ? AND ID = ?) AS A "
+                        + "LEFT JOIN Topic T ON A.TopicID = T.ID) AS B LEFT JOIN Lecturer L "
+                        + "ON B.LecturerID = L.ID";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, subID);
+                stm.setInt(2, sesID);
+                stm.setInt(3, topicAID);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int topicAss = rs.getInt("TopicAssign");
+                    int topicID = rs.getInt("TopicID");
+                    String StartDate = rs.getString("StartDate");
+                    String ModifyDate = rs.getString("ModifyDate");
+                    String Status = rs.getString("Status");
+                    String TopicCode = rs.getString("Code");
+                    String TopicName = rs.getString("Name");
+                    int lecID = rs.getInt("LecturerID");
+                    String context = rs.getString("Context");
+                    String actor = rs.getString("Actor");
+                    String function = rs.getString("Function");
+                    String lecName = rs.getString("lecName");
+                    list.add(new TopicAssign(topicAss, StartDate, ModifyDate,
+                            sesID, Status, lecName, lecID, topicID, TopicCode,
+                            TopicName, context, actor, function));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+    
     public List<TopicAssign> getListSourceTopic() throws SQLException {
         List<TopicAssign> list = new ArrayList<>();
         Connection conn = null;

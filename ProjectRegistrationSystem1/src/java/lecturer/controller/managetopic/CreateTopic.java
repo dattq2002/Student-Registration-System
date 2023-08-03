@@ -67,16 +67,20 @@ public class CreateTopic extends HttpServlet {
 
             int lecturerID = topDao.getLecturerID(loginUser.getEmail());
 
-            if (context.length() < 0) {
-                request.setAttribute("MESSAGE", "Short Description must be longer than 0!!!");
+            if (topicName.length() < 0 || topicName.length() >= 100) {
+                request.setAttribute("MESSAGE", "Topic Name has length between 0 - 100!!!");
                 return;
             }
-            if (actor.length() < 0) {
-                request.setAttribute("MESSAGE", "Full Description must be longer than 0!!!");
+            if (context.length() < 0 || context.length() >= 250) {
+                request.setAttribute("MESSAGE", "Context has length between 0 - 250!!!");
                 return;
             }
-            if (function.length() < 0) {
-                request.setAttribute("MESSAGE", "Full Description must be longer than 0!!!");
+            if (actor.length() < 0 || actor.length() >= 50) {
+                request.setAttribute("MESSAGE", "Actor has length between 0 - 50!!!");
+                return;
+            }
+            if (function.length() < 0 || function.length() >= 250) {
+                request.setAttribute("MESSAGE", "Function has length between 0 - 250!!!");
                 return;
             }
             
